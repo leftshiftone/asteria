@@ -1,0 +1,108 @@
+# default: https://github.com/asciidoctor/asciidoctor-pdf/blob/095bb89e998d031e018254f64cf0db74ebbf69d8/data/themes/default-theme.yml
+extends: default
+page:
+  background_color: ffffff
+  layout: portrait
+  margin: [0.67in, 0.67in, 0.75in, 0.67in]
+  margin_inner: 0.59in
+  margin_outer: 0.59in
+  size: A4
+base:
+  font_color: 233246
+  border_color: 6E7989
+  border_radius: 0
+link:
+  font_color: 829BAD
+literal:
+  font_color: 233246
+title_page:
+  title:
+    font_color: 00FFC8
+  authors:
+    font_color: 233246
+abstract:
+  font_color: 233246
+toc:
+  dot_leader:
+    font_color: 233246
+heading:
+  font_color: 233246
+admonition:
+  column_rule_color: $base_border_color
+  icon:
+    tip:
+      stroke_color: 233246
+    note:
+      stroke_color: 233246
+    important:
+      stroke_color: 00FFC8
+    caution:
+      stroke_color: E22020
+    warning:
+      stroke_color: FFBC00
+  label:
+    text_transform: uppercase
+    font_style: bold
+key:
+  background_color: d2dee5
+  border_color: $base_border_color
+  border_radius: $base_border_radius
+blockquote:
+  font_color: $base_font_color
+  border_color: 00FFC8
+  cite_font_color: $link_font_color
+code:
+  font_color: $base_font_color
+  background_color: d2dee5
+  border_color: d2dee5
+  border_radius: $base_border_radius
+example:
+  border_color: $base_border_color
+  border_radius: $base_border_radius
+sidebar:
+  background_color: d2dee5
+  border_color: d2dee5
+  border_radius: $base_border_radius
+  title:
+    font_color: $base_font_color
+table:
+  background_color: $page_background_color
+  border_color: d2dee5ff
+  body:
+    stripe_background_color: d2dee5ff
+  foot:
+    background_color: d2dee5ff
+header:
+  border_color: $base_border_color
+  border_width: 0
+  height: 0.75in
+  line_height: 1.2
+  recto:
+    left:
+      content: ''
+    right:
+      content: '{section-or-chapter-title}'
+  verso:
+    left:
+      content: $header_recto_left_content
+    right:
+      content: $header_recto_right_content
+footer:
+  border_color: $base_border_color
+  border_width: 0
+  height: 0.75in
+  line_height: 1.2
+  recto:
+    left:
+      content: |
+        LEFTSHIFT ONE Software GmbH +
+        support@leftshift.one
+    right:
+      content: |
+        {page-number}/{page-count} +
+        {revnumber}
+  verso:
+    left:
+      content: $footer_recto_left_content
+    right:
+      content: $footer_recto_right_content

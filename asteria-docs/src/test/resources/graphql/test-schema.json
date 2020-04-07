@@ -1,0 +1,2199 @@
+{
+  "nerScore": 0.0,
+  "score": 0.0,
+  "nluScore": 0.0,
+  "data": {
+    "__schema": {
+      "queryType": {
+        "name": "atlasQuery"
+      },
+      "mutationType": {
+        "name": "atlasMutation"
+      },
+      "types": [
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "ImpulseContext",
+          "description": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "impulseContextHeader",
+              "description": null,
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "ImpulseContextHeader",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "impulseContextPayload",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "SCALAR",
+          "name": "Boolean",
+          "description": "Built-in Boolean"
+        },
+        {
+          "kind": "SCALAR",
+          "name": "Datetime",
+          "description": "Coercing Datetime"
+        },
+        {
+          "kind": "SCALAR",
+          "name": "Float",
+          "description": "Built-in Float"
+        },
+        {
+          "kind": "SCALAR",
+          "name": "Int",
+          "description": "Built-in Int"
+        },
+        {
+          "kind": "ENUM",
+          "name": "Period",
+          "enumValues": [
+            {
+              "name": "auto",
+              "isDeprecated": false
+            },
+            {
+              "name": "defaultFuture",
+              "isDeprecated": false
+            },
+            {
+              "name": "defaultPast",
+              "isDeprecated": false
+            },
+            {
+              "name": "future",
+              "isDeprecated": false
+            },
+            {
+              "name": "past",
+              "isDeprecated": false
+            }
+          ]
+        },
+        {
+          "kind": "SCALAR",
+          "name": "String",
+          "description": "Built-in String"
+        },
+        {
+          "kind": "OBJECT",
+          "name": "__Directive",
+          "fields": [
+            {
+              "name": "args",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "__InputValue"
+                    }
+                  }
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "description",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "locations",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "__DirectiveLocation"
+                  }
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "name",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "onField",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean"
+              },
+              "isDeprecated": true,
+              "deprecationReason": "Use `locations`."
+            },
+            {
+              "name": "onFragment",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean"
+              },
+              "isDeprecated": true,
+              "deprecationReason": "Use `locations`."
+            },
+            {
+              "name": "onOperation",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean"
+              },
+              "isDeprecated": true,
+              "deprecationReason": "Use `locations`."
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "ENUM",
+          "name": "__DirectiveLocation",
+          "description": "An enum describing valid locations where a directive can be placed",
+          "enumValues": [
+            {
+              "name": "ARGUMENT_DEFINITION",
+              "description": "Indicates the directive is valid on a field argument SDL definition.",
+              "isDeprecated": false
+            },
+            {
+              "name": "ENUM",
+              "description": "Indicates the directive is valid on an enum SDL definition.",
+              "isDeprecated": false
+            },
+            {
+              "name": "ENUM_VALUE",
+              "description": "Indicates the directive is valid on an enum value SDL definition.",
+              "isDeprecated": false
+            },
+            {
+              "name": "FIELD",
+              "description": "Indicates the directive is valid on fields.",
+              "isDeprecated": false
+            },
+            {
+              "name": "FIELD_DEFINITION",
+              "description": "Indicates the directive is valid on a field SDL definition.",
+              "isDeprecated": false
+            },
+            {
+              "name": "FRAGMENT_DEFINITION",
+              "description": "Indicates the directive is valid on fragment definitions.",
+              "isDeprecated": false
+            },
+            {
+              "name": "FRAGMENT_SPREAD",
+              "description": "Indicates the directive is valid on fragment spreads.",
+              "isDeprecated": false
+            },
+            {
+              "name": "INLINE_FRAGMENT",
+              "description": "Indicates the directive is valid on inline fragments.",
+              "isDeprecated": false
+            },
+            {
+              "name": "INPUT_FIELD_DEFINITION",
+              "description": "Indicates the directive is valid on an input object field SDL definition.",
+              "isDeprecated": false
+            },
+            {
+              "name": "INPUT_OBJECT",
+              "description": "Indicates the directive is valid on an input object SDL definition.",
+              "isDeprecated": false
+            },
+            {
+              "name": "INTERFACE",
+              "description": "Indicates the directive is valid on an interface SDL definition.",
+              "isDeprecated": false
+            },
+            {
+              "name": "MUTATION",
+              "description": "Indicates the directive is valid on mutations.",
+              "isDeprecated": false
+            },
+            {
+              "name": "OBJECT",
+              "description": "Indicates the directive is valid on an object SDL definition.",
+              "isDeprecated": false
+            },
+            {
+              "name": "QUERY",
+              "description": "Indicates the directive is valid on queries.",
+              "isDeprecated": false
+            },
+            {
+              "name": "SCALAR",
+              "description": "Indicates the directive is valid on a scalar SDL definition.",
+              "isDeprecated": false
+            },
+            {
+              "name": "SCHEMA",
+              "description": "Indicates the directive is valid on a schema SDL definition.",
+              "isDeprecated": false
+            },
+            {
+              "name": "UNION",
+              "description": "Indicates the directive is valid on an union SDL definition.",
+              "isDeprecated": false
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "__EnumValue",
+          "fields": [
+            {
+              "name": "deprecationReason",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "description",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "isDeprecated",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "name",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String"
+                }
+              },
+              "isDeprecated": false
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "__Field",
+          "fields": [
+            {
+              "name": "args",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "__InputValue"
+                    }
+                  }
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "deprecationReason",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "description",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "isDeprecated",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "name",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "type",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "__Type"
+                }
+              },
+              "isDeprecated": false
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "__InputValue",
+          "fields": [
+            {
+              "name": "defaultValue",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "description",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "name",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "type",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "__Type"
+                }
+              },
+              "isDeprecated": false
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "__Schema",
+          "description": "A GraphQL Introspection defines the capabilities of a GraphQL server. It exposes all available types and directives on the server, the entry points for query, mutation, and subscription operations.",
+          "fields": [
+            {
+              "name": "directives",
+              "description": "'A list of all directives supported by this server.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "__Directive"
+                    }
+                  }
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "mutationType",
+              "description": "If this server supports mutation, the type that mutation operations will be rooted at.",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "__Type"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "queryType",
+              "description": "The type that query operations will be rooted at.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "__Type"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "subscriptionType",
+              "description": "'If this server support subscription, the type that subscription operations will be rooted at.",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "__Type"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "types",
+              "description": "A list of all types supported by this server.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "__Type"
+                    }
+                  }
+                }
+              },
+              "isDeprecated": false
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "__Type",
+          "fields": [
+            {
+              "name": "description",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "enumValues",
+              "args": [
+                {
+                  "name": "includeDeprecated",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean"
+                  },
+                  "defaultValue": "false"
+                }
+              ],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "__EnumValue"
+                  }
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "fields",
+              "args": [
+                {
+                  "name": "includeDeprecated",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean"
+                  },
+                  "defaultValue": "false"
+                }
+              ],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "__Field"
+                  }
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "inputFields",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "__InputValue"
+                  }
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "interfaces",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "__Type"
+                  }
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "kind",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "__TypeKind"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "name",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "ofType",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "__Type"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "possibleTypes",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "__Type"
+                  }
+                }
+              },
+              "isDeprecated": false
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "ENUM",
+          "name": "__TypeKind",
+          "description": "An enum describing what kind of type a given __Type is",
+          "enumValues": [
+            {
+              "name": "ENUM",
+              "description": "Indicates this type is an enum. `enumValues` is a valid field.",
+              "isDeprecated": false
+            },
+            {
+              "name": "INPUT_OBJECT",
+              "description": "Indicates this type is an input object. `inputFields` is a valid field.",
+              "isDeprecated": false
+            },
+            {
+              "name": "INTERFACE",
+              "description": "Indicates this type is an interface. `fields` and `possibleTypes` are valid fields.",
+              "isDeprecated": false
+            },
+            {
+              "name": "LIST",
+              "description": "Indicates this type is a list. `ofType` is a valid field.",
+              "isDeprecated": false
+            },
+            {
+              "name": "NON_NULL",
+              "description": "Indicates this type is a non-null. `ofType` is a valid field.",
+              "isDeprecated": false
+            },
+            {
+              "name": "OBJECT",
+              "description": "Indicates this type is an object. `fields` and `interfaces` are valid fields.",
+              "isDeprecated": false
+            },
+            {
+              "name": "SCALAR",
+              "description": "Indicates this type is a scalar.",
+              "isDeprecated": false
+            },
+            {
+              "name": "UNION",
+              "description": "Indicates this type is a union. `possibleTypes` is a valid field.",
+              "isDeprecated": false
+            }
+          ]
+        },
+        {
+          "kind": "OBJECT",
+          "name": "accommodation",
+          "description": "named entity recognition of accommodation information",
+          "fields": [
+            {
+              "name": "amount",
+              "description": "the amount of times the entity is demanded",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "indices",
+              "description": "the token indices of the named entity",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "name",
+              "description": "the accommodation name",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "negation",
+              "description": "indicates if the accommodation is negated",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "type",
+              "description": "the accommodation type",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "age",
+          "description": "named entity recognition of age information",
+          "fields": [
+            {
+              "name": "age",
+              "description": "the age",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "indices",
+              "description": "the token indices of the named entity",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "negation",
+              "description": "indicates if the age is negated",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean"
+              },
+              "isDeprecated": false
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "atlasMutation",
+          "fields": [],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "atlasQuery",
+          "fields": [
+            {
+              "name": "nlu",
+              "args": [
+                {
+                  "name": "lang",
+                  "description": "specifies the language to use. default is 'de'",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String"
+                    }
+                  },
+                  "defaultValue": "\"de\""
+                },
+                {
+                  "name": "merge",
+                  "description": "specifies if the lex noun chunks should be merged. default value is 'false'",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Boolean"
+                    }
+                  },
+                  "defaultValue": "false"
+                },
+                {
+                  "name": "text",
+                  "description": "the input text to analyze",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String"
+                    }
+                  }
+                }
+              ],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "nlu"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "ver",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "bool",
+          "description": "named entity recognition of bool information",
+          "fields": [
+            {
+              "name": "indices",
+              "description": "the token indices of the named entity",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "negation",
+              "description": "indicates if the flightcode is negated",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "value",
+              "description": "the boolean value",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean"
+              },
+              "isDeprecated": false
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "datetime",
+          "description": "named entity recognition of date and time information",
+          "fields": [
+            {
+              "name": "date",
+              "description": "the first date information",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Datetime"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "date1",
+              "description": "the first date information",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Datetime"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "date2",
+              "description": "the second date information",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Datetime"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "fuzzy",
+              "description": "indicates if the date(s) is/are fuzzy",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "indices",
+              "description": "the token indices of the named entity",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "negation",
+              "description": "indicates if the datetime is negated",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean"
+              },
+              "isDeprecated": false
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "dep",
+          "description": "the semantic dependency information",
+          "fields": [
+            {
+              "name": "main",
+              "description": "indicates if the target is in the main sentence",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean"
+              },
+              "isDeprecated": true,
+              "deprecationReason": "will be removed in a future release"
+            },
+            {
+              "name": "modifier",
+              "description": "indicates if the target is a modifier",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean"
+              },
+              "isDeprecated": true,
+              "deprecationReason": "will be removed in a future release"
+            },
+            {
+              "name": "parenthesized",
+              "description": "indicates if the target is parenthesized",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean"
+              },
+              "isDeprecated": true,
+              "deprecationReason": "will be removed in a future release"
+            },
+            {
+              "name": "rawRelation",
+              "description": "the language specific dependency relation",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "relation",
+              "description": "the universal dependency relation",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "source",
+              "description": "the source token",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "sourceBase",
+              "description": "the base form of the source",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "sourceIndex",
+              "description": "the source token index",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "sourcePos",
+              "description": "the universal part of speech tag of the source",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "sourceTag",
+              "description": "the language specific part of speech tag of the source",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "target",
+              "description": "the target token",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "targetBase",
+              "description": "the base form of the target",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "targetIndex",
+              "description": "the target token index",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "targetPos",
+              "description": "the universal part of speech tag of the target",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "targetTag",
+              "description": "the language specific part of speech tag of the target",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "duration",
+          "description": "named entity recognition of duration information",
+          "fields": [
+            {
+              "name": "amount",
+              "description": "the amount information",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "amountMax",
+              "description": "the max amount value",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "amountMin",
+              "description": "the min amount value",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "indices",
+              "description": "the token indices of the named entity",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "negation",
+              "description": "indicates if the duration is negated",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "unit",
+              "description": "the duration unit value",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "email",
+          "description": "named entity recognition of email information",
+          "fields": [
+            {
+              "name": "indices",
+              "description": "the token indices of the named entity",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "lemma",
+              "description": "the email string",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "negation",
+              "description": "indicates if the flightcode is negated",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean"
+              },
+              "isDeprecated": false
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "flightcode",
+          "description": "named entity recognition of flightcode information",
+          "fields": [
+            {
+              "name": "code",
+              "description": "the flightcode",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "indices",
+              "description": "the token indices of the named entity",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "negation",
+              "description": "indicates if the flightcode is negated",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean"
+              },
+              "isDeprecated": false
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "lex",
+          "description": "the lexicon information of a token",
+          "fields": [
+            {
+              "name": "abbreviations",
+              "description": "the abbreviations of the token",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "lex"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "base",
+              "description": "the base form of the token",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "causations",
+              "description": "the causations of the token",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "lex"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "collocations",
+              "description": "the collocations of the token",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "lex"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "flexions",
+              "description": "the flexions of the token",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "lex"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "hyperonyms",
+              "description": "the hyperonyms of the token",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "lex"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "labels",
+              "description": "the labels of the token",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "lemma",
+              "description": "the lemma string",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "meronyms",
+              "description": "the meronyms of the token",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "lex"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "parts",
+              "description": "the parts of the token",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "lex"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "pos",
+              "description": "the part-of-speech tag",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "synonyms",
+              "description": "the synonyms of the token",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "lex"
+                }
+              },
+              "isDeprecated": false
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "location",
+          "description": "named entity recognition of price information",
+          "fields": [
+            {
+              "name": "indices",
+              "description": "the token indices of the named entity",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "name",
+              "description": "the location name",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "negation",
+              "description": "indicates if the location is negated",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "type",
+              "description": "the location type",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "ner",
+          "fields": [
+            {
+              "name": "accommodation",
+              "args": [
+                {
+                  "name": "mandatory",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean"
+                  },
+                  "defaultValue": "false"
+                }
+              ],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "accommodation"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "age",
+              "args": [
+                {
+                  "name": "mandatory",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean"
+                  },
+                  "defaultValue": "false"
+                }
+              ],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "age"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "bool",
+              "args": [
+                {
+                  "name": "mandatory",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean"
+                  },
+                  "defaultValue": "false"
+                }
+              ],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "bool"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "datetime",
+              "args": [
+                {
+                  "name": "mandatory",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean"
+                  },
+                  "defaultValue": "false"
+                },
+                {
+                  "name": "period",
+                  "type": {
+                    "kind": "ENUM",
+                    "name": "Period"
+                  }
+                }
+              ],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "datetime"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "duration",
+              "args": [
+                {
+                  "name": "mandatory",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean"
+                  },
+                  "defaultValue": "false"
+                }
+              ],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "duration"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "email",
+              "args": [
+                {
+                  "name": "mandatory",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean"
+                  },
+                  "defaultValue": "false"
+                }
+              ],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "email"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "flightcode",
+              "args": [
+                {
+                  "name": "mandatory",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean"
+                  },
+                  "defaultValue": "false"
+                }
+              ],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "flightcode"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "location",
+              "args": [
+                {
+                  "name": "mandatory",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean"
+                  },
+                  "defaultValue": "false"
+                }
+              ],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "location"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "organization",
+              "args": [
+                {
+                  "name": "mandatory",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean"
+                  },
+                  "defaultValue": "false"
+                }
+              ],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "organization"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "person",
+              "args": [
+                {
+                  "name": "mandatory",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean"
+                  },
+                  "defaultValue": "false"
+                }
+              ],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "person"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "price",
+              "args": [
+                {
+                  "name": "mandatory",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean"
+                  },
+                  "defaultValue": "false"
+                }
+              ],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "price"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "ubitpersonas",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "url",
+              "args": [
+                {
+                  "name": "mandatory",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean"
+                  },
+                  "defaultValue": "false"
+                }
+              ],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "url"
+                }
+              },
+              "isDeprecated": false
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "nlu",
+          "fields": [
+            {
+              "name": "cls",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "dep",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "dep"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "lex",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "lex"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "ner",
+              "args": [
+                {
+                  "name": "density",
+                  "description": "defines the entity density used by the performance measurement. default value is '0'",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int"
+                  },
+                  "defaultValue": "0"
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "ner"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "raw",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "txt",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "vec",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "organization",
+          "description": "named entity recognition of organization information",
+          "fields": [
+            {
+              "name": "indices",
+              "description": "the token indices of the named entity",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "name",
+              "description": "the organization name",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "negation",
+              "description": "indicates if the organization is negated",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "type",
+              "description": "the organization type",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "person",
+          "description": "named entity recognition of person information",
+          "fields": [
+            {
+              "name": "age",
+              "description": "the age of the person",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "indices",
+              "description": "the token indices of the named entity",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "isAdult",
+              "description": "indicates if the person is an adult",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "name",
+              "description": "the name of the person",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "negation",
+              "description": "indicates if the person is negated",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean"
+              },
+              "isDeprecated": false
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "price",
+          "description": "named entity recognition of price information",
+          "fields": [
+            {
+              "name": "amount",
+              "description": "the amount information",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "amountMax",
+              "description": "the max amount value",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "amountMin",
+              "description": "the min amount value",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "currency",
+              "description": "the currency value",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "indices",
+              "description": "the token indices of the named entity",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "negation",
+              "description": "indicates if the price is negated",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "priceCategory",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "scope",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "sensibility",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            }
+          ],
+          "interfaces": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "url",
+          "description": "named entity recognition of url information",
+          "fields": [
+            {
+              "name": "indices",
+              "description": "the token indices of the named entity",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int"
+                }
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "lemma",
+              "description": "the url string",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String"
+              },
+              "isDeprecated": false
+            },
+            {
+              "name": "negation",
+              "description": "indicates if the flightcode is negated",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean"
+              },
+              "isDeprecated": false
+            }
+          ],
+          "interfaces": []
+        }
+      ],
+      "directives": [
+        {
+          "name": "include",
+          "description": "Directs the executor to include this field or fragment only when the `if` argument is true",
+          "locations": [
+            "FIELD",
+            "FRAGMENT_SPREAD",
+            "INLINE_FRAGMENT"
+          ],
+          "args": [
+            {
+              "name": "if",
+              "description": "Included when true.",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "skip",
+          "description": "Directs the executor to skip this field or fragment when the `if`'argument is true.",
+          "locations": [
+            "FIELD",
+            "FRAGMENT_SPREAD",
+            "INLINE_FRAGMENT"
+          ],
+          "args": [
+            {
+              "name": "if",
+              "description": "Skipped when true.",
+              "type": {
+                "kind": "NON_NULL",
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "defer",
+          "description": "This directive allows results to be deferred during execution",
+          "locations": [
+            "FIELD"
+          ],
+          "args": []
+        }
+      ]
+    }
+  },
+  "logs": {
+    "errors": [
+      "internal server error"
+    ]
+  }
+}

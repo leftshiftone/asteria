@@ -1,0 +1,32 @@
+plugins {
+    id "one.leftshift.asteria-report" apply false
+}
+
+apply plugin: "one.leftshift.asteria-report"
+asteriaReport {
+    envVarBuildNumber = "WRONG_VAR"
+    envVarRepository = "WRONG_VAR" //this forces to determine repository by git
+    envVarBranch = "WRONG_VAR" //this forces to determine repository by git
+    depsJsonResult = file("${rootProject.buildDir}/reports/dependencyUpdates/report.json")
+    depsGraphResultFile = file("${rootProject.buildDir}/reports/depsGraphReport/report.json")
+    junitXmlResults = fileTree(rootProject.projectDir) { include("**/TEST-*.xml") }
+    junitBinaryResults = files(subprojects.collect { subproject ->
+        ["test"].collect { "${subproject.buildDir}/test-results/${it}/binary" }
+    }.flatten())
+}
+
+allprojects {
+    version = "0.1.0-SNAPSHOT"
+    
+    repositories {
+        jcenter()
+    }
+}
+
+subprojects {
+    apply plugin: "java"
+
+    dependencies {
+        testCompile "junit:junit:4.12"
+    }
+}

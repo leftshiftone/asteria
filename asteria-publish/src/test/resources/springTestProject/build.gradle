@@ -1,0 +1,39 @@
+plugins {
+    id "org.springframework.boot" version "2.0.1.RELEASE" apply false
+    id "one.leftshift.asteria-publish" apply false
+}
+
+group = "com.example"
+version = "0.0.1-SNAPSHOT"
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+subprojects {
+    apply plugin: "java"
+    apply plugin: "io.spring.dependency-management"
+    apply plugin: "one.leftshift.asteria-publish"
+
+    dependencyManagement {
+        imports {
+            mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+        }
+    }
+
+    dependencies {
+        testImplementation "junit:junit"
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+
+                artifact sourceJar
+            }
+        }
+    }
+}

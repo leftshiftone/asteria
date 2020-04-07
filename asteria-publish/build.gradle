@@ -1,0 +1,14 @@
+apply plugin: 'java-gradle-plugin'
+
+dependencies {
+    implementation("com.amazonaws:aws-java-sdk-core:1.11.505")
+}
+
+gradlePlugin {
+    plugins {
+        asteriaPublishPlugin {
+            id = "one.leftshift.asteria-publish"
+            implementationClass = "one.leftshift.asteria.publish.AsteriaPublishPlugin"
+        }
+    }
+}

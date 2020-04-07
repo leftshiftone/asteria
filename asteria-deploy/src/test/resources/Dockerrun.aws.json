@@ -1,0 +1,31 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name" : "gaia-web",
+      "image" : "007098893018.dkr.ecr.eu-central-1.amazonaws.com/gaia-web:${version}",
+      "essential" : true,
+      "memory": 512,
+      "environment": [
+        {
+          "name": "BACKEND_URL",
+          "value": "https://www.google.com"
+        },
+        {
+          "name": "FRONTEND_URL",
+          "value": "https://www.facebook.com"
+        },
+        {
+          "name" : "SERVER_PORT",
+          "value" : "8000"
+        }
+      ],
+      "portMappings": [
+        {
+          "hostPort": 443,
+          "containerPort": 8000
+        }
+      ]
+    }
+  ]
+}

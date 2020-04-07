@@ -1,0 +1,21 @@
+sourceSets {
+    docs {
+        java {
+            srcDir "src/docs/asciidoc"
+        }
+    }
+}
+
+task customJar(type: Jar) {
+    classifier = 'foo'
+    from sourceSets.docs.allSource
+}
+
+publishing {
+    publications {
+        mavenDocs(MavenPublication) {
+            from components.java
+            artifact customJar
+        }
+    }
+}

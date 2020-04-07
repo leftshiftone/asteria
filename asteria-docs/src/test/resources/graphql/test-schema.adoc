@@ -1,0 +1,975 @@
+= Query
+
+== atlasQuery
+
+
+
+See <<graphql-api-types-1710949117,atlasQuery>> for more information.
+
+= Mutation
+
+== atlasMutation
+
+
+
+See <<graphql-api-types-245661780,atlasMutation>> for more information.
+
+= Types
+
+== [[graphql-api-types-1580832998]]ImpulseContext
+
+
+
+=== Input Fields
+
+==== impulseContextHeader
+
+*Type:* <<graphql-api-types-924383815,ImpulseContextHeader>>
+
+
+
+==== impulseContextPayload
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+
+
+== [[graphql-api-types-1729365000]]Boolean
+
+*Type:* `SCALAR`
+
+Built-in Boolean
+
+== [[graphql-api-types-1858346907]]Datetime
+
+*Type:* `SCALAR`
+
+Coercing Datetime
+
+== [[graphql-api-types-67973692]]Float
+
+*Type:* `SCALAR`
+
+Built-in Float
+
+== [[graphql-api-types-73679]]Int
+
+*Type:* `SCALAR`
+
+Built-in Int
+
+== [[graphql-api-types-1907858975]]Period
+
+*Type:* `ENUM`
+
+
+
+.Values
+|===
+|Name |Description
+
+|`auto`
+|
+|`defaultFuture`
+|
+|`defaultPast`
+|
+|`future`
+|
+|`past`
+|
+|===
+
+== [[graphql-api-types-1808118735]]String
+
+*Type:* `SCALAR`
+
+Built-in String
+
+== [[graphql-api-types-710246318]]accommodation
+
+named entity recognition of accommodation information
+
+=== Fields
+
+==== amount
+
+*Type:* <<graphql-api-types-73679,Int>>
+
+the amount of times the entity is demanded
+
+==== indices
+
+*Type:* `LIST` of type <<graphql-api-types-73679,Int>>
+
+the token indices of the named entity
+
+==== name
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the accommodation name
+
+==== negation
+
+*Type:* <<graphql-api-types-1729365000,Boolean>>
+
+indicates if the accommodation is negated
+
+==== type
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the accommodation type
+
+== [[graphql-api-types-96511]]age
+
+named entity recognition of age information
+
+=== Fields
+
+==== age
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the age
+
+==== indices
+
+*Type:* `LIST` of type <<graphql-api-types-73679,Int>>
+
+the token indices of the named entity
+
+==== negation
+
+*Type:* <<graphql-api-types-1729365000,Boolean>>
+
+indicates if the age is negated
+
+== [[graphql-api-types-245661780]]atlasMutation
+
+
+
+=== Fields
+
+== [[graphql-api-types-1710949117]]atlasQuery
+
+
+
+=== Fields
+
+==== nlu
+
+*Type:* `LIST` of type <<graphql-api-types-109175,nlu>>
+
+
+
+.Arguments
+|===
+|Name |Default |Type |Description
+
+|`lang`
+|`"de"`
+|`NON_NULL` of type <<graphql-api-types-1808118735,String>>
+|specifies the language to use. default is 'de'
+|`merge`
+|`false`
+|`NON_NULL` of type <<graphql-api-types-1729365000,Boolean>>
+|specifies if the lex noun chunks should be merged. default value is 'false'
+|`text`
+|`null`
+|`NON_NULL` of type <<graphql-api-types-1808118735,String>>
+|the input text to analyze
+|===
+
+==== ver
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+
+
+== [[graphql-api-types-3029738]]bool
+
+named entity recognition of bool information
+
+=== Fields
+
+==== indices
+
+*Type:* `LIST` of type <<graphql-api-types-73679,Int>>
+
+the token indices of the named entity
+
+==== negation
+
+*Type:* <<graphql-api-types-1729365000,Boolean>>
+
+indicates if the flightcode is negated
+
+==== value
+
+*Type:* <<graphql-api-types-1729365000,Boolean>>
+
+the boolean value
+
+== [[graphql-api-types-1793702779]]datetime
+
+named entity recognition of date and time information
+
+=== Fields
+
+==== date
+
+*Type:* <<graphql-api-types-1858346907,Datetime>>
+
+the first date information
+
+==== date1
+
+*Type:* <<graphql-api-types-1858346907,Datetime>>
+
+the first date information
+
+==== date2
+
+*Type:* <<graphql-api-types-1858346907,Datetime>>
+
+the second date information
+
+==== fuzzy
+
+*Type:* <<graphql-api-types-1729365000,Boolean>>
+
+indicates if the date(s) is/are fuzzy
+
+==== indices
+
+*Type:* `LIST` of type <<graphql-api-types-73679,Int>>
+
+the token indices of the named entity
+
+==== negation
+
+*Type:* <<graphql-api-types-1729365000,Boolean>>
+
+indicates if the datetime is negated
+
+== [[graphql-api-types-99343]]dep
+
+the semantic dependency information
+
+=== Fields
+
+==== [.line-through]#main#
+
+.Deprecated
+WARNING: will be removed in a future release
+
+*Type:* <<graphql-api-types-1729365000,Boolean>>
+
+_DEPRECATED_ indicates if the target is in the main sentence
+
+==== [.line-through]#modifier#
+
+.Deprecated
+WARNING: will be removed in a future release
+
+*Type:* <<graphql-api-types-1729365000,Boolean>>
+
+_DEPRECATED_ indicates if the target is a modifier
+
+==== [.line-through]#parenthesized#
+
+.Deprecated
+WARNING: will be removed in a future release
+
+*Type:* <<graphql-api-types-1729365000,Boolean>>
+
+_DEPRECATED_ indicates if the target is parenthesized
+
+==== rawRelation
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the language specific dependency relation
+
+==== relation
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the universal dependency relation
+
+==== source
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the source token
+
+==== sourceBase
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the base form of the source
+
+==== sourceIndex
+
+*Type:* <<graphql-api-types-73679,Int>>
+
+the source token index
+
+==== sourcePos
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the universal part of speech tag of the source
+
+==== sourceTag
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the language specific part of speech tag of the source
+
+==== target
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the target token
+
+==== targetBase
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the base form of the target
+
+==== targetIndex
+
+*Type:* <<graphql-api-types-73679,Int>>
+
+the target token index
+
+==== targetPos
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the universal part of speech tag of the target
+
+==== targetTag
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the language specific part of speech tag of the target
+
+== [[graphql-api-types-1992012396]]duration
+
+named entity recognition of duration information
+
+=== Fields
+
+==== amount
+
+*Type:* <<graphql-api-types-73679,Int>>
+
+the amount information
+
+==== amountMax
+
+*Type:* <<graphql-api-types-73679,Int>>
+
+the max amount value
+
+==== amountMin
+
+*Type:* <<graphql-api-types-73679,Int>>
+
+the min amount value
+
+==== indices
+
+*Type:* `LIST` of type <<graphql-api-types-73679,Int>>
+
+the token indices of the named entity
+
+==== negation
+
+*Type:* <<graphql-api-types-1729365000,Boolean>>
+
+indicates if the duration is negated
+
+==== unit
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the duration unit value
+
+== [[graphql-api-types-96619420]]email
+
+named entity recognition of email information
+
+=== Fields
+
+==== indices
+
+*Type:* `LIST` of type <<graphql-api-types-73679,Int>>
+
+the token indices of the named entity
+
+==== lemma
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the email string
+
+==== negation
+
+*Type:* <<graphql-api-types-1729365000,Boolean>>
+
+indicates if the flightcode is negated
+
+== [[graphql-api-types-2116581981]]flightcode
+
+named entity recognition of flightcode information
+
+=== Fields
+
+==== code
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the flightcode
+
+==== indices
+
+*Type:* `LIST` of type <<graphql-api-types-73679,Int>>
+
+the token indices of the named entity
+
+==== negation
+
+*Type:* <<graphql-api-types-1729365000,Boolean>>
+
+indicates if the flightcode is negated
+
+== [[graphql-api-types-107039]]lex
+
+the lexicon information of a token
+
+=== Fields
+
+==== abbreviations
+
+*Type:* `LIST` of type <<graphql-api-types-107039,lex>>
+
+the abbreviations of the token
+
+==== base
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the base form of the token
+
+==== causations
+
+*Type:* `LIST` of type <<graphql-api-types-107039,lex>>
+
+the causations of the token
+
+==== collocations
+
+*Type:* `LIST` of type <<graphql-api-types-107039,lex>>
+
+the collocations of the token
+
+==== flexions
+
+*Type:* `LIST` of type <<graphql-api-types-107039,lex>>
+
+the flexions of the token
+
+==== hyperonyms
+
+*Type:* `LIST` of type <<graphql-api-types-107039,lex>>
+
+the hyperonyms of the token
+
+==== labels
+
+*Type:* `LIST` of type <<graphql-api-types-1808118735,String>>
+
+the labels of the token
+
+==== lemma
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the lemma string
+
+==== meronyms
+
+*Type:* `LIST` of type <<graphql-api-types-107039,lex>>
+
+the meronyms of the token
+
+==== parts
+
+*Type:* `LIST` of type <<graphql-api-types-107039,lex>>
+
+the parts of the token
+
+==== pos
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the part-of-speech tag
+
+==== synonyms
+
+*Type:* `LIST` of type <<graphql-api-types-107039,lex>>
+
+the synonyms of the token
+
+== [[graphql-api-types-1901043637]]location
+
+named entity recognition of price information
+
+=== Fields
+
+==== indices
+
+*Type:* `LIST` of type <<graphql-api-types-73679,Int>>
+
+the token indices of the named entity
+
+==== name
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the location name
+
+==== negation
+
+*Type:* <<graphql-api-types-1729365000,Boolean>>
+
+indicates if the location is negated
+
+==== type
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the location type
+
+== [[graphql-api-types-108955]]ner
+
+
+
+=== Fields
+
+==== accommodation
+
+*Type:* `LIST` of type <<graphql-api-types-710246318,accommodation>>
+
+
+
+.Arguments
+|===
+|Name |Default |Type |Description
+
+|`mandatory`
+|`false`
+|<<graphql-api-types-1729365000,Boolean>>
+|
+|===
+
+==== age
+
+*Type:* `LIST` of type <<graphql-api-types-96511,age>>
+
+
+
+.Arguments
+|===
+|Name |Default |Type |Description
+
+|`mandatory`
+|`false`
+|<<graphql-api-types-1729365000,Boolean>>
+|
+|===
+
+==== bool
+
+*Type:* `LIST` of type <<graphql-api-types-3029738,bool>>
+
+
+
+.Arguments
+|===
+|Name |Default |Type |Description
+
+|`mandatory`
+|`false`
+|<<graphql-api-types-1729365000,Boolean>>
+|
+|===
+
+==== datetime
+
+*Type:* `LIST` of type <<graphql-api-types-1793702779,datetime>>
+
+
+
+.Arguments
+|===
+|Name |Default |Type |Description
+
+|`mandatory`
+|`false`
+|<<graphql-api-types-1729365000,Boolean>>
+|
+|`period`
+|`null`
+|<<graphql-api-types-1907858975,Period>>
+|
+|===
+
+==== duration
+
+*Type:* `LIST` of type <<graphql-api-types-1992012396,duration>>
+
+
+
+.Arguments
+|===
+|Name |Default |Type |Description
+
+|`mandatory`
+|`false`
+|<<graphql-api-types-1729365000,Boolean>>
+|
+|===
+
+==== email
+
+*Type:* `LIST` of type <<graphql-api-types-96619420,email>>
+
+
+
+.Arguments
+|===
+|Name |Default |Type |Description
+
+|`mandatory`
+|`false`
+|<<graphql-api-types-1729365000,Boolean>>
+|
+|===
+
+==== flightcode
+
+*Type:* `LIST` of type <<graphql-api-types-2116581981,flightcode>>
+
+
+
+.Arguments
+|===
+|Name |Default |Type |Description
+
+|`mandatory`
+|`false`
+|<<graphql-api-types-1729365000,Boolean>>
+|
+|===
+
+==== location
+
+*Type:* `LIST` of type <<graphql-api-types-1901043637,location>>
+
+
+
+.Arguments
+|===
+|Name |Default |Type |Description
+
+|`mandatory`
+|`false`
+|<<graphql-api-types-1729365000,Boolean>>
+|
+|===
+
+==== organization
+
+*Type:* `LIST` of type <<graphql-api-types-1178922291,organization>>
+
+
+
+.Arguments
+|===
+|Name |Default |Type |Description
+
+|`mandatory`
+|`false`
+|<<graphql-api-types-1729365000,Boolean>>
+|
+|===
+
+==== person
+
+*Type:* `LIST` of type <<graphql-api-types-991716523,person>>
+
+
+
+.Arguments
+|===
+|Name |Default |Type |Description
+
+|`mandatory`
+|`false`
+|<<graphql-api-types-1729365000,Boolean>>
+|
+|===
+
+==== price
+
+*Type:* `LIST` of type <<graphql-api-types-106934601,price>>
+
+
+
+.Arguments
+|===
+|Name |Default |Type |Description
+
+|`mandatory`
+|`false`
+|<<graphql-api-types-1729365000,Boolean>>
+|
+|===
+
+==== ubitpersonas
+
+*Type:* `LIST` of type <<graphql-api-types-1729365000,Boolean>>
+
+
+
+==== url
+
+*Type:* `LIST` of type <<graphql-api-types-116079,url>>
+
+
+
+.Arguments
+|===
+|Name |Default |Type |Description
+
+|`mandatory`
+|`false`
+|<<graphql-api-types-1729365000,Boolean>>
+|
+|===
+
+== [[graphql-api-types-109175]]nlu
+
+
+
+=== Fields
+
+==== cls
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+
+
+==== dep
+
+*Type:* `LIST` of type <<graphql-api-types-99343,dep>>
+
+
+
+==== lex
+
+*Type:* `LIST` of type <<graphql-api-types-107039,lex>>
+
+
+
+==== ner
+
+*Type:* <<graphql-api-types-108955,ner>>
+
+
+
+.Arguments
+|===
+|Name |Default |Type |Description
+
+|`density`
+|`0`
+|<<graphql-api-types-73679,Int>>
+|defines the entity density used by the performance measurement. default value is '0'
+|===
+
+==== raw
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+
+
+==== txt
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+
+
+==== vec
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+
+
+== [[graphql-api-types-1178922291]]organization
+
+named entity recognition of organization information
+
+=== Fields
+
+==== indices
+
+*Type:* `LIST` of type <<graphql-api-types-73679,Int>>
+
+the token indices of the named entity
+
+==== name
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the organization name
+
+==== negation
+
+*Type:* <<graphql-api-types-1729365000,Boolean>>
+
+indicates if the organization is negated
+
+==== type
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the organization type
+
+== [[graphql-api-types-991716523]]person
+
+named entity recognition of person information
+
+=== Fields
+
+==== age
+
+*Type:* <<graphql-api-types-73679,Int>>
+
+the age of the person
+
+==== indices
+
+*Type:* `LIST` of type <<graphql-api-types-73679,Int>>
+
+the token indices of the named entity
+
+==== isAdult
+
+*Type:* <<graphql-api-types-1729365000,Boolean>>
+
+indicates if the person is an adult
+
+==== name
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the name of the person
+
+==== negation
+
+*Type:* <<graphql-api-types-1729365000,Boolean>>
+
+indicates if the person is negated
+
+== [[graphql-api-types-106934601]]price
+
+named entity recognition of price information
+
+=== Fields
+
+==== amount
+
+*Type:* <<graphql-api-types-67973692,Float>>
+
+the amount information
+
+==== amountMax
+
+*Type:* <<graphql-api-types-67973692,Float>>
+
+the max amount value
+
+==== amountMin
+
+*Type:* <<graphql-api-types-67973692,Float>>
+
+the min amount value
+
+==== currency
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the currency value
+
+==== indices
+
+*Type:* `LIST` of type <<graphql-api-types-73679,Int>>
+
+the token indices of the named entity
+
+==== negation
+
+*Type:* <<graphql-api-types-1729365000,Boolean>>
+
+indicates if the price is negated
+
+==== priceCategory
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+
+
+==== scope
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+
+
+==== sensibility
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+
+
+== [[graphql-api-types-116079]]url
+
+named entity recognition of url information
+
+=== Fields
+
+==== indices
+
+*Type:* `LIST` of type <<graphql-api-types-73679,Int>>
+
+the token indices of the named entity
+
+==== lemma
+
+*Type:* <<graphql-api-types-1808118735,String>>
+
+the url string
+
+==== negation
+
+*Type:* <<graphql-api-types-1729365000,Boolean>>
+
+indicates if the flightcode is negated
+

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="atlas.nlp.similiarity.StringSimiliarityEnsembleTest" tests="11" skipped="1" failures="1" errors="0" timestamp="2018-06-08T14:09:28" hostname="mmair-alienware15" time="0.202">
+    <properties/>
+    <testcase name="albar ~ aller = false" classname="atlas.nlp.similiarity.StringSimiliarityEnsembleTest" time="0.03"/>
+    <testcase name="dem ~ den = false" classname="atlas.nlp.similiarity.StringSimiliarityEnsembleTest" time="0.165">
+        <failure message="Condition not satisfied:&#10;&#10;match == (result &gt;= 0.85)&#10;|     |   |      |&#10;false |   |      true&#10;      |   0.8965277923478021&#10;      false&#10;" type="org.spockframework.runtime.SpockComparisonFailure">Condition not satisfied:
+
+            match == (result &gt;= 0.85)
+            |     |   |      |
+            false |   |      true
+            |   0.8965277923478021
+            false
+
+            at atlas.nlp.similiarity.StringSimiliarityEnsembleTest.#s1 ~ #s2 = #match(StringSimiliarityEnsembleTest.groovy:45)
+        </failure>
+    </testcase>
+    <testcase name="test ~ test = true" classname="atlas.nlp.similiarity.StringSimiliarityEnsembleTest" time="0.001"/>
+    <testcase name="such ~ sucht = true" classname="atlas.nlp.similiarity.StringSimiliarityEnsembleTest" time="0.001"/>
+    <testcase name="such ~ suchen = false" classname="atlas.nlp.similiarity.StringSimiliarityEnsembleTest" time="0.0"/>
+    <testcase name="grüssen ~ grüße = true" classname="atlas.nlp.similiarity.StringSimiliarityEnsembleTest" time="0.0"/>
+    <testcase name="grazer ~ größer = false" classname="atlas.nlp.similiarity.StringSimiliarityEnsembleTest" time="0.0">
+        <skipped/>
+    </testcase>
+    <testcase name="mir ~ mia = false" classname="atlas.nlp.similiarity.StringSimiliarityEnsembleTest" time="0.001"/>
+    <testcase name="gibst ~ gibts = true" classname="atlas.nlp.similiarity.StringSimiliarityEnsembleTest" time="0.001"/>
+    <testcase name="etaxi ~ taxi = false" classname="atlas.nlp.similiarity.StringSimiliarityEnsembleTest" time="0.0"/>
+    <testcase name="ticket ~ tickets = true" classname="atlas.nlp.similiarity.StringSimiliarityEnsembleTest" time="0.001"/>
+    <system-out><![CDATA[0.7391666698455811
+0.8965277923478021
+1.0
+0.8550000005960464
+0.8444444454378552
+0.8855272026390446
+0.816666681236691
+0.8027777923478021
+0.8689583340287208
+0.8483333343267441
+0.8651360547056004
+]]></system-out>
+    <system-err><![CDATA[]]></system-err>
+</testsuite>

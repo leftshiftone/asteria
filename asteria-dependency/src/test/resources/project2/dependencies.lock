@@ -1,0 +1,47 @@
+{
+    "compile": {
+        "junit:junit": {
+            "locked": "4.5"
+        }
+    },
+    "compileClasspath": {
+        "junit:junit": {
+            "locked": "4.5"
+        }
+    },
+    "default": {
+        "junit:junit": {
+            "locked": "4.5"
+        }
+    },
+    "runtime": {
+        "junit:junit": {
+            "locked": "4.5"
+        }
+    },
+    "runtimeClasspath": {
+        "junit:junit": {
+            "locked": "4.5"
+        }
+    },
+    "testCompile": {
+        "junit:junit": {
+            "locked": "4.5"
+        }
+    },
+    "testCompileClasspath": {
+        "junit:junit": {
+            "locked": "4.5"
+        }
+    },
+    "testRuntime": {
+        "junit:junit": {
+            "locked": "4.5"
+        }
+    },
+    "testRuntimeClasspath": {
+        "junit:junit": {
+            "locked": "4.5"
+        }
+    }
+}

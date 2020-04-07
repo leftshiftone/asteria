@@ -1,0 +1,22 @@
+apply plugin: 'java-gradle-plugin'
+
+gradlePlugin {
+    plugins {
+        asteriaReportPlugin {
+            id = "one.leftshift.asteria-report"
+            implementationClass = "one.leftshift.asteria.report.AsteriaReportPlugin"
+        }
+    }
+}
+
+repositories {
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
+}
+
+dependencies {
+    implementation("org.ajoberstar:grgit:1.9.3")
+    implementation("org.codehaus.groovy.modules.http-builder:http-builder:0.7.2")
+    implementation("org.apache.httpcomponents:httpmime:4.5.6")
+}

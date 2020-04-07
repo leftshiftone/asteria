@@ -1,0 +1,135 @@
+
+buildscript {
+    ext {
+        versionGradle = "5.6.4"
+    }
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.netflix.nebula:nebula-release-plugin:8.0.3"
+        classpath "com.github.ben-manes:gradle-versions-plugin:0.20.0"
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.17"
+        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.8"
+    }
+}
+
+allprojects {
+    apply plugin: "nebula.nebula-release"
+    apply plugin: "com.github.ben-manes.versions"
+    apply plugin: "org.sonarqube"
+
+    dependencyUpdates.doFirst {
+        if (!System.hasProperty("revision")) {
+            project.logger.info("Configure dependency updates check for releases")
+            System.setProperty("revision", "release")
+        }
+        if (!System.hasProperty("outputFormatter")) {
+            project.logger.info("Configure dependency updates check report format")
+            System.setProperty("outputFormatter", "json")
+        }
+    }
+
+    release {
+        defaultVersionStrategy = nebula.plugin.release.NetflixOssStrategies.SNAPSHOT
+    }
+}
+
+subprojects {
+    apply plugin: "groovy"
+    apply plugin: "maven-publish"
+    apply plugin: "com.jfrog.bintray"
+    apply plugin: "org.jetbrains.dokka"
+    apply plugin: "org.sonarqube"
+
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation(gradleApi())
+
+        testImplementation(gradleTestKit())
+        testImplementation("org.codehaus.groovy:groovy-all:2.5.8")
+        testImplementation("org.spockframework:spock-core:1.2-groovy-2.5")
+    }
+
+    test {
+        if (project.hasProperty("continueOnFailure")) {
+            boolean isContinueOnFailure = project.property("continueOnFailure")
+            ignoreFailures isContinueOnFailure
+        }
+    }
+
+    task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
+        outputFormat = "javadoc"
+        outputDirectory = "${buildDir}/dokkaJavadoc"
+    }
+    task sourceJar(type: Jar) {
+        from sourceSets.main.allSource
+        classifier "sources"
+    }
+    task javadocJar(type: Jar) {
+        from dokkaJavadoc
+        classifier "javadoc"
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                artifactId = project.name
+                from components.java
+                artifact sourceJar
+                artifact javadocJar
+                pom.withXml {
+                    Node root = asNode()
+                    root.appendNode("name", "Asteria")
+                    root.appendNode("description", "Asteria")
+                    root.appendNode("url", "https://github.com/leftshiftone/asteria")
+
+                    Node licenses = root.appendNode("licenses")
+                    Node license = licenses.appendNode("license")
+                    license.appendNode("name", "The Apache License, Version 2.0")
+                    license.appendNode("url", "http://www.apache.org/licenses/LICENSE-2.0.txt")
+
+                    Node developers = root.appendNode("developers")
+                    Node developer = developers.appendNode("developer")
+                    developer.appendNode("id", "leftshiftone")
+                    developer.appendNode("name", "Leftshift One")
+                    developer.appendNode("email", "contact@leftshift.one")
+                    developer.appendNode("organization", "Leftshift One Software GmbH")
+                    developer.appendNode("organizationUrl", "https://www.leftshift.one")
+
+                    Node scm = root.appendNode("scm")
+                    scm.appendNode("connection", "scm:git:git://github.com/leftshiftone/canon.git")
+                    scm.appendNode("developerConnection", "scm:git:ssh://github.com:leftshiftone/asteria.git")
+                    scm.appendNode("url", "https://github.com/leftshiftone/asteria")
+                }
+            }
+        }
+    }
+
+    bintray {
+        logger.info "Bintray deploy with user [${System.getenv('BINTRAY_USER')}] while working on ${project.name}"
+        user = System.getenv('BINTRAY_USER')
+        key = System.getenv('BINTRAY_KEY')
+        publish = true
+        pkg {
+            repo = "asteria"
+            name = "${project.group}.${project.name}"
+            userOrg = "leftshiftone"
+            licenses = ["Apache-2.0"]
+            vcsUrl = "https://github.com/leftshiftone/asteria.git"
+            publications = ["mavenJava"]
+        }
+    }
+
+}
+
+
+
+
+

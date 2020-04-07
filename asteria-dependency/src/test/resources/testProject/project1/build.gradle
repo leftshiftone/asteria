@@ -1,0 +1,9 @@
+apply plugin: "org.springframework.boot"
+
+springBoot.mainClassName = "project1.Project1"
+
+dependencies {
+    compile project(":project2")
+    compile "org.spockframework:spock-core:latest.smart"
+    compile "one.leftshift.argos:argos-category"
+}

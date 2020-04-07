@@ -1,0 +1,33 @@
+plugins {
+    id "one.leftshift.asteria-code-analytics" apply false
+}
+
+allprojects {
+    apply plugin: "one.leftshift.asteria-code-analytics"
+
+    repositories {
+        jcenter()
+    }
+
+    asteriaCodeAnalytics {
+        xmlCoverageReportEnabled = true
+        csvCoverageReportEnabled = true
+    }
+}
+
+subprojects {
+    apply plugin: "java"
+    apply plugin: "maven-publish"
+
+    dependencies {
+        testCompile "junit:junit:4.12"
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+            }
+        }
+    }
+}

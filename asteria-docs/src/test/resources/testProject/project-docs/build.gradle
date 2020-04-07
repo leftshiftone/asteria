@@ -1,0 +1,14 @@
+sourceSets {
+    docs {
+        java {
+            srcDir "src/docs/asciidoc"
+        }
+    }
+}
+
+apply plugin: "one.leftshift.asteria-docs"
+
+asteriaDocs {
+    documents = ["index.adoc"]
+    asciidocAttributes << [foo: "bar"]
+}

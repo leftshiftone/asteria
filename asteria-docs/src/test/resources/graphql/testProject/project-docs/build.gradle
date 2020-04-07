@@ -1,0 +1,16 @@
+sourceSets {
+    docs {
+        java {
+            srcDir "src/docs/asciidoc"
+        }
+        resources {
+            srcDir "src/docs/resources"
+        }
+    }
+}
+
+apply plugin: "one.leftshift.asteria-docs"
+
+asteriaDocs {
+    documents = ["index.adoc"]
+}

@@ -1,0 +1,14 @@
+rootProject.name = rootProjectName
+
+include 'asteria-common'
+include 'asteria-code-analytics'
+include 'asteria-dependency'
+include 'asteria-deploy'
+include 'asteria-docker'
+include 'asteria-docs'
+include 'asteria-email'
+include 'asteria-jira'
+include 'asteria-helm'
+include 'asteria-publish'
+include 'asteria-report'
+include 'asteria-version'

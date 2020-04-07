@@ -1,0 +1,56 @@
+/*
+ * Copyright (c) 2016-2019, Leftshift One
+ * __________________
+ * [2019] Leftshift One
+ * All Rights Reserved.
+ * NOTICE:  All information contained herein is, and remains
+ * the property of Leftshift One and its suppliers,
+ * if any.  The intellectual and technical concepts contained
+ * herein are proprietary to Leftshift One
+ * and its suppliers and may be covered by Patents,
+ * patents in process, and are protected by trade secret or copyright law.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Leftshift One.
+ */
+
+plugins {
+    id "nebula.release" version "6.3.5" apply false
+    id "one.leftshift.asteria-email" apply false
+}
+
+apply plugin: "one.leftshift.asteria-email"
+asteriaEmail {
+    smptAuth = true
+    smtpStartTlsEnable = false
+    smtpHost = "localhost"
+    smtpPort = 3025
+    smptUser = "admin"
+    smptPassword = "admin"
+
+    sender = "CI Leftshift One <no-reply@leftshift.one>"
+    recipients = "no-reply@leftshift.one"
+    subject = "Test"
+    project.afterEvaluate {
+        content = "Test of ${rootProject.name} ${version.toString()}"
+    }
+}
+
+project.getTasksByName("sendReleaseEmail", false).first().recipients = "foo@leftshift.one,bar@leftshift.one"
+
+allprojects {
+    apply plugin: "nebula.release"
+    afterEvaluate { rootProject.tasks.postRelease.finalizedBy rootProject.tasks.sendReleaseEmail }
+
+    repositories {
+        jcenter()
+    }
+}
+
+subprojects {
+    apply plugin: "java"
+
+    dependencies {
+        testCompile "junit:junit:4.12"
+    }
+}

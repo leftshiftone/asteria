@@ -1,0 +1,6 @@
+app:
+  version: "@version@"
+
+image:
+  repository: foo/bar
+  tag: @version@

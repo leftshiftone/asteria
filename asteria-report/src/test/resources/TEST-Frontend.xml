@@ -1,0 +1,40 @@
+<testsuites name="Frontend Tests" tests="13" failures="0" time="1.468">
+    <testsuite name="utils.test.js" errors="0" failures="0" skipped="0" time="0.586" tests="5">
+        <testcase classname="-insertAt inserts an element at the expected position" name="-insertAt inserts an element at the expected position" time="0.003">
+        </testcase>
+        <testcase classname="-insertAt throws an error if null or undefined is passed instead of an array" name="-insertAt throws an error if null or undefined is passed instead of an array" time="0">
+        </testcase>
+        <testcase classname="-insertAt can handle undefined elements" name="-insertAt can handle undefined elements" time="0">
+        </testcase>
+        <testcase classname="-insertAt can handle null elements" name="-insertAt can handle null elements" time="0.001">
+        </testcase>
+        <testcase classname="-insertAt out of range index" name="-insertAt out of range index" time="0">
+        </testcase>
+    </testsuite>
+    <testsuite name="ChatRenderer.test.js" errors="0" failures="0" skipped="0" timestamp="2018-07-04T07:12:37" time="0.16" tests="1">
+        <testcase classname="-render element returns expected component" name="-render element returns expected component" time="0.001">
+        </testcase>
+    </testsuite>
+    <testsuite name="ImmutableQueue.test.js" errors="0" failures="0" skipped="0" timestamp="2018-07-04T07:12:38" time="0.033" tests="4">
+        <testcase classname="-queueing operations" name="-queueing operations" time="0.002">
+        </testcase>
+        <testcase classname="-dequeue on empty queue throws an error" name="-dequeue on empty queue throws an error" time="0">
+        </testcase>
+        <testcase classname="-isEmpty delivers expected result" name="-isEmpty delivers expected result" time="0.001">
+        </testcase>
+        <testcase classname="-does not care about message uniqueness" name="-does not care about message uniqueness" time="0">
+        </testcase>
+    </testsuite>
+    <testsuite name="ImmutableAudioQueue.test.js" errors="0" failures="0" skipped="0" timestamp="2018-07-04T07:12:38" time="0.026" tests="1">
+        <testcase classname="-messages are unique in the queue" name="-messages are unique in the queue" time="0.002">
+        </testcase>
+    </testsuite>
+    <testsuite name="Base64ToArrayBufferConverter.test.js" errors="0" failures="0" skipped="0" timestamp="2018-07-04T07:12:38" time="0.024" tests="1">
+        <testcase classname="-conversion returns the expected string as array buffer" name="-conversion returns the expected string as array buffer" time="0.001">
+        </testcase>
+    </testsuite>
+    <testsuite name="MessageType.test.js" errors="0" failures="0" skipped="0" timestamp="2018-07-04T07:12:38" time="0.03" tests="1">
+        <testcase classname="-maps as expected" name="-maps as expected" time="0.004">
+        </testcase>
+    </testsuite>
+</testsuites>

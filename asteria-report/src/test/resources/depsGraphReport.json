@@ -1,0 +1,138 @@
+[
+  {
+    "dependencies": [
+      {
+        "dependencies": [
+          {
+            "dependencies": [
+              {
+                "dependencies": [
+                  {
+                    "dependencies": [
+                    ],
+                    "group": "org.springframework",
+                    "hasParent": true,
+                    "version": "5.1.5.RELEASE",
+                    "name": "spring-core"
+                  }
+                ],
+                "group": "org.springframework",
+                "hasParent": true,
+                "version": "5.1.5.RELEASE",
+                "name": "spring-expression"
+              },
+              {
+                "dependencies": [
+                  {
+                    "dependencies": [
+                    ],
+                    "group": "org.springframework",
+                    "hasParent": true,
+                    "version": "5.1.5.RELEASE",
+                    "name": "spring-core"
+                  },
+                  {
+                    "dependencies": [
+                      {
+                        "dependencies": [
+                        ],
+                        "group": "org.springframework",
+                        "hasParent": true,
+                        "version": "5.1.5.RELEASE",
+                        "name": "spring-core"
+                      }
+                    ],
+                    "group": "org.springframework",
+                    "hasParent": true,
+                    "version": "5.1.5.RELEASE",
+                    "name": "spring-beans"
+                  }
+                ],
+                "group": "org.springframework",
+                "hasParent": true,
+                "version": "5.1.5.RELEASE",
+                "name": "spring-aop"
+              },
+              {
+                "dependencies": [
+                ],
+                "group": "org.springframework",
+                "hasParent": true,
+                "version": "5.1.5.RELEASE",
+                "name": "spring-core"
+              },
+              {
+                "dependencies": [
+                ],
+                "group": "org.springframework",
+                "hasParent": true,
+                "version": "5.1.5.RELEASE",
+                "name": "spring-beans"
+              }
+            ],
+            "group": "org.springframework",
+            "hasParent": true,
+            "version": "5.1.5.RELEASE",
+            "name": "spring-context"
+          },
+          {
+            "dependencies": [
+              {
+                "dependencies": [
+                ],
+                "group": "org.springframework",
+                "hasParent": true,
+                "version": "5.1.5.RELEASE",
+                "name": "spring-jcl"
+              }
+            ],
+            "group": "org.springframework",
+            "hasParent": true,
+            "version": "5.1.5.RELEASE",
+            "name": "spring-core"
+          }
+        ],
+        "group": "org.springframework.boot",
+        "hasParent": true,
+        "version": "2.1.3.RELEASE",
+        "name": "spring-boot"
+      },
+      {
+        "dependencies": [
+        ],
+        "group": "org.springframework",
+        "hasParent": true,
+        "version": "5.1.5.RELEASE",
+        "name": "spring-core"
+      },
+      {
+        "dependencies": [
+        ],
+        "group": "org.springframework.boot",
+        "hasParent": true,
+        "version": "2.1.3.RELEASE",
+        "name": "spring-boot-starter-logging"
+      },
+      {
+        "dependencies": [
+          {
+            "dependencies": [
+            ],
+            "group": "org.springframework.boot",
+            "hasParent": true,
+            "version": "2.1.3.RELEASE",
+            "name": "spring-boot"
+          }
+        ],
+        "group": "org.springframework.boot",
+        "hasParent": true,
+        "version": "2.1.3.RELEASE",
+        "name": "spring-boot-autoconfigure"
+      }
+    ],
+    "group": "org.springframework.boot",
+    "hasParent": false,
+    "version": "2.1.3.RELEASE",
+    "name": "spring-boot-starter"
+  }
+]

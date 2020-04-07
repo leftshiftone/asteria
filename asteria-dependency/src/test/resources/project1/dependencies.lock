@@ -1,0 +1,164 @@
+{
+    "compile": {
+        "com.example.test:project2": {
+            "project": true
+        },
+        "junit:junit": {
+            "firstLevelTransitive": [
+                "com.example.test:project2"
+            ],
+            "locked": "4.5"
+        },
+        "one.leftshift.argos:argos-category": {
+            "locked": "0.1.0"
+        },
+        "org.spockframework:spock-core": {
+            "locked": "1.0-groovy-2.4",
+            "requested": "latest.smart"
+        }
+    },
+    "compileClasspath": {
+        "com.example.test:project2": {
+            "project": true
+        },
+        "junit:junit": {
+            "firstLevelTransitive": [
+                "com.example.test:project2"
+            ],
+            "locked": "4.5"
+        },
+        "one.leftshift.argos:argos-category": {
+            "locked": "0.1.0"
+        },
+        "org.spockframework:spock-core": {
+            "locked": "1.0-groovy-2.4",
+            "requested": "latest.smart"
+        }
+    },
+    "default": {
+        "com.example.test:project2": {
+            "project": true
+        },
+        "junit:junit": {
+            "firstLevelTransitive": [
+                "com.example.test:project2"
+            ],
+            "locked": "4.5"
+        },
+        "one.leftshift.argos:argos-category": {
+            "locked": "0.1.0"
+        },
+        "org.spockframework:spock-core": {
+            "locked": "1.0-groovy-2.4",
+            "requested": "latest.smart"
+        }
+    },
+    "runtime": {
+        "com.example.test:project2": {
+            "project": true
+        },
+        "junit:junit": {
+            "firstLevelTransitive": [
+                "com.example.test:project2"
+            ],
+            "locked": "4.5"
+        },
+        "one.leftshift.argos:argos-category": {
+            "locked": "0.1.0"
+        },
+        "org.spockframework:spock-core": {
+            "locked": "1.0-groovy-2.4",
+            "requested": "latest.smart"
+        }
+    },
+    "runtimeClasspath": {
+        "com.example.test:project2": {
+            "project": true
+        },
+        "junit:junit": {
+            "firstLevelTransitive": [
+                "com.example.test:project2"
+            ],
+            "locked": "4.5"
+        },
+        "one.leftshift.argos:argos-category": {
+            "locked": "0.1.0"
+        },
+        "org.spockframework:spock-core": {
+            "locked": "1.0-groovy-2.4",
+            "requested": "latest.smart"
+        }
+    },
+    "testCompile": {
+        "com.example.test:project2": {
+            "project": true
+        },
+        "junit:junit": {
+            "firstLevelTransitive": [
+                "com.example.test:project2"
+            ],
+            "locked": "4.5"
+        },
+        "one.leftshift.argos:argos-category": {
+            "locked": "0.1.0"
+        },
+        "org.spockframework:spock-core": {
+            "locked": "1.0-groovy-2.4",
+            "requested": "latest.smart"
+        }
+    },
+    "testCompileClasspath": {
+        "com.example.test:project2": {
+            "project": true
+        },
+        "junit:junit": {
+            "firstLevelTransitive": [
+                "com.example.test:project2"
+            ],
+            "locked": "4.5"
+        },
+        "one.leftshift.argos:argos-category": {
+            "locked": "0.1.0"
+        },
+        "org.spockframework:spock-core": {
+            "locked": "1.0-groovy-2.4",
+            "requested": "latest.smart"
+        }
+    },
+    "testRuntime": {
+        "com.example.test:project2": {
+            "project": true
+        },
+        "junit:junit": {
+            "firstLevelTransitive": [
+                "com.example.test:project2"
+            ],
+            "locked": "4.5"
+        },
+        "one.leftshift.argos:argos-category": {
+            "locked": "0.1.0"
+        },
+        "org.spockframework:spock-core": {
+            "locked": "1.0-groovy-2.4",
+            "requested": "latest.smart"
+        }
+    },
+    "testRuntimeClasspath": {
+        "com.example.test:project2": {
+            "project": true
+        },
+        "junit:junit": {
+            "firstLevelTransitive": [
+                "com.example.test:project2"
+            ],
+            "locked": "4.5"
+        },
+        "one.leftshift.argos:argos-category": {
+            "locked": "0.1.0"
+        },
+        "org.spockframework:spock-core": {
+            "locked": "1.0-groovy-2.4",
+            "requested": "latest.smart"
+        }
+    }
+}

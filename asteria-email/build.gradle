@@ -1,0 +1,17 @@
+apply plugin: 'java-gradle-plugin'
+
+dependencies {
+    implementation(project(':asteria-common'))
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.+")
+    implementation("com.sun.mail:javax.mail:1.6.2")
+    testImplementation("com.icegreen:greenmail:1.5.10")
+}
+
+gradlePlugin {
+    plugins {
+        asteriaVersionPlugin {
+            id = "one.leftshift.asteria-email"
+            implementationClass = "one.leftshift.asteria.email.AsteriaEmailPlugin"
+        }
+    }
+}

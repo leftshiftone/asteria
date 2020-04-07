@@ -1,0 +1,21 @@
+apply plugin: "java-gradle-plugin"
+
+
+gradlePlugin {
+    plugins {
+        asteriaCodeAnalyticsPlugin {
+            id = "one.leftshift.asteria-code-analytics"
+            implementationClass = "one.leftshift.asteria.code.analytics.AsteriaCodeAnalyticsPlugin"
+        }
+    }
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    compile("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.8")
+    compile("org.owasp:dependency-check-gradle:5.2.2")
+}

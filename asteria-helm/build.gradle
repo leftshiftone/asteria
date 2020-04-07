@@ -1,0 +1,14 @@
+apply plugin: 'java-gradle-plugin'
+
+dependencies {
+    implementation(project(':asteria-common'))
+}
+
+gradlePlugin {
+    plugins {
+        asteriaDockerPlugin {
+            id = "one.leftshift.asteria-helm"
+            implementationClass = "one.leftshift.asteria.helm.AsteriaHelmPlugin"
+        }
+    }
+}

@@ -1,0 +1,151 @@
+{
+  "current": {
+    "dependencies": [
+      {
+        "group": "com.github.kittinunf.fuel",
+        "version": "1.13.0",
+        "projectUrl": null,
+        "name": "fuel"
+      },
+      {
+        "group": "com.github.kittinunf.fuel",
+        "version": "1.13.0",
+        "projectUrl": null,
+        "name": "fuel-rxjava"
+      },
+      {
+        "group": "io.github.microutils",
+        "version": "1.5.4",
+        "projectUrl": "https://github.com/MicroUtils/kotlin-logging",
+        "name": "kotlin-logging"
+      },
+      {
+        "group": "org.jacoco",
+        "version": "0.8.1",
+        "projectUrl": "http://jacoco.org",
+        "name": "org.jacoco.agent"
+      },
+      {
+        "group": "org.jacoco",
+        "version": "0.8.1",
+        "projectUrl": "http://jacoco.org",
+        "name": "org.jacoco.ant"
+      },
+      {
+        "group": "org.jetbrains.kotlin",
+        "version": "1.2.50",
+        "projectUrl": "https://kotlinlang.org/",
+        "name": "kotlin-annotation-processing-gradle"
+      },
+      {
+        "group": "org.jetbrains.kotlin",
+        "version": "1.2.50",
+        "projectUrl": "https://kotlinlang.org/",
+        "name": "kotlin-reflect"
+      },
+      {
+        "group": "org.jetbrains.kotlin",
+        "version": "1.2.50",
+        "projectUrl": "https://kotlinlang.org/",
+        "name": "kotlin-stdlib-jdk8"
+      },
+      {
+        "group": "org.spockframework",
+        "version": "1.1-groovy-2.4",
+        "projectUrl": "http://spockframework.org",
+        "name": "spock-core"
+      }
+    ],
+    "count": 9
+  },
+  "gradle": {
+    "current": {
+      "version": "4.8.1",
+      "reason": "",
+      "isUpdateAvailable": true,
+      "isFailure": false
+    },
+    "nightly": {
+      "version": "4.10-20180628235918+0000",
+      "reason": "",
+      "isUpdateAvailable": true,
+      "isFailure": false
+    },
+    "enabled": true,
+    "releaseCandidate": {
+      "version": "",
+      "reason": "update check succeeded: no release available",
+      "isUpdateAvailable": false,
+      "isFailure": false
+    },
+    "running": {
+      "version": "4.8",
+      "reason": "",
+      "isUpdateAvailable": false,
+      "isFailure": false
+    }
+  },
+  "exceeded": {
+    "dependencies": [
+      {
+        "group": "one.leftshift.argos",
+        "latest": "0.1.0",
+        "version": "0.2.0-SNAPSHOT",
+        "projectUrl": null,
+        "name": "argos-category"
+      }
+    ],
+    "count": 1
+  },
+  "outdated": {
+    "dependencies": [
+      {
+        "group": "com.amazonaws",
+        "available": {
+          "release": "1.11.357",
+          "milestone": null,
+          "integration": null
+        },
+        "version": "1.11.251",
+        "projectUrl": "https://aws.amazon.com/sdkforjava",
+        "name": "aws-java-sdk-polly"
+      },
+      {
+        "group": "io.reactivex.rxjava2",
+        "available": {
+          "release": "2.1.16",
+          "milestone": null,
+          "integration": null
+        },
+        "version": "2.1.10",
+        "projectUrl": "https://github.com/ReactiveX/RxJava",
+        "name": "rxjava"
+      },
+      {
+        "group": "org.reactivestreams",
+        "available": {
+          "release": "1.0.2",
+          "milestone": null,
+          "integration": null
+        },
+        "version": "1.0.0",
+        "projectUrl": "http://www.reactive-streams.org/",
+        "name": "reactive-streams"
+      }
+    ],
+    "count": 3
+  },
+  "unresolved": {
+    "dependencies": [
+      {
+        "group": "one.leftshift.gaia",
+        "version": "0.4.0-SNAPSHOT",
+        "reason": "Could not find any version that matches one.leftshift.gaia:gaia-api:+.\nVersions rejected by component selection rules:\n  - 0.4.0-SNAPSHOT\n  - 0.1.0-SNAPSHOT",
+        "projectUrl": null,
+        "name": "gaia-api"
+      }
+    ],
+    "count": 1
+  },
+  "count": 14
+}
