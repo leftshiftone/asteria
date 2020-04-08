@@ -43,9 +43,9 @@ class AsteriaDependencyPluginTest extends Specification {
             result.output.contains "Attempting to resolve version for org.spockframework:spock-core:${expectedVersion} using repositories"
             result.output =~ /Using org\.spockframework:spock-core:\d\.\d.*-groovy-\d\.\d/
 
-            result.output.contains "Evaluating dependency one.leftshift.argos:argos-category:"
-            result.output.contains "Assigned one.leftshift.argos:argos-category to version ${expectedVersion} (no version set)"
-            result.output.contains "Attempting to resolve version for one.leftshift.argos:argos-category:${expectedVersion} using repositories"
+            result.output.contains "Evaluating dependency one.leftshift.canon:canon:"
+            result.output.contains "Assigned one.leftshift.canon:canon to version ${expectedVersion} (no version set)"
+            result.output.contains "Attempting to resolve version for one.leftshift.canon:canon:${expectedVersion} using repositories"
 
         where:
             description             | task          || expectedVersion

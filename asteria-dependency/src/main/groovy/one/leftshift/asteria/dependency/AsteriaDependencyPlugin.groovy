@@ -19,7 +19,7 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
 
     @Override
     void apply(Project project) {
-        project.extensions.create(EXTENSION_NAME, AsteriaDependencyExtension)
+        def extension = project.extensions.create(EXTENSION_NAME, AsteriaDependencyExtension)
 
         project.logger.debug("Applying spring dependency management plugin")
         project.pluginManager.apply DependencyManagementPlugin
@@ -27,7 +27,7 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
         project.logger.debug("Configuring spring dependency management plugin")
         project.dependencyManagement {
             imports {
-                mavenBom "one.leftshift:deps:latest.release"
+                mavenBom extension.dependencyManagementBom
             }
         }
 
