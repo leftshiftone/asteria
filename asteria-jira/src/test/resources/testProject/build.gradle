@@ -24,8 +24,8 @@ version = "0.0.1-SNAPSHOT"
 apply plugin: "one.leftshift.asteria-jira"
 
 asteriaJira {
-    username = ""
-    apiToken = ""
+    username = System.getenv("ASTERIA_JIRA_USERNAME") ?: ""
+    apiToken = System.getenv("ASTERIA_JIRA_APITOKEN") ?: ""
 }
 
 allprojects {

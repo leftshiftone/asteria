@@ -7,12 +7,12 @@ import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging
 import org.gradle.testfixtures.ProjectBuilder
 import org.gradle.testkit.runner.GradleRunner
-import spock.lang.Ignore
+import spock.lang.Requires
 import spock.lang.Specification
 
+@Requires({ System.getenv("CI") }) // execute on CI only
 class SearchIssuesTaskTest extends Specification {
 
-    @Ignore
     def "http request works as expected"() {
         given:
             def extension = new AsteriaJiraExtension()
@@ -27,8 +27,8 @@ class SearchIssuesTaskTest extends Specification {
                     new URI(extension.baseUrl + SearchIssuesTask.API_PATH),
                     [:],
                     new JsonBuilder(request).toString(),
-                    "",
-                    "",
+                    System.getenv("ASTERIA_JIRA_USERNAME") ?: "",
+                    System.getenv("ASTERIA_JIRA_APITOKEN") ?: "",
                     Logging.getLogger("test") as Logger
             )
         then:
@@ -36,7 +36,6 @@ class SearchIssuesTaskTest extends Specification {
             result.issues.size() == 2
     }
 
-    @Ignore
     def "jiraSearchIssues task retrieves issues and stores it on disk"() {
         given:
             Project project = ProjectBuilder.builder().build()

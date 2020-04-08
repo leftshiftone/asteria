@@ -21,17 +21,6 @@ allprojects {
     apply plugin: "com.github.ben-manes.versions"
     apply plugin: "org.sonarqube"
 
-    dependencyUpdates.doFirst {
-        if (!System.hasProperty("revision")) {
-            project.logger.info("Configure dependency updates check for releases")
-            System.setProperty("revision", "release")
-        }
-        if (!System.hasProperty("outputFormatter")) {
-            project.logger.info("Configure dependency updates check report format")
-            System.setProperty("outputFormatter", "json")
-        }
-    }
-
     release {
         defaultVersionStrategy = nebula.plugin.release.NetflixOssStrategies.SNAPSHOT
     }
@@ -64,17 +53,9 @@ subprojects {
         }
     }
 
-    task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
-        outputFormat = "javadoc"
-        outputDirectory = "${buildDir}/dokkaJavadoc"
-    }
     task sourceJar(type: Jar) {
         from sourceSets.main.allSource
         classifier "sources"
-    }
-    task javadocJar(type: Jar) {
-        from dokkaJavadoc
-        classifier "javadoc"
     }
 
     publishing {
@@ -83,7 +64,6 @@ subprojects {
                 artifactId = project.name
                 from components.java
                 artifact sourceJar
-                artifact javadocJar
                 pom.withXml {
                     Node root = asNode()
                     root.appendNode("name", "Asteria")
@@ -104,7 +84,7 @@ subprojects {
                     developer.appendNode("organizationUrl", "https://www.leftshift.one")
 
                     Node scm = root.appendNode("scm")
-                    scm.appendNode("connection", "scm:git:git://github.com/leftshiftone/canon.git")
+                    scm.appendNode("connection", "scm:git:git://github.com/leftshiftone/asteria.git")
                     scm.appendNode("developerConnection", "scm:git:ssh://github.com:leftshiftone/asteria.git")
                     scm.appendNode("url", "https://github.com/leftshiftone/asteria")
                 }
@@ -128,8 +108,3 @@ subprojects {
     }
 
 }
-
-
-
-
-
