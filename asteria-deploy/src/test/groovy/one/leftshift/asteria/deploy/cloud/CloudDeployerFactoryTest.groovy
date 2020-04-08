@@ -3,11 +3,13 @@ package one.leftshift.asteria.deploy.cloud
 import com.typesafe.config.Config
 import one.leftshift.asteria.deploy.cloud.config.AWSElasticbeanstalkConfigAttribute
 import org.gradle.api.Project
+import spock.lang.IgnoreIf
 import spock.lang.Specification
 import spock.lang.Unroll
 
 import static one.leftshift.asteria.deploy.cloud.ProjectProperty.DRY_RUN
 
+@IgnoreIf({ System.getenv("CI") })
 class CloudDeployerFactoryTest extends Specification {
 
     void "throws exception if cloudProvider is null"() {
