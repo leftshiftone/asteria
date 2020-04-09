@@ -33,8 +33,8 @@ class AsteriaPublishPlugin implements Plugin<Project> {
                 repositories {
                     maven {
                         credentials(AwsCredentials) {
-                            accessKey awsCredentials(project).AWSAccessKeyId
-                            secretKey awsCredentials(project).AWSSecretKey
+                            accessKey awsCredentials(project)?.AWSAccessKeyId
+                            secretKey awsCredentials(project)?.AWSSecretKey
                         }
                         url project.version.toString().endsWith(SNAPSHOT_VERSION_SUFFIX) ? extension.snapshotRepositoryUrl : extension.releaseRepositoryUrl
                     }

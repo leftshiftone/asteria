@@ -1,4 +1,3 @@
-
 buildscript {
     ext {
         versionGradle = "5.6.4"
@@ -47,6 +46,9 @@ subprojects {
     }
 
     test {
+        jvmArgs "-XX:-UseGCOverheadLimit" // ignore much time in GC
+        minHeapSize = "1024m"
+        maxHeapSize = "3072m"
         if (project.hasProperty("continueOnFailure")) {
             boolean isContinueOnFailure = project.property("continueOnFailure")
             ignoreFailures isContinueOnFailure

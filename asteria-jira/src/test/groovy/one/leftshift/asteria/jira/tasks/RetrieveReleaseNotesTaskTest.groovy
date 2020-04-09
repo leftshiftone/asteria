@@ -16,6 +16,9 @@ class RetrieveReleaseNotesTaskTest extends Specification {
     def "http request works as expected"() {
         given:
             def extension = new AsteriaJiraExtension()
+            extension.baseUrl = System.getenv("ASTERIA_JIRA_BASEURL")
+            extension.username = System.getenv("ASTERIA_JIRA_USERNAME")
+            extension.apiToken = System.getenv("ASTERIA_JIRA_APITOKEN")
             Map<String, Object> request = [
                     jql       : String.format(RetrieveReleaseNotesTask.JQL, "GAIA", "GAIA-0.9.0"),
                     fields    : RetrieveReleaseNotesTask.FIELDS,
@@ -27,8 +30,8 @@ class RetrieveReleaseNotesTaskTest extends Specification {
                     new URI(extension.baseUrl + RetrieveReleaseNotesTask.API_PATH),
                     [:],
                     new JsonBuilder(request).toString(),
-                    System.getenv("ASTERIA_JIRA_USERNAME") ?: "",
-                    System.getenv("ASTERIA_JIRA_APITOKEN") ?: "",
+                    extension.username,
+                    extension.apiToken,
                     Logging.getLogger("test") as Logger
             )
         then:

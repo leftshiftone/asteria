@@ -10,12 +10,16 @@ import org.gradle.testkit.runner.GradleRunner
 import spock.lang.Requires
 import spock.lang.Specification
 
-@Requires({ System.getenv("CI") }) // execute on CI only
+@Requires({ System.getenv("CI") })
+// execute on CI only
 class SearchIssuesTaskTest extends Specification {
 
     def "http request works as expected"() {
         given:
             def extension = new AsteriaJiraExtension()
+            extension.baseUrl = System.getenv("ASTERIA_JIRA_BASEURL")
+            extension.username = System.getenv("ASTERIA_JIRA_USERNAME")
+            extension.apiToken = System.getenv("ASTERIA_JIRA_APITOKEN")
             Map<String, Object> request = [
                     jql       : "project = 'GAIA' AND fixVersion = 'GAIA-1.3.1' AND 'Visible for Release Notes' = yes ORDER BY type,created",
                     fields    : SearchIssuesTask.FIELDS,
@@ -27,8 +31,8 @@ class SearchIssuesTaskTest extends Specification {
                     new URI(extension.baseUrl + SearchIssuesTask.API_PATH),
                     [:],
                     new JsonBuilder(request).toString(),
-                    System.getenv("ASTERIA_JIRA_USERNAME") ?: "",
-                    System.getenv("ASTERIA_JIRA_APITOKEN") ?: "",
+                    extension.username,
+                    extension.apiToken,
                     Logging.getLogger("test") as Logger
             )
         then:
