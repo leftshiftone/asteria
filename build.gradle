@@ -48,7 +48,7 @@ subprojects {
     test {
         jvmArgs "-XX:-UseGCOverheadLimit" // ignore much time in GC
         minHeapSize = "1024m"
-        maxHeapSize = "2048m"
+        maxHeapSize = "1024m"
         if (project.hasProperty("continueOnFailure")) {
             boolean isContinueOnFailure = project.property("continueOnFailure")
             ignoreFailures isContinueOnFailure
