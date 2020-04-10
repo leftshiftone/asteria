@@ -110,7 +110,7 @@ class DepsReportToThemisTask extends AbstractReportToThemisTask {
         String reportAsJson = new JsonBuilder(report).toString()
         logger.info("Json to report: ${reportAsJson}")
 
-        def url = project.rootProject.extensions.findByType(AsteriaReportExtension).themisBaseUrl
+        def url = project.rootProject.extensions.findByType(AsteriaReportExtension).reportingUrl
         def urlPath = new URI(url + getThemisApiPath())
         def queryParams = urlPath.query?.split("&")?.collectEntries {
             def pair = it.split("=")
