@@ -61,11 +61,11 @@ jobs:
       - restore_cache:
           key: cache-gradle-{{ checksum "build.gradle" }}
       - run: ./gradlew test --stacktrace
-      - run: ./gradlew final bintrayUpload -x test -Prelease.useLastTag=true --stacktrace
       - run:
           name: Collect test results
           command: find . -type f -regex ".*/build/test-results/test/.*xml" -exec cp {} $TEST_RESULTS_PATH \;
           when: always
+      - run: ./gradlew final bintrayUpload -x test -Prelease.useLastTag=true --stacktrace
       - save_cache:
           paths:
             - ~/.gradle
@@ -88,11 +88,11 @@ jobs:
       - restore_cache:
           key: cache-gradle-{{ checksum "build.gradle" }}
       - run: ./gradlew test --stacktrace
-      - run: ./gradlew sonarqube -Dsonar.projectKey=one.leftshift.asteria -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_LOGIN
       - run:
           name: Collect test results
           command: find . -type f -regex ".*/build/test-results/test/.*xml" -exec cp {} $TEST_RESULTS_PATH \;
           when: always
+      - run: ./gradlew sonarqube -Dsonar.projectKey=one.leftshift.asteria -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_LOGIN
       - save_cache:
           paths:
             - ~/.gradle
