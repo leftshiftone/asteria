@@ -38,6 +38,11 @@ class AsteriaDependencyPluginTest extends Specification {
 
         then:
             result.output.contains "BUILD SUCCESSFUL"
+            result.output.contains "Using maven bom org.springframework.boot:spring-boot-dependencies:2.1.6.RELEASE"
+
+            result.output.contains "Using version '2.9.9' for dependency 'com.fasterxml.jackson.core:jackson-core:'"
+            result.output.contains "Attempting to resolve component for com.fasterxml.jackson.core:jackson-core:2.9.9 using repositories"
+
             result.output.contains "Evaluating dependency org.spockframework:spock-core:latest.smart"
             result.output.contains "Reassigned org.spockframework:spock-core to version ${expectedVersion} (was latest.smart)"
             result.output.contains "Attempting to resolve version for org.spockframework:spock-core:${expectedVersion} using repositories"
