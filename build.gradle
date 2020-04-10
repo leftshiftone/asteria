@@ -70,7 +70,7 @@ subprojects {
                 pom.withXml {
                     Node root = asNode()
                     root.appendNode("name", "Asteria")
-                    root.appendNode("description", "Asteria")
+                    root.appendNode("description", "Asteria Gradle Plugins")
                     root.appendNode("url", "https://github.com/leftshiftone/asteria")
 
                     Node licenses = root.appendNode("licenses")
