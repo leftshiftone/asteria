@@ -12,7 +12,7 @@ version: 2.1
 jobs:
   webhook-completed:
     docker:
-      - image: circleci/openjdk:8-jdk-browsers
+      - image: circleci/openjdk:8-jdk
     steps:
       - run:
           name: Webhook completed
@@ -20,7 +20,7 @@ jobs:
             curl $BUILD_STATUS_URL\?flow\=circleci-completed -d '{"repository":"'"$CIRCLE_PROJECT_REPONAME"'","branch":"'"$CIRCLE_BRANCH"'","build_number":"'"$CIRCLE_PREVIOUS_BUILD_NUM"'","build_url":"'"$CIRCLE_BUILD_URL"'"}' -H "Content-Type: application/json" -X POST -i || true
   build:
     docker:
-      - image: circleci/openjdk:8-jdk-browsers
+      - image: circleci/openjdk:8-jdk
     environment:
       TZ: "/usr/share/zoneinfo/Europe/Vienna"
       GRADLE_OPTS: '-Xmx128m -Dorg.gradle.parallel=false -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"'
@@ -35,7 +35,10 @@ jobs:
       - run: mkdir -p $TEST_RESULTS_PATH
       - run: ./gradlew test --stacktrace
       - run: ./gradlew assemble --stacktrace
-      - run: find . -type f -regex ".*/build/test-results/test/.*xml" -exec cp {} $TEST_RESULTS_PATH \;
+      - run:
+          name: Collect test results
+          command: find . -type f -regex ".*/build/test-results/test/.*xml" -exec cp {} $TEST_RESULTS_PATH \;
+          when: always
       - save_cache:
           paths:
             - ~/.gradle
@@ -46,10 +49,11 @@ jobs:
           <<: *webhook-failed
   release:
     docker:
-      - image: circleci/openjdk:8-jdk-browsers
+      - image: circleci/openjdk:8-jdk
     environment:
       TZ: "/usr/share/zoneinfo/Europe/Vienna"
       GRADLE_OPTS: '-Xmx128m -Dorg.gradle.parallel=false -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"'
+      TEST_RESULTS_PATH: build/circleci/test-results
     steps:
       - run:
           <<: *webhook-created
@@ -58,18 +62,25 @@ jobs:
           key: cache-gradle-{{ checksum "build.gradle" }}
       - run: ./gradlew test --stacktrace
       - run: ./gradlew final bintrayUpload -x test -Prelease.useLastTag=true --stacktrace
+      - run:
+          name: Collect test results
+          command: find . -type f -regex ".*/build/test-results/test/.*xml" -exec cp {} $TEST_RESULTS_PATH \;
+          when: always
       - save_cache:
           paths:
             - ~/.gradle
           key: cache-gradle-{{ checksum "build.gradle" }}
+      - store_test_results:
+          path: build/circleci/test-results
       - run:
           <<: *webhook-failed
   code-analytics:
     docker:
-      - image: circleci/openjdk:8-jdk-browsers
+      - image: circleci/openjdk:8-jdk
     environment:
       TZ: "/usr/share/zoneinfo/Europe/Vienna"
       GRADLE_OPTS: '-Xmx128m -Dorg.gradle.parallel=false -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"'
+      TEST_RESULTS_PATH: build/circleci/test-results
     steps:
       - run:
           <<: *webhook-created
@@ -78,10 +89,16 @@ jobs:
           key: cache-gradle-{{ checksum "build.gradle" }}
       - run: ./gradlew test --stacktrace
       - run: ./gradlew sonarqube -Dsonar.projectKey=one.leftshift.asteria -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_LOGIN
+      - run:
+          name: Collect test results
+          command: find . -type f -regex ".*/build/test-results/test/.*xml" -exec cp {} $TEST_RESULTS_PATH \;
+          when: always
       - save_cache:
           paths:
             - ~/.gradle
           key: cache-gradle-{{ checksum "build.gradle" }}
+      - store_test_results:
+          path: build/circleci/test-results
       - run:
           <<: *webhook-failed
 

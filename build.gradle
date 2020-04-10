@@ -46,7 +46,6 @@ subprojects {
     }
 
     test {
-        jvmArgs "-XX:-UseGCOverheadLimit" // ignore much time in GC
         maxHeapSize = "1024m"
         beforeTest { descriptor ->
             logger.lifecycle(descriptor.toString())
