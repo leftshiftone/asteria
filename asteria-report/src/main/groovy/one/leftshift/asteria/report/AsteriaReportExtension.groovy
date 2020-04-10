@@ -8,9 +8,9 @@ class AsteriaReportExtension {
     Grgit git
 
     /**
-     * Base URL of Themis
+     * Base URL to send the reports to.
      */
-    String themisBaseUrl = "https://themis.leftshift.one"
+    String reportingUrl = ""
     /**
      * Base URL of Bitbucket API
      */
