@@ -80,10 +80,14 @@ class AsteriaDependencyPluginTest extends Specification {
             def dependencyUpdatesReport = new File("${project.buildDir.absolutePath}/dependencyUpdates/report.json")
             dependencyUpdatesReport.exists()
             def dependencyUpdates = new JsonSlurper().parse(dependencyUpdatesReport)
-            dependencyUpdates.outdated.count == 1
-            dependencyUpdates.outdated.dependencies.first().name == "junit"
-            dependencyUpdates.outdated.dependencies.first().version == "4.5"
-            dependencyUpdates.outdated.dependencies.first().available.release =~ /\d\.\d/
+            dependencyUpdates.outdated.count == 2
+            dependencyUpdates.outdated.dependencies[0].name == "jackson-core"
+            dependencyUpdates.outdated.dependencies[0].version == "2.9.9"
+            dependencyUpdates.outdated.dependencies[0].available.release =~ /\d+\.\d+.\d+/
+            dependencyUpdates.outdated.dependencies[1].name == "junit"
+            dependencyUpdates.outdated.dependencies[1].version == "4.5"
+            dependencyUpdates.outdated.dependencies[1].available.release =~ /\d+\.\d+/
+
     }
 
     def "dependency lock file is generated"() {
