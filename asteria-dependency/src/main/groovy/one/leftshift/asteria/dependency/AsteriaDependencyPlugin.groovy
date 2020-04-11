@@ -25,11 +25,13 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
         project.pluginManager.apply DependencyManagementPlugin
 
         project.afterEvaluate {
-            project.logger.debug("Configuring spring dependency management plugin")
-            project.dependencyManagement {
-                imports {
-                    project.logger.info("Using maven bom ${extension.dependencyManagementBom}")
-                    mavenBom extension.dependencyManagementBom
+            if (extension.dependencyManagementEnabled) {
+                project.logger.debug("Configuring spring dependency management plugin")
+                project.dependencyManagement {
+                    imports {
+                        project.logger.info("Using maven bom ${extension.dependencyManagementBom}")
+                        mavenBom extension.dependencyManagementBom
+                    }
                 }
             }
         }
