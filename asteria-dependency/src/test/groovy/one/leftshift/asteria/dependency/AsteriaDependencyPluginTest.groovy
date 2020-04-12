@@ -80,14 +80,21 @@ class AsteriaDependencyPluginTest extends Specification {
             def dependencyUpdatesReport = new File("${project.buildDir.absolutePath}/dependencyUpdates/report.json")
             dependencyUpdatesReport.exists()
             def dependencyUpdates = new JsonSlurper().parse(dependencyUpdatesReport)
-            dependencyUpdates.outdated.count == 2
-            dependencyUpdates.outdated.dependencies[0].name == "jackson-core"
-            dependencyUpdates.outdated.dependencies[0].version == "2.9.9"
-            dependencyUpdates.outdated.dependencies[0].available.release =~ /\d+\.\d+.\d+/
-            dependencyUpdates.outdated.dependencies[1].name == "junit"
-            dependencyUpdates.outdated.dependencies[1].version == "4.5"
-            dependencyUpdates.outdated.dependencies[1].available.release =~ /\d+\.\d+/
 
+            // assert depending on found outdated dependencies
+            dependencyUpdates.outdated.count in [1, 2]
+            if (dependencyUpdates.outdated.count > 1) {
+                dependencyUpdates.outdated.dependencies[0].name == "jackson-core"
+                dependencyUpdates.outdated.dependencies[0].version == "2.9.9"
+                dependencyUpdates.outdated.dependencies[0].available.release =~ /\d+\.\d+.\d+/
+                dependencyUpdates.outdated.dependencies[1].name == "junit"
+                dependencyUpdates.outdated.dependencies[1].version == "4.5"
+                dependencyUpdates.outdated.dependencies[1].available.release =~ /\d+\.\d+/
+            } else {
+                dependencyUpdates.outdated.dependencies[0].name == "junit"
+                dependencyUpdates.outdated.dependencies[0].version == "4.5"
+                dependencyUpdates.outdated.dependencies[0].available.release =~ /\d+\.\d+/
+            }
     }
 
     def "dependency lock file is generated"() {
