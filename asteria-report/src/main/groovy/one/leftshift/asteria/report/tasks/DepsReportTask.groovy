@@ -16,27 +16,27 @@ import java.time.ZonedDateTime
 
 import static java.time.format.DateTimeFormatter.ISO_OFFSET_DATE_TIME
 
-class DepsReportToThemisTask extends AbstractReportToThemisTask {
+class DepsReportTask extends AbstractReportTask {
 
     @InputFile
     File depsResultFile
 
-    private String themisApiPath = "/api/deps/report"
+    private String apiPath = "/api/deps/report"
     private String publish = "true"
 
-    DepsReportToThemisTask() {
+    DepsReportTask() {
         group = AsteriaReportPlugin.GROUP
-        description = "Aggregate dependency updates results an send the information to the Themis dashboard."
+        description = "Aggregate dependency updates results and send the information to the specified API."
     }
 
     @Input
-    String getThemisApiPath() {
-        return themisApiPath
+    String getApiPath() {
+        return apiPath
     }
 
-    @Option(option = "themisApiPath", description = "The path after the base URL where the report will be posted to (e.g. /api/deps/report).")
-    void setThemisApiPath(String themisApiPath) {
-        this.themisApiPath = themisApiPath
+    @Option(option = "apiPath", description = "The path after the base URL where the report will be posted to (e.g. /api/deps/report).")
+    void setApiPath(String apiPath) {
+        this.apiPath = apiPath
     }
 
     @Input
@@ -60,7 +60,7 @@ class DepsReportToThemisTask extends AbstractReportToThemisTask {
 
         logger.debug("Report data to be published: {}", report)
         if (Boolean.valueOf(publish)) {
-            postToThemis(report)
+            postToApi(report)
         } else {
             logger.info("Skipped publishing")
         }
@@ -106,12 +106,12 @@ class DepsReportToThemisTask extends AbstractReportToThemisTask {
         return aggregatedDepsReport
     }
 
-    void postToThemis(AggregatedDepsReport report) {
+    void postToApi(AggregatedDepsReport report) {
         String reportAsJson = new JsonBuilder(report).toString()
         logger.info("Json to report: ${reportAsJson}")
 
         def url = project.rootProject.extensions.findByType(AsteriaReportExtension).reportingUrl
-        def urlPath = new URI(url + getThemisApiPath())
+        def urlPath = new URI(url + getApiPath())
         def queryParams = urlPath.query?.split("&")?.collectEntries {
             def pair = it.split("=")
             pair.size() > 1 ? [(pair[0]): pair[1]] : [(pair[0]): null]

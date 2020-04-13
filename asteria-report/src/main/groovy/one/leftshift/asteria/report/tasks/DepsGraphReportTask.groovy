@@ -1,102 +1,95 @@
 package one.leftshift.asteria.report.tasks
 
 import groovy.json.JsonBuilder
+import groovy.json.JsonSlurper
+import one.leftshift.asteria.report.AsteriaReportExtension
 import one.leftshift.asteria.report.AsteriaReportPlugin
 import one.leftshift.asteria.report.tasks.model.deps.DependencyGraphNode
-import org.gradle.api.DefaultTask
-import org.gradle.api.artifacts.component.ModuleComponentSelector
-import org.gradle.api.artifacts.result.DependencyResult
+import one.leftshift.asteria.report.tasks.model.deps.DependencyGraphReport
 import org.gradle.api.tasks.Input
-import org.gradle.api.tasks.OutputFile
+import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
 
-import static one.leftshift.asteria.report.AsteriaReportPlugin.DEPS_GRAPH_REPORT_TASK_NAME
+class DepsGraphReportTask extends AbstractReportTask {
 
-class DepsGraphReportTask extends DefaultTask {
+    @InputFile
+    File depsGraphResultFile
 
-    private String startsWithGroup = "one.leftshift"
-    private String print = "true"
-
-    @OutputFile
-    File depsGraphFile
+    private String apiPath = "/api/deps-graph/report"
+    private String publish = "true"
 
     DepsGraphReportTask() {
         group = AsteriaReportPlugin.GROUP
-        description = "Get dependency graph for dependencies starting with certain group."
-        def fileDir = new File("${project.buildDir}/report/${DEPS_GRAPH_REPORT_TASK_NAME}")
-        if (!fileDir.exists()) {
-            fileDir.mkdirs()
-        }
-        depsGraphFile = new File(fileDir, "report.json")
+        description = "Get dependencies starting with group id 'one.leftshift'."
     }
 
     @Input
-    String getStartsWithGroup() {
-        return startsWithGroup
+    String getApiPath() {
+        return apiPath
     }
 
-    @Option(option = "startsWithGroup", description = "The group prefix for filtering the dependencies. Default: 'one.leftshift'")
-    void setStartsWithGroup(String startsWithGroup) {
-        this.startsWithGroup = startsWithGroup
+    @Option(option = "apiPath", description = "The path after the base URL where the report will be posted to (e.g. /api/deps/report).")
+    void setApiPath(String apiPath) {
+        this.apiPath = apiPath
     }
 
     @Input
-    String getPrint() {
-        return print
+    String getPublish() {
+        return publish
     }
 
-    @Option(option = "print", description = "Whether or not to print the graph. Default: true")
-    void setPrint(String print) {
-        this.print = print
+    @Option(option = "publish", description = "Configures whether the report will be sent or not.")
+    void setPublish(String publish) {
+        this.publish = publish
     }
 
     @TaskAction
-    def buildDependencyGraph() {
-        def allDependencies = new HashSet<DependencyGraphNode>()
-        project.subprojects { subproject ->
-            subproject.configurations.compile.incoming.getResolutionResult().getAllDependencies().each { DependencyResult dependency ->
-                project.logger.debug("Evaluating ${dependency.requested.toString()}")
-                if (startsWithGroup && !dependency.requested.toString().startsWith(startsWithGroup)) {
-                    return false
-                }
+    def retrieveAndReport() {
+        DependencyGraphReport report = new DependencyGraphReport()
+        report.metaInfo = determineMetaInformation()
 
-                def parent = allDependencies.find {
-                    it.group == dependency.from.moduleVersion.group && it.name == dependency.from.moduleVersion.name
-                }
-                def dep = new DependencyGraphNode()
-                if (dependency.requested instanceof ModuleComponentSelector) {
-                    dep.group = dependency.requested.group
-                    dep.name = dependency.requested.module
-                    dep.version = dependency.requested.version
-                } else {
-                    dep.name = dependency.requested.toString()
-                }
-                if (parent) {
-                    parent.addDependency(dep)
-                }
-                allDependencies.add(dep)
-            }
+        logger.info("Got ${depsGraphResultFile.size()} dependency updates result files")
+        report.dependencies = extractResults(depsGraphResultFile)
+        if (Boolean.valueOf(publish)) {
+            postToApi(report)
+        } else {
+            logger.info("Skipped publishing")
         }
-        def dependencyGraph = allDependencies.findAll { (!it.hasParent) }
-        dependencyGraph.sort(true) { it.group }
-
-        if (Boolean.valueOf(print)) {
-            printDependencies(dependencyGraph)
-        }
-        def jsonBuilder = new JsonBuilder(dependencyGraph)
-        depsGraphFile.text = jsonBuilder.toPrettyString()
     }
 
-    static void printDependencies(Set<DependencyGraphNode> dependencyGraph, int depth = 0) {
-        if (dependencyGraph.isEmpty()) return
-        dependencyGraph.each {
-            def string = ""
-            if (depth > 0) {
-                (0..depth).each { string += "  " }
-            }
-            println "${string}${it.group}:${it.name}"
-            printDependencies(it.dependencies, ++depth)
+    void postToApi(DependencyGraphReport report) {
+        String reportAsJson = new JsonBuilder(report).toString()
+        logger.info("Json to report: ${reportAsJson}")
+
+        def url = project.rootProject.extensions.findByType(AsteriaReportExtension).reportingUrl
+        def urlPath = new URI(url + getApiPath())
+        def queryParams = urlPath.query?.split("&")?.collectEntries {
+            def pair = it.split("=")
+            pair.size() > 1 ? [(pair[0]): pair[1]] : [(pair[0]): null]
         }
+
+        httpRequest(url, urlPath, queryParams, reportAsJson)
+    }
+
+    private static Set<DependencyGraphNode> extractResults(File resultFile) {
+        def json = new JsonSlurper().parseText(resultFile.text) as List<Map>
+        def result = new HashSet<DependencyGraphNode>()
+        json.each { result.add(extractDependency(it)) }
+        return result
+    }
+
+    private static DependencyGraphNode extractDependency(Map dependency) {
+        def node = new DependencyGraphNode(
+                group: dependency.group,
+                name: dependency.name,
+                version: dependency.version
+        )
+        if (dependency.dependencies) {
+            dependency.dependencies.each { Map dep ->
+                node.addDependency(extractDependency(dep))
+            }
+        }
+        return node
     }
 }

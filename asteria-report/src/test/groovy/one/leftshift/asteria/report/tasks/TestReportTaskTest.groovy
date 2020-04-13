@@ -2,14 +2,14 @@ package one.leftshift.asteria.report.tasks
 
 import spock.lang.Specification
 
-class TestReportToThemisTaskTest extends Specification {
+class TestReportTaskTest extends Specification {
 
     def "reading junit test results file returns necessary data"() {
         given:
             File resultFile = new File(this.class.classLoader.getResource("TEST-atlas.nlp.similarity.StringSimilarityEnsembleTest.xml").file)
 
         when:
-            def result = TestReportToThemisTask.readJunitResults(resultFile).first()
+            def result = TestReportTask.readJunitResults(resultFile).first()
 
         then:
             result.name == "atlas.nlp.similiarity.StringSimiliarityEnsembleTest"
@@ -49,7 +49,7 @@ class TestReportToThemisTaskTest extends Specification {
             File resultFile = new File(this.class.classLoader.getResource("TEST-Frontend.xml").file)
 
         when:
-            def result = TestReportToThemisTask.readJunitResults(resultFile)
+            def result = TestReportTask.readJunitResults(resultFile)
 
         then:
             result.size() == 6
@@ -66,7 +66,7 @@ class TestReportToThemisTaskTest extends Specification {
             File resultFile = new File(this.class.classLoader.getResource("TEST-pytest.xml").file)
 
         when:
-            def result = TestReportToThemisTask.readJunitResults(resultFile)
+            def result = TestReportTask.readJunitResults(resultFile)
 
         then:
             result.size() == 1

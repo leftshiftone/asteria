@@ -5,7 +5,7 @@ import org.gradle.testfixtures.ProjectBuilder
 import org.gradle.testkit.runner.GradleRunner
 import spock.lang.Specification
 
-import static one.leftshift.asteria.report.AsteriaReportPlugin.getDEPS_GRAPH_REPORT_TASK_NAME
+import static one.leftshift.asteria.report.AsteriaReportPlugin.getDEPS_GRAPH_TASK_NAME
 
 class AsteriaReportPluginTest extends Specification {
 
@@ -73,7 +73,7 @@ class AsteriaReportPluginTest extends Specification {
         when:
             def result = GradleRunner.create()
                     .withProjectDir(project.projectDir)
-                    .withArguments("build", "testReportToThemis", "--publish=false", "--debug", "--stacktrace")
+                    .withArguments("build", "testReport", "--publish=false", "--debug", "--stacktrace")
                     .withPluginClasspath()
                     .build()
             println result.output
@@ -99,7 +99,7 @@ class AsteriaReportPluginTest extends Specification {
         when:
             def result = GradleRunner.create()
                     .withProjectDir(project.projectDir)
-                    .withArguments("build", "versionReportToThemis", "--publish=false", "--debug", "--stacktrace")
+                    .withArguments("build", "versionReport", "--publish=false", "--debug", "--stacktrace")
                     .withPluginClasspath()
                     .build()
             println result.output
@@ -125,7 +125,7 @@ class AsteriaReportPluginTest extends Specification {
             //test assumes that dependency report has been already generated
             def result = GradleRunner.create()
                     .withProjectDir(project.projectDir)
-                    .withArguments("depsReportToThemis", "--publish=false", "--debug", "--stacktrace")
+                    .withArguments("depsReport", "--publish=false", "--debug", "--stacktrace")
                     .withPluginClasspath()
                     .build()
             println result.output
@@ -149,11 +149,11 @@ class AsteriaReportPluginTest extends Specification {
         when:
             def result = GradleRunner.create()
                     .withProjectDir(project.projectDir)
-                    .withArguments("depsGraphReport", "--startsWithGroup=org.springframework", "--debug", "--stacktrace")
+                    .withArguments("depsGraph", "--startsWithGroup=org.springframework", "--debug", "--stacktrace")
                     .withPluginClasspath()
                     .build()
             println result.output
-            def resultFile = new File("${project.buildDir}/report/${DEPS_GRAPH_REPORT_TASK_NAME}/report.json")
+            def resultFile = new File("${project.buildDir}/report/${DEPS_GRAPH_TASK_NAME}/report.json")
 
         then:
 

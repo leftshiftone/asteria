@@ -14,11 +14,11 @@ class AsteriaReportPlugin implements Plugin<Project> {
     static final String ZIP_TEST_REPORT_TASK_NAME = "zipTestReport"
     static final String DEPS_UPLOAD_TO_BITBUCKET_DOWNLOADS_TASK_NAME = "depsUploadToBitbucketDownloads"
     static final String TEST_UPLOAD_TO_BITBUCKET_DOWNLOADS_TASK_NAME = "testUploadToBitbucketDownloads"
-    static final String DEPS_REPORT_TO_THEMIS_TASK_NAME = "depsReportToThemis"
+    static final String DEPS_REPORT_TASK_NAME = "depsReport"
+    static final String DEPS_GRAPH_TASK_NAME = "depsGraph"
     static final String DEPS_GRAPH_REPORT_TASK_NAME = "depsGraphReport"
-    static final String DEPS_GRAPH_REPORT_TO_THEMIS_TASK_NAME = "depsGraphReportToThemis"
-    static final String TEST_REPORT_TO_THEMIS_TASK_NAME = "testReportToThemis"
-    static final String VERSION_REPORT_TO_THEMIS_TASK_NAME = "versionReportToThemis"
+    static final String TEST_REPORT_TASK_NAME = "testReport"
+    static final String VERSION_REPORT_TASK_NAME = "versionReport"
 
     @Override
     void apply(Project project) {
@@ -28,30 +28,30 @@ class AsteriaReportPlugin implements Plugin<Project> {
         }
 
         project.logger.debug("Adding tasks")
-        def depsReportToThemisTask
-        if (!project.rootProject.tasks.find { it.name == DEPS_REPORT_TO_THEMIS_TASK_NAME }) {
-            depsReportToThemisTask = project.rootProject.task(DEPS_REPORT_TO_THEMIS_TASK_NAME, type: DepsReportToThemisTask)
+        def depsReportTask
+        if (!project.rootProject.tasks.find { it.name == DEPS_REPORT_TASK_NAME }) {
+            depsReportTask = project.rootProject.task(DEPS_REPORT_TASK_NAME, type: DepsReportTask)
+        }
+        def depsGraphTask
+        if (!project.rootProject.tasks.find { it.name == DEPS_GRAPH_TASK_NAME }) {
+            depsGraphTask = project.rootProject.task(DEPS_GRAPH_TASK_NAME, type: DepsGraphTask)
         }
         def depsGraphReportTask
         if (!project.rootProject.tasks.find { it.name == DEPS_GRAPH_REPORT_TASK_NAME }) {
             depsGraphReportTask = project.rootProject.task(DEPS_GRAPH_REPORT_TASK_NAME, type: DepsGraphReportTask)
-        }
-        def depsGraphReportToThemisTask
-        if (!project.rootProject.tasks.find { it.name == DEPS_GRAPH_REPORT_TO_THEMIS_TASK_NAME }) {
-            depsGraphReportToThemisTask = project.rootProject.task(DEPS_GRAPH_REPORT_TO_THEMIS_TASK_NAME, type: DepsGraphReportToThemisTask)
-            depsGraphReportToThemisTask.dependsOn depsGraphReportTask
+            depsGraphReportTask.dependsOn depsGraphTask
         }
         def depsUploadToBitbucketDownloadsTask
         if (!project.rootProject.tasks.find { it.name == DEPS_UPLOAD_TO_BITBUCKET_DOWNLOADS_TASK_NAME }) {
             depsUploadToBitbucketDownloadsTask = project.rootProject.task(DEPS_UPLOAD_TO_BITBUCKET_DOWNLOADS_TASK_NAME, type: DepsUploadToBitbucketDownloadsTask)
         }
-        def testReportToThemisTask
-        if (!project.rootProject.tasks.find { it.name == TEST_REPORT_TO_THEMIS_TASK_NAME }) {
-            testReportToThemisTask = project.rootProject.task(TEST_REPORT_TO_THEMIS_TASK_NAME, type: TestReportToThemisTask)
+        def testReportTask
+        if (!project.rootProject.tasks.find { it.name == TEST_REPORT_TASK_NAME }) {
+            testReportTask = project.rootProject.task(TEST_REPORT_TASK_NAME, type: TestReportTask)
         }
-        def versionReportToThemisTask
-        if (!project.rootProject.tasks.find { it.name == VERSION_REPORT_TO_THEMIS_TASK_NAME }) {
-            versionReportToThemisTask = project.rootProject.task(VERSION_REPORT_TO_THEMIS_TASK_NAME, type: VersionReportToThemisTask)
+        def versionReportTask
+        if (!project.rootProject.tasks.find { it.name == VERSION_REPORT_TASK_NAME }) {
+            versionReportTask = project.rootProject.task(VERSION_REPORT_TASK_NAME, type: VersionReportTask)
         }
         def rootTestReportTask
         if (!project.rootProject.tasks.find { it.name == ROOT_TEST_REPORT_TASK_NAME }) {
@@ -68,9 +68,9 @@ class AsteriaReportPlugin implements Plugin<Project> {
 
         project.logger.debug("Configuring tasks")
         project.afterEvaluate {
-            depsReportToThemisTask.depsResultFile = extension.depsJsonResult
-            depsGraphReportToThemisTask.depsGraphResultFile = extension.depsGraphResultFile
-            testReportToThemisTask.testResultFiles = extension.junitXmlResults
+            depsReportTask.depsResultFile = extension.depsJsonResult
+            depsGraphReportTask.depsGraphResultFile = extension.depsGraphResultFile
+            testReportTask.testResultFiles = extension.junitXmlResults
 
             if (project.plugins.hasPlugin("com.github.ben-manes.versions")) {
                 depsUploadToBitbucketDownloadsTask.mustRunAfter project.tasks.dependencyUpdates

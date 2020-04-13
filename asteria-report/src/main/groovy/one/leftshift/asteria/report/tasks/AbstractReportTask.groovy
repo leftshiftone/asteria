@@ -13,7 +13,7 @@ import java.time.Duration
 
 import static groovyx.net.http.Method.POST
 
-abstract class AbstractReportToThemisTask extends DefaultTask {
+abstract class AbstractReportTask extends DefaultTask {
 
     void httpRequest(String url, URI urlPath, Map queryParams, String reportAsJson) {
         def requestConfig = RequestConfig.custom()

@@ -8,24 +8,24 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
 
-class VersionReportToThemisTask extends AbstractReportToThemisTask {
+class VersionReportTask extends AbstractReportTask {
 
-    private String themisApiPath = "/api/version/report"
+    private String apiPath = "/api/version/report"
     private String publish = "true"
 
-    VersionReportToThemisTask() {
+    VersionReportTask() {
         group = AsteriaReportPlugin.GROUP
-        description = "Send version information to the Themis dashboard."
+        description = "Send version information to the API."
     }
 
     @Input
-    String getThemisApiPath() {
-        return themisApiPath
+    String getApiPath() {
+        return apiPath
     }
 
-    @Option(option = "themisApiPath", description = "The path after the base URL where the report will be posted to (e.g. /api/junit/report).")
-    void setThemisApiPath(String themisApiPath) {
-        this.themisApiPath = themisApiPath
+    @Option(option = "apiPath", description = "The path after the base URL where the report will be posted to (e.g. /api/junit/report).")
+    void setApiPath(String apiPath) {
+        this.apiPath = apiPath
     }
 
     @Input
@@ -45,7 +45,7 @@ class VersionReportToThemisTask extends AbstractReportToThemisTask {
         MetaInformation metaInfo = determineMetaInformation()
 
         if (Boolean.valueOf(publish)) {
-            postToThemis([
+            postToApi([
                     metaInfo: metaInfo,
                     version : versionString
             ])
@@ -54,12 +54,12 @@ class VersionReportToThemisTask extends AbstractReportToThemisTask {
         }
     }
 
-    void postToThemis(Map<String, Object> report) {
+    void postToApi(Map<String, Object> report) {
         String reportAsJson = new JsonBuilder(report).toString()
         logger.info("Json to report: ${reportAsJson}")
 
         def url = project.rootProject.extensions.findByType(AsteriaReportExtension).reportingUrl
-        def urlPath = new URI(url + getThemisApiPath())
+        def urlPath = new URI(url + getApiPath())
         def queryParams = urlPath.query?.split("&")?.collectEntries {
             def pair = it.split("=")
             pair.size() > 1 ? [(pair[0]): pair[1]] : [(pair[0]): null]

@@ -8,7 +8,7 @@ asteriaReport {
     envVarRepository = "WRONG_VAR" //this forces to determine repository by git
     envVarBranch = "WRONG_VAR" //this forces to determine repository by git
     depsJsonResult = file("${rootProject.buildDir}/reports/dependencyUpdates/report.json")
-    depsGraphResultFile = file("${rootProject.buildDir}/reports/depsGraphReport/report.json")
+    depsGraphResultFile = file("${rootProject.buildDir}/reports/depsGraph/report.json")
     junitXmlResults = fileTree(rootProject.projectDir) { include("**/TEST-*.xml") }
     junitBinaryResults = files(subprojects.collect { subproject ->
         ["test"].collect { "${subproject.buildDir}/test-results/${it}/binary" }

@@ -28,7 +28,7 @@ If you want to ensure reporting tasks are executed even if tests fail, then add 
 ```groovy
 subprojects.each { subproject ->
     subproject.tasks.findAll { it instanceof Test }*.each {
-        it.finalizedBy(reportToThemis, rootTestReport, zipTestReport, testUploadToBitbucketDownloads)
+        it.finalizedBy(testReport, rootTestReport, zipTestReport, testUploadToBitbucketDownloads)
     }
 }
 ```
@@ -37,9 +37,9 @@ subprojects.each { subproject ->
 
 Several tasks are available as shown below.
 
-### Report to Themis
+### Report
 
-`/gradlew test reportToThemis` Report executed test results to Themis <br/>
+`/gradlew test testReport` Report executed test results to API <br/>
 
 ### Root Test Report
 

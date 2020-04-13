@@ -2,14 +2,14 @@ package one.leftshift.asteria.report.tasks
 
 import spock.lang.Specification
 
-class DepsReportToThemisTaskTest extends Specification {
+class DepsReportTaskTest extends Specification {
 
     def "reading dependency updates results file returns necessary data"() {
         given:
             File resultFile = new File(this.class.classLoader.getResource("report.json").file)
 
         when:
-            def result = DepsReportToThemisTask.extractResults(resultFile)
+            def result = DepsReportTask.extractResults(resultFile)
 
         then:
             result.timestamp
