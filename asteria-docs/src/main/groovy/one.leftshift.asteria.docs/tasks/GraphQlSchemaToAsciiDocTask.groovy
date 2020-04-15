@@ -21,7 +21,7 @@ class GraphQlSchemaToAsciiDocTask extends DefaultTask {
     GraphQlSchemaToAsciiDocTask() {
         group = AsteriaDocsPlugin.GROUP
         description = "Convert GraphQL schema to Asciidoc documentation."
-        asciidocFile = project.file("${project.buildDir}/asciidoc/graphql-api.adoc")
+        asciidocFile = project.file("${project.buildDir}/asciidoc/generated/graphql-api.adoc")
     }
 
     @Input

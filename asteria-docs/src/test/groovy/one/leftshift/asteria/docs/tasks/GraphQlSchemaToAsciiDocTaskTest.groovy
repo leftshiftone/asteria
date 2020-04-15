@@ -22,7 +22,7 @@ class GraphQlSchemaToAsciiDocTaskTest extends Specification {
                     .withPluginClasspath()
                     .build()
             println result.output
-            def graphqlApiFile = new File("${project.projectDir}/project-docs/build/asciidoc/graphql-api.adoc")
+            def graphqlApiFile = new File("${project.projectDir}/project-docs/build/asciidoc/generated/graphql-api.adoc")
 
         then:
             result.output.contains "BUILD SUCCESSFUL"
