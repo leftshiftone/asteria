@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets
 
 class ConfigurationPropertiesToAsciiDocTask extends DefaultTask {
 
-    final String METADATA_PATH_IN_JAR = "META-INF/spring-configuration-metadata.json"
+    public static final String METADATA_PATH_IN_JAR = "META-INF/spring-configuration-metadata.json"
 
     @OutputFile
     File asciidocFile
