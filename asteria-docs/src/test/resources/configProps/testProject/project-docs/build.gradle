@@ -1,0 +1,20 @@
+sourceSets {
+    docs {
+        java {
+            srcDir "src/docs/asciidoc"
+        }
+        resources {
+            srcDir "src/docs/resources"
+        }
+    }
+}
+
+apply plugin: "one.leftshift.asteria-docs"
+
+asteriaDocs {
+    documents = ["index.adoc"]
+}
+
+dependencies {
+    generateConfigDocsFor "org.springframework.boot:spring-boot-autoconfigure:2.1.13.RELEASE"
+}

@@ -70,7 +70,7 @@ class ConfigurationPropertiesToAsciiDocTask extends DefaultTask {
             prop.with {
                 name = property['name']
                 text = property['description'] ?: "TODO: missing description"
-                type = property['type']
+                type = property['type'] ?: "-"
                 defaultValue = property['defaultValue']?.toString() ?: "-"
                 isDeprecated = property['deprecated']?.asBoolean() ?: false
                 deprecationReason = property['deprecation']?.getAt('reason')?.toString() ?: ""
@@ -84,27 +84,24 @@ class ConfigurationPropertiesToAsciiDocTask extends DefaultTask {
 
     private void generateAsciiDocFromProperties(List<ConfigProperty> properties, MarkupDocBuilder asciidoc) {
         properties.each { prop ->
-            asciidoc.textLine("|===")
-
-            asciidoc.text("| ").literalTextLine(prop.name)
-            asciidoc.text("| ").textLine(prop.text)
-            asciidoc.text("| ").text("Type: ").literalTextLine(prop.type)
-            asciidoc.text("| ").text("Default: ").literalTextLine(prop.defaultValue)
-
+            asciidoc.literalText(prop.name).newLine(true)
             // for deprecations use
             // @DeprecatedConfigurationProperty(reason = "renamed", replacement = "gaia.example.new")
             // on the getter of the property
             if (prop.isDeprecated) {
-                asciidoc.text("| ").text("Deprecated: ").text(prop.deprecationReason)
-
+                asciidoc.newLine()
+                asciidoc.text("IMPORTANT: Deprecated: ").text(prop.deprecationReason)
                 if (!prop.deprecationReplacement.isEmpty()) {
                     asciidoc.text(" (use ").literalText(prop.deprecationReplacement).text(")")
                 }
-
-                asciidoc.textLine("")
+                asciidoc.newLine()
+                asciidoc.newLine()
             }
-
-            asciidoc.textLine("|===")
+            asciidoc.text(prop.text).newLine(true)
+            asciidoc.boldText("Type: ").literalText(prop.type).newLine(true)
+            asciidoc.boldText("Default: ").literalTextLine(prop.defaultValue)
+            asciidoc.newLine()
+            asciidoc.newLine()
         }
     }
 
