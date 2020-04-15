@@ -83,7 +83,7 @@ class ConfigurationPropertiesToAsciiDocTask extends DefaultTask {
         properties.each { prop ->
             asciidoc.textLine("|===")
             asciidoc.text("| ").literalTextLine(prop.name)
-            asciidoc.text("| ").textLine(prop.description)
+            asciidoc.text("| ").textLine(prop.text)
             asciidoc.text("| ").text("Type: ").literalTextLine(prop.type)
             asciidoc.text("| ").text("Default: ").literalTextLine(prop.defaultValue)
             asciidoc.textLine("|===")
