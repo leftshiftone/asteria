@@ -72,6 +72,9 @@ class ConfigurationPropertiesToAsciiDocTask extends DefaultTask {
                 text = property['description'] ?: "TODO: missing description"
                 type = property['type']
                 defaultValue = property['defaultValue']?.toString() ?: "-"
+                isDeprecated = property['deprecated']?.asBoolean() ?: false
+                deprecationReason = property['deprecation']?.getAt('reason')?.toString() ?: ""
+                deprecationReplacement = property['deprecation']?.getAt('replacement')?.toString() ?: ""
             }
             properties.add(prop)
         }
@@ -82,10 +85,25 @@ class ConfigurationPropertiesToAsciiDocTask extends DefaultTask {
     private void generateAsciiDocFromProperties(List<ConfigProperty> properties, MarkupDocBuilder asciidoc) {
         properties.each { prop ->
             asciidoc.textLine("|===")
+
             asciidoc.text("| ").literalTextLine(prop.name)
             asciidoc.text("| ").textLine(prop.text)
             asciidoc.text("| ").text("Type: ").literalTextLine(prop.type)
             asciidoc.text("| ").text("Default: ").literalTextLine(prop.defaultValue)
+
+            // for deprecations use
+            // @DeprecatedConfigurationProperty(reason = "renamed", replacement = "gaia.example.new")
+            // on the getter of the property
+            if (prop.isDeprecated) {
+                asciidoc.text("| ").text("Deprecated: ").text(prop.deprecationReason)
+
+                if (!prop.deprecationReplacement.isEmpty()) {
+                    asciidoc.text(" (use ").literalText(prop.deprecationReplacement).text(")")
+                }
+
+                asciidoc.textLine("")
+            }
+
             asciidoc.textLine("|===")
         }
     }
@@ -95,6 +113,9 @@ class ConfigurationPropertiesToAsciiDocTask extends DefaultTask {
         String text
         String type
         String defaultValue
+        Boolean isDeprecated
+        String deprecationReason
+        String deprecationReplacement
 
         ConfigProperty() {}
     }
