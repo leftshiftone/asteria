@@ -1,5 +1,6 @@
 package one.leftshift.asteria.docs
 
+import one.leftshift.asteria.docs.tasks.ConfigurationPropertiesToAsciiDocTask
 import one.leftshift.asteria.docs.tasks.GraphQlSchemaToAsciiDocTask
 import org.asciidoctor.gradle.AsciidoctorPlugin
 import org.asciidoctor.gradle.AsciidoctorTask
@@ -22,6 +23,8 @@ class AsteriaDocsPlugin implements Plugin<Project> {
     static final String DOCS_JAR_TASK_NAME = "docsJar"
     static final String DOCS_ZIP_TASK_NAME = "docsZip"
     static final String DOCS_GRAPHQL_TO_ASCIIDOC_TASK_NAME = "graphqlToAsciidoc"
+    static final String DOCS_CONFIG_TO_ASCIIDOC_TASK_NAME = "configToAsciidoc"
+    static final String CONFIGURATION_NAME = "generateConfigDocsFor"
 
     File asciidocBuildDir
 
@@ -31,6 +34,11 @@ class AsteriaDocsPlugin implements Plugin<Project> {
         if (!asciidocBuildDir.exists()) {
             asciidocBuildDir.mkdirs()
         }
+
+        project.configurations.create(CONFIGURATION_NAME) {
+            transitive = false
+        }
+
         def extension = project.extensions.create(EXTENSION_NAME, AsteriaDocsExtension)
 
         project.logger.debug("Applying asciidoc plugin")
@@ -47,6 +55,7 @@ class AsteriaDocsPlugin implements Plugin<Project> {
         docsXmlTask.group = GROUP
         docsXmlTask.description = "Renders XML documentation (https://docbook.org)"
         docsXmlTask.outputs.upToDateWhen { false }
+        docsXmlTask.mustRunAfter(DOCS_GRAPHQL_TO_ASCIIDOC_TASK_NAME, DOCS_CONFIG_TO_ASCIIDOC_TASK_NAME)
         project.afterEvaluate {
             docsXmlTask.doFirst {
                 def attributes = extension.asciidocAttributes + [imagesdir: "./images"]
@@ -76,6 +85,7 @@ class AsteriaDocsPlugin implements Plugin<Project> {
         docsHtmlTask.group = GROUP
         docsHtmlTask.description = "Renders HTML documentation"
         docsHtmlTask.outputs.upToDateWhen { false }
+        docsHtmlTask.mustRunAfter(DOCS_GRAPHQL_TO_ASCIIDOC_TASK_NAME, DOCS_CONFIG_TO_ASCIIDOC_TASK_NAME)
         project.afterEvaluate {
             docsHtmlTask.doFirst {
                 def attributes = extension.asciidocAttributes + [
@@ -120,6 +130,7 @@ class AsteriaDocsPlugin implements Plugin<Project> {
         docsPdfTask.group = GROUP
         docsPdfTask.description = "Renders PDF documentation"
         docsPdfTask.outputs.upToDateWhen { false }
+        docsPdfTask.mustRunAfter(DOCS_GRAPHQL_TO_ASCIIDOC_TASK_NAME, DOCS_CONFIG_TO_ASCIIDOC_TASK_NAME)
         project.afterEvaluate {
             docsPdfTask.doFirst {
                 def attributes = extension.asciidocAttributes + [
@@ -186,5 +197,12 @@ class AsteriaDocsPlugin implements Plugin<Project> {
 
         project.logger.debug("Adding graphqlToAsciidoc task")
         def graphQlToAsciiDocTask = project.task(DOCS_GRAPHQL_TO_ASCIIDOC_TASK_NAME, type: GraphQlSchemaToAsciiDocTask)
+
+        project.logger.debug("Adding configToAsciidoc task")
+        def configToAsciiDocTask = project.task(DOCS_CONFIG_TO_ASCIIDOC_TASK_NAME, type: ConfigurationPropertiesToAsciiDocTask)
+        configToAsciiDocTask.group = GROUP
+        configToAsciiDocTask.description = "Creates AsciiDoc from configuration properties metadata"
+        configToAsciiDocTask.outputs.upToDateWhen { false }
+        configToAsciiDocTask.dependsOn project.configurations.findByName(CONFIGURATION_NAME)
     }
 }
