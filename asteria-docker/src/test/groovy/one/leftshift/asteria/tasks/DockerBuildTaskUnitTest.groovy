@@ -53,7 +53,7 @@ class DockerBuildTaskUnitTest extends Specification {
         AsteriaDockerExtension extension = new AsteriaDockerExtension(mockedProject)
         extension.repositoryURI = "someRepository"
         extension.name = "some-app"
-        extension.buildParameters = [new Tuple2("build-arg", "argumentName1=argumentValue1"),new Tuple2("build-arg", "argumentName2=argumentValue2")]
+        extension.buildParameters = ["{\"argumentName1\":\"argumentValue1\",\"argumentName2\":\"argumentValue2\"}"]
         extension.versionPrefix = "foo-"
         classUnderTest = new DockerBuildTask.DockerBuildTaskExecution(
                 mockedClient, extension
@@ -67,14 +67,12 @@ class DockerBuildTaskUnitTest extends Specification {
             arg1 = args[0]
             arg2 = args[2][0]
             arg3 = args[2][1]
-            arg4 = args[2][2]
         }
         arg1.toString() == "/tmp/mockedProject/build/docker"
         arg2.name() == "t"
         arg2.value() == "someRepository/some-app:foo-1.2.3-SNAPSHOT"
-        arg3.name() == "build-arg"
-        arg3.value() == "argumentName1=argumentValue1"
-        arg4.name() == "build-arg"
-        arg4.value() == "argumentName2=argumentValue2"
+        arg3.name() == "buildargs"
+        arg3.value() == URLEncoder.encode("{\"argumentName1\":\"argumentValue1\",\"argumentName2\":\"argumentValue2\"}","UTF-8")
+
     }
 }

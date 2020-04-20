@@ -15,7 +15,7 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 
 import java.nio.file.Paths
-
+import java.net.URLEncoder;
 /**
  * Triggers a docker build
  */
@@ -54,8 +54,8 @@ class DockerBuildTask extends DefaultTask {
 
             List<DockerClient.BuildParam> params = [DockerClient.BuildParam.name("${extension?.repositoryURI}/${extension?.name}:$version")] as LinkedList
 
-            extension.buildParameters?.forEach{
-                params.add(DockerClient.BuildParam.create(it.first,it.second))
+            extension.buildParameters?.forEach{ parameter ->
+                params.add(DockerClient.BuildParam.create("buildargs", URLEncoder.encode(parameter,"UTF-8")))
             }
 
 

@@ -12,7 +12,7 @@ class AsteriaDockerExtension {
     String repositoryURI
     String name
     String versionPrefix
-    List<Tuple2<String,String>> buildParameters
+    List<String> buildParameters
     ConfigurableFileCollection additionalFiles
     boolean copyArtifacts = true
     boolean withLatestTag = false
