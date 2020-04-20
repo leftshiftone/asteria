@@ -5,7 +5,6 @@ import org.apache.commons.io.FileUtils
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
-import org.gradle.internal.component.external.model.ComponentVariant
 
 import java.nio.file.Files
 import java.nio.file.Paths
