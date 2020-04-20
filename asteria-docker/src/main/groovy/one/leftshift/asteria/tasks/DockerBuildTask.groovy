@@ -51,10 +51,17 @@ class DockerBuildTask extends DefaultTask {
                     .addStrategies(SnapshotExtractionStrategy.instance, ReleaseExtractionStrategy.instance)
                     .extractVersion(BuildProperties.from(BuildPropertiesResolver.resolve(extension.project)), extension.project.version as String)
             final String version = extension?.versionPrefix ? "${extension.versionPrefix}$extractedVersion" : extractedVersion
+
+            List<DockerClient.BuildParam> params = [DockerClient.BuildParam.name("${extension?.repositoryURI}/${extension?.name}:$version")] as LinkedList
+
+            extension.buildParameters?.forEach{
+                params.add(DockerClient.BuildParam.create(it.first,it.second))
+            }
+
+
             extension.project.logger.quiet("Using version $version for image tag")
             dockerClient.build(Paths.get(extension.project.buildDir.toString(), "docker"),
-                    new LoggingBuildHandler(),
-                    DockerClient.BuildParam.name("${extension?.repositoryURI}/${extension?.name}:$version"))
+                    new LoggingBuildHandler(),*params)
         }
     }
 }
