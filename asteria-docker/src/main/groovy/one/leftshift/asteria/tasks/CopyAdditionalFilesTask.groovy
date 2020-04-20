@@ -1,9 +1,11 @@
 package one.leftshift.asteria.tasks
 
 import one.leftshift.asteria.AsteriaDockerExtension
+import org.apache.commons.io.FileUtils
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
+import org.gradle.internal.component.external.model.ComponentVariant
 
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -19,7 +21,11 @@ class CopyAdditionalFilesTask extends DefaultTask {
     @TaskAction
     void copyAdditionalFiles() {
         extension.additionalFiles?.each { file ->
-            Files.copy(file.toPath(), Paths.get("$project.buildDir/docker/", file.getName()))
+            if(file.isDirectory()){
+                FileUtils.copyDirectory(file, new File("$project.buildDir/docker/${file.getName()}"))
+            }else {
+                Files.copy(file.toPath(), Paths.get("$project.buildDir/docker/", file.getName()))
+            }
         }
     }
 }
