@@ -41,6 +41,7 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
 
         project.logger.debug("Applying nebula dependency lock plugin")
         project.pluginManager.apply DependencyLockPlugin
+        project.ext.set("dependencyLock.includeTransitives", true)
 
         project.logger.debug("Applying dependency interception")
         project.configurations.all {
