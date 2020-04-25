@@ -31,12 +31,14 @@ class AsteriaPublishPlugin implements Plugin<Project> {
         project.configure(project) {
             publishing {
                 repositories {
-                    maven {
-                        credentials(AwsCredentials) {
-                            accessKey awsCredentials(project)?.AWSAccessKeyId
-                            secretKey awsCredentials(project)?.AWSSecretKey
+                    if (awsCredentials(project)) {
+                        maven {
+                            credentials(AwsCredentials) {
+                                accessKey awsCredentials(project)?.AWSAccessKeyId
+                                secretKey awsCredentials(project)?.AWSSecretKey
+                            }
+                            url project.version.toString().endsWith(SNAPSHOT_VERSION_SUFFIX) ? extension.snapshotRepositoryUrl : extension.releaseRepositoryUrl
                         }
-                        url project.version.toString().endsWith(SNAPSHOT_VERSION_SUFFIX) ? extension.snapshotRepositoryUrl : extension.releaseRepositoryUrl
                     }
                 }
                 publications {
@@ -110,7 +112,9 @@ class AsteriaPublishPlugin implements Plugin<Project> {
                     new EnvironmentVariableCredentialsProvider()
             ).credentials
         } catch (IllegalArgumentException | SdkBaseException ex) {
-            project.logger.error("Error reading AWS credentials: " + ex.message)
+            if (project.logger.isInfoEnabled()) {
+                project.logger.error("Error reading AWS credentials: " + ex.message)
+            }
             return null
         }
     }
