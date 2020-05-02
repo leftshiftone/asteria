@@ -44,6 +44,13 @@ class AsteriaPublishPlugin implements Plugin<Project> {
                 publications {
                     mavenPom(MavenPublication) {
                         from components.java
+                        project.afterEvaluate {
+                            if (extension.additionalArtifacts) {
+                                extension.additionalArtifacts.each {
+                                    artifact it
+                                }
+                            }
+                        }
                         pom.withXml {
                             Map resolvedVersionMap = [:]
                             Set<ResolvedArtifact> resolvedArtifacts = []
