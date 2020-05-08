@@ -20,6 +20,7 @@ import static javax.mail.Message.RecipientType.TO
 
 class SendEmailTask extends DefaultTask {
 
+    private boolean interruptOnError = false
     private String sender = ""
     private String recipients = ""
     private String subject = ""
@@ -29,6 +30,16 @@ class SendEmailTask extends DefaultTask {
     SendEmailTask() {
         group = AsteriaEmailPlugin.GROUP
         description = "Send email."
+    }
+
+    @Input
+    boolean getInterruptOnError() {
+        return interruptOnError
+    }
+
+    @Option(option = "interruptOnError", description = "Whether or not to interrupt gradle when an error occurs (default: false)")
+    void setInterruptOnError(boolean interruptOnError) {
+        this.interruptOnError = interruptOnError
     }
 
     @Input
@@ -157,6 +168,13 @@ class SendEmailTask extends DefaultTask {
         }
         message.setContent(multipart)
         project.logger.quiet("Sending email to ${emailRecipients}")
-        Transport.send(message)
+        try {
+            Transport.send(message)
+        } catch (MessagingException ex) {
+            project.logger.error("Failure sending email", ex)
+            if (interruptOnError) {
+                throw ex
+            }
+        }
     }
 }
