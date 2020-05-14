@@ -289,6 +289,8 @@ class AsteriaDependencyPluginTest extends Specification {
             Files.exists(spockJar)
     }
 
+    //todo: test dependency lock
+
     def "custom snapshot repository is added if setting has been enabled"() {
         given:
             Project project = ProjectBuilder.builder().build()
