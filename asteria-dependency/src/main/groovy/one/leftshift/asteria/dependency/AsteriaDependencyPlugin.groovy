@@ -145,7 +145,7 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
                     String branchName = getCurrentGitBranch(project)
                     boolean isPatchReleaseBranch = BranchResolver.isPatchReleaseBranch(branchName, extension.patchReleaseBranchRegex)
                     if (isPatchReleaseBranch) {
-                        project.logger.quiet("Dependency lock is honored branch ${branchName} for version ${project.version}")
+                        project.logger.quiet("Dependency lock is honored for branch ${branchName} and version ${project.version}")
                         project.ext.set("dependencyLock.ignore", false)
                     } else {
                         project.logger.info("Dependency lock is ignored for version ${project.version}")
