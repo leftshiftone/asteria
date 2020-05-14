@@ -3,7 +3,6 @@ package one.leftshift.asteria.publish.tasks
 import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder
 import org.gradle.testkit.runner.GradleRunner
-import spock.lang.Ignore
 import spock.lang.Specification
 
 class PublishTaskTest extends Specification {
@@ -69,57 +68,85 @@ class PublishTaskTest extends Specification {
   </dependencies>""")
     }
 
-    //todo: test master branch
+    def "no custom snapshot repository is used for master branch"() {
+        given:
+            Project project = ProjectBuilder.builder().build()
+            new AntBuilder().copy(todir: project.projectDir.absolutePath) {
+                fileset(dir: "src/test/resources/testProject")
+            }
+            def initGit = new ProcessBuilder(["git", "init"]).directory(project.projectDir).start()
+            initGit.waitForProcessOutput(System.out, System.err)
+            def configEmailGit = new ProcessBuilder(["git", "config", "user.email", "pipelines@bitbucket.org"]).directory(project.projectDir).start()
+            configEmailGit.waitForProcessOutput(System.out, System.err)
+            def configNameGit = new ProcessBuilder(["git", "config", "user.name", "Bitbucket Pipelines"]).directory(project.projectDir).start()
+            configNameGit.waitForProcessOutput(System.out, System.err)
+            def stageGit = new ProcessBuilder(["git", "add", "--all"]).directory(project.projectDir).start()
+            stageGit.waitForProcessOutput(System.out, System.err)
+            def commitGit = new ProcessBuilder(["git", "commit", "-m", "initial"]).directory(project.projectDir).start()
+            commitGit.waitForProcessOutput(System.out, System.err)
 
-    @Ignore
+        when:
+            def result = GradleRunner.create()
+                    .withProjectDir(project.projectDir)
+                    .withArguments("assemble", "--debug", "--stacktrace")
+                    .withPluginClasspath()
+                    .build()
+
+        then:
+            result.output.contains "Currently on branch master"
+            result.output.contains "Snapshot repositories for branches are enabled"
+            result.output.contains "Branch master does not match regex"
+            result.output.contains "Using snapshot repository s3://leftshiftone-maven-artifacts.s3.eu-central-1.amazonaws.com/test-snapshots"
+    }
+
     def "custom snapshot repository is used for feature branch"() {
         given:
-            //todo: test with test project
             Project project = ProjectBuilder.builder().build()
-            File projectDir = project.projectDir
-            File projectBuildFile = new File(projectDir, "build.gradle")
-            projectBuildFile << """
-            plugins {
-                id "java"
-                id "one.leftshift.asteria-publish"
+            new AntBuilder().copy(todir: project.projectDir.absolutePath) {
+                fileset(dir: "src/test/resources/testProject")
             }
-            asteriaPublish {
-                snapshotRepositoryUrl = "s3://leftshiftone-maven-artifacts.s3.eu-central-1.amazonaws.com/test-snapshots"
-                enableBranchSnapshotRepositories = true
-                createSnapshotRepositories = false
-            }
-            """.stripIndent()
-
-            File javaSrcDir = new File("${projectDir.absolutePath}/src/main/java")
-            javaSrcDir.mkdirs()
-            new File(javaSrcDir, "Foo.java").createNewFile()
-            File resourcesDir = new File("${projectDir.absolutePath}/src/main/resources")
-            resourcesDir.mkdirs()
-
-            def initGit = new ProcessBuilder(["git", "init"]).directory(projectDir).start()
+            def initGit = new ProcessBuilder(["git", "init"]).directory(project.projectDir).start()
             initGit.waitForProcessOutput(System.out, System.err)
-            def configEmailGit = new ProcessBuilder(["git", "config", "user.email", "pipelines@bitbucket.org"]).directory(projectDir).start()
+            def configEmailGit = new ProcessBuilder(["git", "config", "user.email", "pipelines@bitbucket.org"]).directory(project.projectDir).start()
             configEmailGit.waitForProcessOutput(System.out, System.err)
-            def configNameGit = new ProcessBuilder(["git", "config", "user.name", "Bitbucket Pipelines"]).directory(projectDir).start()
+            def configNameGit = new ProcessBuilder(["git", "config", "user.name", "Bitbucket Pipelines"]).directory(project.projectDir).start()
             configNameGit.waitForProcessOutput(System.out, System.err)
-            def stageGit = new ProcessBuilder(["git", "add", "--all"]).directory(projectDir).start()
+            def stageGit = new ProcessBuilder(["git", "add", "--all"]).directory(project.projectDir).start()
             stageGit.waitForProcessOutput(System.out, System.err)
-            def commitGit = new ProcessBuilder(["git", "commit", "-m", "initial"]).directory(projectDir).start()
+            def commitGit = new ProcessBuilder(["git", "commit", "-m", "initial"]).directory(project.projectDir).start()
             commitGit.waitForProcessOutput(System.out, System.err)
-            def branchGit = new ProcessBuilder(["git", "checkout", "-b", "feature/FOO-666"]).directory(projectDir).start()
+            def branchGit = new ProcessBuilder(["git", "checkout", "-b", "feature/FOO-666"]).directory(project.projectDir).start()
             branchGit.waitForProcessOutput(System.out, System.err)
 
         when:
-            String result = GradleRunner.create()
-                    .withProjectDir(projectDir)
-                    .withArguments("assemble", "publishToMavenLocal", "--debug", "--stacktrace")
+            def result = GradleRunner.create()
+                    .withProjectDir(project.projectDir)
+                    .withArguments("assemble", "--debug", "--stacktrace")
                     .withPluginClasspath()
-                    .build().output
+                    .build()
 
         then:
-            result.contains "Currently on branch feature/FOO-666"
-            result.contains "Snapshot repositories for branches are enabled"
-            result.contains "Using snapshot repository url s3://leftshiftone-maven-artifacts.s3.eu-central-1.amazonaws.com/test-snapshots-foo-666"
+            result.output.contains "Currently on branch feature/FOO-666"
+            result.output.contains "Snapshot repositories for branches are enabled"
+            result.output.contains "Using snapshot repository s3://leftshiftone-maven-artifacts.s3.eu-central-1.amazonaws.com/test-snapshots-foo-666"
+    }
+
+    def "default snapshot repository is used for not existing git repository"() {
+        given:
+            Project project = ProjectBuilder.builder().build()
+            new AntBuilder().copy(todir: project.projectDir.absolutePath) {
+                fileset(dir: "src/test/resources/testProject")
+            }
+
+        when:
+            def result = GradleRunner.create()
+                    .withProjectDir(project.projectDir)
+                    .withArguments("assemble", "--debug", "--stacktrace")
+                    .withPluginClasspath()
+                    .build()
+
+        then:
+            result.output.contains "Unable to get current branch: repository not found"
     }
 
 }

@@ -8,6 +8,7 @@ import com.amazonaws.auth.AWSCredentialsProviderChain
 import com.amazonaws.auth.EnvironmentVariableCredentialsProvider
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
 import com.amazonaws.services.s3.AmazonS3
+import com.amazonaws.services.s3.AmazonS3ClientBuilder
 import com.amazonaws.services.s3.model.ObjectMetadata
 import com.amazonaws.services.s3.model.ObjectTagging
 import com.amazonaws.services.s3.model.PutObjectRequest
@@ -21,7 +22,6 @@ import org.gradle.api.artifacts.ResolvedArtifact
 import org.gradle.api.credentials.AwsCredentials
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.publish.maven.plugins.MavenPublishPlugin
-import com.amazonaws.services.s3.AmazonS3ClientBuilder
 import org.gradle.jvm.tasks.Jar
 
 import java.time.ZoneOffset
@@ -46,15 +46,17 @@ class AsteriaPublishPlugin implements Plugin<Project> {
             publishing {
                 repositories {
                     if (awsCredentials(project)) {
-                        if (!isSnapshotVersion && !extension.releaseRepositoryUrl) {
-                            project.logger.info("No release repository url set")
-                        } else {
-                            maven {
-                                credentials(AwsCredentials) {
-                                    accessKey awsCredentials(project)?.AWSAccessKeyId
-                                    secretKey awsCredentials(project)?.AWSSecretKey
+                        project.afterEvaluate {
+                            if (!isSnapshotVersion && !extension.releaseRepositoryUrl) {
+                                project.logger.info("No release repository url set")
+                            } else {
+                                maven {
+                                    credentials(AwsCredentials) {
+                                        accessKey awsCredentials(project)?.AWSAccessKeyId
+                                        secretKey awsCredentials(project)?.AWSSecretKey
+                                    }
+                                    url isSnapshotVersion ? getSnapshotRepositoryUrl(extension, project) : extension.releaseRepositoryUrl
                                 }
-                                url isSnapshotVersion ? getSnapshotRepositoryUrl(extension, project) : extension.releaseRepositoryUrl
                             }
                         }
                     }
