@@ -3,10 +3,6 @@ package one.leftshift.asteria.publish
 import com.amazonaws.AmazonServiceException
 import com.amazonaws.SdkBaseException
 import com.amazonaws.SdkClientException
-import com.amazonaws.auth.AWSCredentials
-import com.amazonaws.auth.AWSCredentialsProviderChain
-import com.amazonaws.auth.EnvironmentVariableCredentialsProvider
-import com.amazonaws.auth.profile.ProfileCredentialsProvider
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.AmazonS3ClientBuilder
 import com.amazonaws.services.s3.model.ObjectMetadata
@@ -22,6 +18,10 @@ import org.gradle.api.artifacts.ResolvedArtifact
 import org.gradle.api.credentials.AwsCredentials
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.publish.maven.plugins.MavenPublishPlugin
+import org.gradle.internal.impldep.com.amazonaws.auth.AWSCredentials
+import org.gradle.internal.impldep.com.amazonaws.auth.AWSCredentialsProviderChain
+import org.gradle.internal.impldep.com.amazonaws.auth.EnvironmentVariableCredentialsProvider
+import org.gradle.internal.impldep.com.amazonaws.auth.profile.ProfileCredentialsProvider
 import org.gradle.jvm.tasks.Jar
 
 import java.time.ZoneOffset
