@@ -9,7 +9,7 @@ import com.github.benmanes.gradle.versions.VersionsPlugin
 import io.spring.gradle.dependencymanagement.DependencyManagementPlugin
 import nebula.plugin.dependencylock.DependencyLockPlugin
 import nebula.plugin.release.ReleasePlugin
-import one.leftshift.asteria.common.branchsnapshots.BranchSnapshotResolver
+import one.leftshift.asteria.common.branch.BranchResolver
 import one.leftshift.asteria.dependency.tasks.PersistDependencyLockTask
 import org.ajoberstar.grgit.Grgit
 import org.gradle.api.Plugin
@@ -71,18 +71,8 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
         project.logger.debug("Adding custom snapshot repository if applicable")
         project.afterEvaluate {
             if (extension.enableBranchSnapshotRepositories) {
-                String branchName = null
-                try {
-                    Grgit git = Grgit.open(dir: project.rootProject.projectDir.absolutePath)
-                    branchName = git.branch.current.name ?: "unknown"
-                } catch (Exception ex) {
-                    project.logger.warn("Unable to get current branch: ${ex.message}")
-                    if (project.logger.isInfoEnabled()) {
-                        project.logger.error(ex.message, ex)
-                    }
-                }
-                project.logger.info("Currently on branch {}", branchName)
-                String snapshotRepoUrl = BranchSnapshotResolver.getSnapshotRepositoryUrl(
+                String branchName = getCurrentGitBranch(project)
+                String snapshotRepoUrl = BranchResolver.getSnapshotRepositoryUrlBasedOnBranch(
                         true,
                         extension.snapshotRepositoryUrl,
                         branchName,
@@ -189,6 +179,21 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
             }
             return null
         }
+    }
+
+    private static String getCurrentGitBranch(Project project) {
+        String branchName = null
+        try {
+            Grgit git = Grgit.open(dir: project.rootProject.projectDir.absolutePath)
+            branchName = git.branch.current.name ?: "unknown"
+            project.logger.info("Currently on branch {}", branchName)
+        } catch (Exception ex) {
+            project.logger.warn("Unable to get current branch: ${ex.message}")
+            if (project.logger.isInfoEnabled()) {
+                project.logger.error(ex.message, ex)
+            }
+        }
+        return branchName
     }
 
     private static void interceptVersion(Project project, DependencyResolveDetails dependency) {

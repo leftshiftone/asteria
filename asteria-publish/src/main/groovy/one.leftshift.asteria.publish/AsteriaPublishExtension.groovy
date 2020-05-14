@@ -1,6 +1,6 @@
 package one.leftshift.asteria.publish
 
-import one.leftshift.asteria.common.branchsnapshots.BranchSnapshotResolver
+import one.leftshift.asteria.common.branch.BranchResolver
 
 class AsteriaPublishExtension {
 
@@ -28,12 +28,12 @@ class AsteriaPublishExtension {
     /**
      * Branch regex.
      */
-    String snapshotBranchRegex = BranchSnapshotResolver.SNAPSHOT_BRANCH_REGEX
+    String snapshotBranchRegex = BranchResolver.SNAPSHOT_BRANCH_REGEX
 
     /**
      * Regex to determine name for snapshot repository to be used or created based on the branch name (regex groups are not supported).
      */
-    String snapshotRepositoryNameRegex = BranchSnapshotResolver.SNAPSHOT_REPOSITORY_NAME_REGEX
+    String snapshotRepositoryNameRegex = BranchResolver.SNAPSHOT_REPOSITORY_NAME_REGEX
 
     /**
      * Snapshot expiration date in days.
