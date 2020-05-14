@@ -1,10 +1,19 @@
 package one.leftshift.asteria.publish
 
+import com.amazonaws.AmazonServiceException
 import com.amazonaws.SdkBaseException
+import com.amazonaws.SdkClientException
 import com.amazonaws.auth.AWSCredentials
 import com.amazonaws.auth.AWSCredentialsProviderChain
 import com.amazonaws.auth.EnvironmentVariableCredentialsProvider
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
+import com.amazonaws.services.s3.AmazonS3
+import com.amazonaws.services.s3.model.ObjectMetadata
+import com.amazonaws.services.s3.model.ObjectTagging
+import com.amazonaws.services.s3.model.PutObjectRequest
+import com.amazonaws.services.s3.model.Tag
+import one.leftshift.asteria.common.branchsnapshots.BranchSnapshotResolver
+import org.ajoberstar.grgit.Grgit
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ModuleVersionIdentifier
@@ -12,7 +21,11 @@ import org.gradle.api.artifacts.ResolvedArtifact
 import org.gradle.api.credentials.AwsCredentials
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.publish.maven.plugins.MavenPublishPlugin
+import com.amazonaws.services.s3.AmazonS3ClientBuilder
 import org.gradle.jvm.tasks.Jar
+
+import java.time.ZoneOffset
+import java.time.ZonedDateTime
 
 class AsteriaPublishPlugin implements Plugin<Project> {
     static final String GROUP = "Asteria Publish"
@@ -22,22 +35,27 @@ class AsteriaPublishPlugin implements Plugin<Project> {
 
     @Override
     void apply(Project project) {
-        def extension = project.extensions.create(EXTENSION_NAME, AsteriaPublishExtension)
+        AsteriaPublishExtension extension = project.extensions.create(EXTENSION_NAME, AsteriaPublishExtension)
 
         project.logger.debug("Applying maven publish plugin")
         project.pluginManager.apply MavenPublishPlugin
 
         project.logger.debug("Configuring maven publish plugin")
         project.configure(project) {
+            boolean isSnapshotVersion = project.version.toString().endsWith(SNAPSHOT_VERSION_SUFFIX)
             publishing {
                 repositories {
                     if (awsCredentials(project)) {
-                        maven {
-                            credentials(AwsCredentials) {
-                                accessKey awsCredentials(project)?.AWSAccessKeyId
-                                secretKey awsCredentials(project)?.AWSSecretKey
+                        if (!isSnapshotVersion && !extension.releaseRepositoryUrl) {
+                            project.logger.info("No release repository url set")
+                        } else {
+                            maven {
+                                credentials(AwsCredentials) {
+                                    accessKey awsCredentials(project)?.AWSAccessKeyId
+                                    secretKey awsCredentials(project)?.AWSSecretKey
+                                }
+                                url isSnapshotVersion ? getSnapshotRepositoryUrl(extension, project) : extension.releaseRepositoryUrl
                             }
-                            url project.version.toString().endsWith(SNAPSHOT_VERSION_SUFFIX) ? extension.snapshotRepositoryUrl : extension.releaseRepositoryUrl
                         }
                     }
                 }
@@ -124,5 +142,60 @@ class AsteriaPublishPlugin implements Plugin<Project> {
             }
             return null
         }
+    }
+
+    private static String getSnapshotRepositoryUrl(AsteriaPublishExtension extension, Project project) {
+        String branchName = null
+        try {
+            Grgit git = Grgit.open(dir: project.rootProject.projectDir.absolutePath)
+            branchName = git.branch.current.name ?: "unknown"
+        } catch (Exception ex) {
+            project.logger.warn("Unable to get current branch: ${ex.message}")
+            if (project.logger.isInfoEnabled()) {
+                project.logger.error(ex.message, ex)
+            }
+            return extension.snapshotRepositoryUrl
+        }
+        project.logger.info("Currently on branch {}", branchName)
+
+        String snapshotRepository = BranchSnapshotResolver.getSnapshotRepositoryUrl(extension.enableBranchSnapshotRepositories,
+                extension.snapshotRepositoryUrl,
+                branchName,
+                extension.snapshotBranchRegex,
+                extension.snapshotRepositoryNameRegex,
+                project.logger)
+
+        if (!extension.createSnapshotRepositories) {
+            return snapshotRepository
+        }
+
+        URI s3Uri = new URI(snapshotRepository)
+        String[] s3UriElements = s3Uri.getHost().split(".")
+        String bucket = s3UriElements[0]
+        String region = s3UriElements[2]
+        String snapshotRepositoryPath = s3Uri.getPath()
+
+        AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(region).build()
+
+        boolean snapshotRepositoryExists = s3.doesObjectExist(bucket, snapshotRepositoryPath)
+        if (snapshotRepositoryExists) {
+            return snapshotRepository
+        }
+
+        try {
+            ObjectMetadata metadata = new ObjectMetadata().with {
+                it.setExpirationTime(ZonedDateTime.now(ZoneOffset.UTC).plusDays(extension.snapshotsExpirationInDays).toInstant().toDate())
+                return it
+            }
+            PutObjectRequest request = new PutObjectRequest(bucket, snapshotRepositoryPath, null)
+                    .withTagging(new ObjectTagging([new Tag("temporary", "true")]))
+                    .withMetadata(metadata)
+            def response = s3.putObject(request)
+            project.logger.info("Created object {}", response.metadata?.rawMetadata)
+        } catch (SdkClientException | AmazonServiceException ex) {
+            project.logger.error("Failed to create object ${snapshotRepositoryPath}: ${ex.message}", ex)
+        }
+
+        return snapshotRepository
     }
 }

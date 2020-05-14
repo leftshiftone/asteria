@@ -1,7 +1,11 @@
 apply plugin: 'java-gradle-plugin'
 
 dependencies {
+    implementation project(":asteria-common")
+    implementation("org.ajoberstar:grgit:1.9.3")
+    implementation("org.eclipse.jgit:org.eclipse.jgit:4.5.2.201704071617-r")
     implementation("com.amazonaws:aws-java-sdk-core:1.11.505")
+    implementation("com.amazonaws:aws-java-sdk-s3:1.11.505")
 }
 
 gradlePlugin {
