@@ -289,6 +289,31 @@ class AsteriaDependencyPluginTest extends Specification {
             Files.exists(spockJar)
     }
 
+    def "custom snapshot repository is added if setting has been enabled"() {
+        given:
+            Project project = ProjectBuilder.builder().build()
+            File projectDir = project.projectDir
+            new AntBuilder().copy(todir: project.projectDir.absolutePath) {
+                fileset(dir: "src/test/resources/testProject")
+            }
+            setupGitRepo(projectDir)
+            def branchGit = new ProcessBuilder(["git", "checkout", "-b", "feature/FOO-666"]).directory(projectDir).start()
+            branchGit.waitForProcessOutput(System.out, System.err)
+
+        when:
+            def result = GradleRunner.create()
+                    .withProjectDir(project.projectDir)
+                    .withArguments("assemble", "--debug", "--stacktrace")
+                    .withPluginClasspath()
+                    .build()
+            println result.output
+
+        then:
+            result.output.contains "Currently on branch feature/FOO-666"
+            result.output.contains "Snapshot repositories for branches are enabled"
+            result.output.contains "Using snapshot repository s3://leftshiftone-maven-artifacts.s3.eu-central-1.amazonaws.com/test-snapshots-foo-666"
+    }
+
     private static void setupGitRepo(File projectDir) {
         def gitignoreFile = new File(projectDir, ".gitignore")
         gitignoreFile << [".gradle", "build/", "userHome/"].join("\n")

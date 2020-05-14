@@ -2,6 +2,7 @@ apply plugin: 'java-gradle-plugin'
 
 dependencies {
     implementation project(":asteria-common")
+    implementation("com.amazonaws:aws-java-sdk-core:1.11.505")
     implementation("com.netflix.nebula:nebula-release-plugin:6.3.5")
     implementation("com.netflix.nebula:gradle-dependency-lock-plugin:6.1.2")
     implementation("org.ajoberstar:grgit:1.9.3")

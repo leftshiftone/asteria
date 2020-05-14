@@ -1,5 +1,10 @@
 package one.leftshift.asteria.dependency
 
+import com.amazonaws.SdkBaseException
+import com.amazonaws.auth.AWSCredentials
+import com.amazonaws.auth.AWSCredentialsProviderChain
+import com.amazonaws.auth.EnvironmentVariableCredentialsProvider
+import com.amazonaws.auth.profile.ProfileCredentialsProvider
 import com.github.benmanes.gradle.versions.VersionsPlugin
 import io.spring.gradle.dependencymanagement.DependencyManagementPlugin
 import nebula.plugin.dependencylock.DependencyLockPlugin
@@ -79,22 +84,23 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
                 project.logger.info("Currently on branch {}", branchName)
                 String snapshotRepoUrl = BranchSnapshotResolver.getSnapshotRepositoryUrl(
                         true,
-                        null,
+                        extension.snapshotRepositoryUrl,
                         branchName,
                         extension.snapshotBranchRegex,
                         extension.snapshotRepositoryNameRegex,
                         project.logger)
 
-                if (!snapshotRepoUrl) {
-                    project.logger.info("Snapshot repository url is empty")
+                if (snapshotRepoUrl == extension.snapshotRepositoryUrl || snapshotRepoUrl == null || extension.snapshotRepositoryUrl == null) {
+                    project.logger.info("No custom snapshot repository url detected.")
                 } else {
                     project.logger.info("Snapshot repository url is {}", snapshotRepoUrl)
-                    if (project.gradle.awsAccessKey && project.gradle.awsSecretKey) {
+                    AWSCredentials awsCredentials = awsCredentials(project)
+                    if (awsCredentials) {
                         project.repositories {
                             maven {
                                 credentials(AwsCredentials) {
-                                    accessKey project.gradle.awsAccessKey
-                                    secretKey project.gradle.awsSecretKey
+                                    accessKey awsCredentials.AWSAccessKeyId
+                                    secretKey awsCredentials.AWSSecretKey
                                 }
                                 url snapshotRepoUrl
                             }
@@ -167,6 +173,21 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
                 def persistLockTask = project.rootProject.tasks.getByName(PERSIST_DEPENDENCY_LOCK_TASK_NAME)
                 project.rootProject.tasks.release.dependsOn generateLockTask, saveLockTask, persistLockTask
             }
+        }
+    }
+
+    static AWSCredentials awsCredentials(Project project) {
+        project.logger.info("Looking for AWS credentials")
+        try {
+            return new AWSCredentialsProviderChain(
+                    new ProfileCredentialsProvider(),
+                    new EnvironmentVariableCredentialsProvider()
+            ).credentials
+        } catch (IllegalArgumentException | SdkBaseException ex) {
+            if (project.logger.isInfoEnabled()) {
+                project.logger.error("Error reading AWS credentials: " + ex.message)
+            }
+            return null
         }
     }
 

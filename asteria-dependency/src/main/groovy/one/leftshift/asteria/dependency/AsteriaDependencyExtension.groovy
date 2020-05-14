@@ -35,4 +35,8 @@ class AsteriaDependencyExtension {
      */
     String snapshotRepositoryNameRegex = BranchSnapshotResolver.SNAPSHOT_REPOSITORY_NAME_REGEX
 
+    /**
+     * The URL pointing to the maven repository.
+     */
+    String snapshotRepositoryUrl = "s3://leftshiftone-maven-artifacts.s3.eu-central-1.amazonaws.com/snapshots"
 }
