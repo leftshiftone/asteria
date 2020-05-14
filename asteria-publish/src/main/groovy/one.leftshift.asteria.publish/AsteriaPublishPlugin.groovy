@@ -3,17 +3,13 @@ package one.leftshift.asteria.publish
 import com.amazonaws.AmazonServiceException
 import com.amazonaws.SdkBaseException
 import com.amazonaws.SdkClientException
-import com.amazonaws.auth.AWSCredentials
-import com.amazonaws.auth.AWSCredentialsProviderChain
-import com.amazonaws.auth.EnvironmentVariableCredentialsProvider
-import com.amazonaws.auth.profile.ProfileCredentialsProvider
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.AmazonS3ClientBuilder
 import com.amazonaws.services.s3.model.ObjectMetadata
 import com.amazonaws.services.s3.model.ObjectTagging
 import com.amazonaws.services.s3.model.PutObjectRequest
 import com.amazonaws.services.s3.model.Tag
-import one.leftshift.asteria.common.branchsnapshots.BranchResolver
+import one.leftshift.asteria.common.branch.BranchResolver
 import org.ajoberstar.grgit.Grgit
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -22,6 +18,10 @@ import org.gradle.api.artifacts.ResolvedArtifact
 import org.gradle.api.credentials.AwsCredentials
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.publish.maven.plugins.MavenPublishPlugin
+import org.gradle.internal.impldep.com.amazonaws.auth.AWSCredentials
+import org.gradle.internal.impldep.com.amazonaws.auth.AWSCredentialsProviderChain
+import org.gradle.internal.impldep.com.amazonaws.auth.EnvironmentVariableCredentialsProvider
+import org.gradle.internal.impldep.com.amazonaws.auth.profile.ProfileCredentialsProvider
 import org.gradle.jvm.tasks.Jar
 
 import java.time.ZoneOffset
