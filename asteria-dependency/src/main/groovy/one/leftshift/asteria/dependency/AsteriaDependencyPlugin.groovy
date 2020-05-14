@@ -4,11 +4,14 @@ import com.github.benmanes.gradle.versions.VersionsPlugin
 import io.spring.gradle.dependencymanagement.DependencyManagementPlugin
 import nebula.plugin.dependencylock.DependencyLockPlugin
 import nebula.plugin.release.ReleasePlugin
+import one.leftshift.asteria.common.branchsnapshots.BranchSnapshotResolver
 import one.leftshift.asteria.dependency.tasks.PersistDependencyLockTask
+import org.ajoberstar.grgit.Grgit
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ComponentSelection
 import org.gradle.api.artifacts.DependencyResolveDetails
+import org.gradle.api.credentials.AwsCredentials
 
 class AsteriaDependencyPlugin implements Plugin<Project> {
     static final String GROUP = "Asteria Dependency"
@@ -56,6 +59,49 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
                 } else if (dep.requested.version == LATEST_SMART_VERSION) {
                     interceptVersion(project, dep)
                     project.logger.info("Reassigned ${dep.requested.group}:${dep.requested.name} to version ${dep.target.version} (was ${dep.requested.version})")
+                }
+            }
+        }
+
+        project.logger.debug("Adding custom snapshot repository if applicable")
+        project.afterEvaluate {
+            if (extension.enableBranchSnapshotRepositories) {
+                String branchName = null
+                try {
+                    Grgit git = Grgit.open(dir: project.rootProject.projectDir.absolutePath)
+                    branchName = git.branch.current.name ?: "unknown"
+                } catch (Exception ex) {
+                    project.logger.warn("Unable to get current branch: ${ex.message}")
+                    if (project.logger.isInfoEnabled()) {
+                        project.logger.error(ex.message, ex)
+                    }
+                }
+                project.logger.info("Currently on branch {}", branchName)
+                String snapshotRepoUrl = BranchSnapshotResolver.getSnapshotRepositoryUrl(
+                        true,
+                        null,
+                        branchName,
+                        extension.snapshotBranchRegex,
+                        extension.snapshotRepositoryNameRegex,
+                        project.logger)
+
+                if (!snapshotRepoUrl) {
+                    project.logger.info("Snapshot repository url is empty")
+                } else {
+                    project.logger.info("Snapshot repository url is {}", snapshotRepoUrl)
+                    if (project.gradle.awsAccessKey && project.gradle.awsSecretKey) {
+                        project.repositories {
+                            maven {
+                                credentials(AwsCredentials) {
+                                    accessKey project.gradle.awsAccessKey
+                                    secretKey project.gradle.awsSecretKey
+                                }
+                                url snapshotRepoUrl
+                            }
+                        }
+                    } else {
+                        project.logger.warn("Snapshot repository credentials not found. Snapshot repository {} cannot be added. Please specify AWS credentials.", snapshotRepoUrl)
+                    }
                 }
             }
         }

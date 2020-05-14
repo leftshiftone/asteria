@@ -10,6 +10,9 @@ import java.util.regex.Matcher
  */
 abstract class BranchSnapshotResolver {
 
+    public static final String SNAPSHOT_BRANCH_REGEX = "^(feature|bug|bugfix)\\/([A-Z]+-\\d+).*\$"
+    public static final String SNAPSHOT_REPOSITORY_NAME_REGEX = "[A-Z]+-\\d+"
+
     static String getSnapshotRepositoryUrl(boolean enableBranchSnapshotRepositories,
                                            String defaultSnapshotRepositoryUrl,
                                            String branchName,

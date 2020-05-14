@@ -4,14 +4,15 @@ import groovy.util.logging.Slf4j
 import spock.lang.Specification
 import spock.lang.Unroll
 
+import static one.leftshift.asteria.common.branchsnapshots.BranchSnapshotResolver.SNAPSHOT_BRANCH_REGEX
+import static one.leftshift.asteria.common.branchsnapshots.BranchSnapshotResolver.SNAPSHOT_REPOSITORY_NAME_REGEX
+
 /**
  * @author Michael Mair
  */
 @Slf4j
 class BranchSnapshotResolverTest extends Specification {
 
-    static final String BRANCH_REGEX = "^(feature|bug)\\/([A-Z]+-\\d+).*\$"
-    static final String SNAPSHOT_REPOSITORY_REGEX = "[A-Z]+-\\d+"
     static final String DEFAULT_URL = "s3://leftshiftone-maven-artifacts.s3.eu-central-1.amazonaws.com/snapshots"
 
     @Unroll
@@ -21,8 +22,8 @@ class BranchSnapshotResolverTest extends Specification {
                     enabled,
                     DEFAULT_URL,
                     branch,
-                    BRANCH_REGEX,
-                    SNAPSHOT_REPOSITORY_REGEX,
+                    SNAPSHOT_BRANCH_REGEX,
+                    SNAPSHOT_REPOSITORY_NAME_REGEX,
                     log)
             result == url
         where:
