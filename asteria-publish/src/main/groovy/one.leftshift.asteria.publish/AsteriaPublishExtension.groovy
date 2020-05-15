@@ -21,11 +21,6 @@ class AsteriaPublishExtension {
     boolean enableBranchSnapshotRepositories = false
 
     /**
-     * If enabled the plugin creates snapshot repositories in AWS S3.
-     */
-    boolean createSnapshotRepositories = false
-
-    /**
      * Branch regex.
      */
     String snapshotBranchRegex = BranchResolver.SNAPSHOT_BRANCH_REGEX
@@ -34,11 +29,6 @@ class AsteriaPublishExtension {
      * Regex to determine name for snapshot repository to be used or created based on the branch name (regex groups are not supported).
      */
     String snapshotRepositoryNameRegex = BranchResolver.SNAPSHOT_REPOSITORY_NAME_REGEX
-
-    /**
-     * Snapshot expiration date in days.
-     */
-    int snapshotsExpirationInDays = 30
 
     /**
      * Additional artifacts to publish which will be added like 'artifact "path/to/jar"'.

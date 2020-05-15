@@ -18,7 +18,6 @@ subprojects {
     asteriaPublish {
         snapshotRepositoryUrl = "s3://leftshiftone-maven-artifacts.s3.eu-central-1.amazonaws.com/test-snapshots"
         enableBranchSnapshotRepositories = true
-        createSnapshotRepositories = false
     }
 
     dependencies {
