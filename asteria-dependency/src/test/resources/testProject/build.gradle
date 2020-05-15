@@ -18,6 +18,8 @@ allprojects {
 
     asteriaDependency {
         dependencyManagementBom = "org.springframework.boot:spring-boot-dependencies:2.1.6.RELEASE"
+        enableBranchSnapshotRepositories = true
+        snapshotRepositoryUrl = "s3://leftshiftone-maven-artifacts.s3.eu-central-1.amazonaws.com/test-snapshots"
     }
 
     release {

@@ -1,14 +1,22 @@
 package one.leftshift.asteria.dependency
 
+import com.amazonaws.SdkBaseException
+import com.amazonaws.auth.AWSCredentials
+import com.amazonaws.auth.AWSCredentialsProviderChain
+import com.amazonaws.auth.EnvironmentVariableCredentialsProvider
+import com.amazonaws.auth.profile.ProfileCredentialsProvider
 import com.github.benmanes.gradle.versions.VersionsPlugin
 import io.spring.gradle.dependencymanagement.DependencyManagementPlugin
 import nebula.plugin.dependencylock.DependencyLockPlugin
 import nebula.plugin.release.ReleasePlugin
+import one.leftshift.asteria.common.branch.BranchResolver
 import one.leftshift.asteria.dependency.tasks.PersistDependencyLockTask
+import org.ajoberstar.grgit.Grgit
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ComponentSelection
 import org.gradle.api.artifacts.DependencyResolveDetails
+import org.gradle.api.credentials.AwsCredentials
 
 class AsteriaDependencyPlugin implements Plugin<Project> {
     static final String GROUP = "Asteria Dependency"
@@ -56,6 +64,40 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
                 } else if (dep.requested.version == LATEST_SMART_VERSION) {
                     interceptVersion(project, dep)
                     project.logger.info("Reassigned ${dep.requested.group}:${dep.requested.name} to version ${dep.target.version} (was ${dep.requested.version})")
+                }
+            }
+        }
+
+        project.logger.debug("Adding custom snapshot repository if applicable")
+        project.afterEvaluate {
+            if (extension.enableBranchSnapshotRepositories) {
+                String branchName = getCurrentGitBranch(project)
+                String snapshotRepoUrl = BranchResolver.getSnapshotRepositoryUrlBasedOnBranch(
+                        true,
+                        extension.snapshotRepositoryUrl,
+                        branchName,
+                        extension.snapshotBranchRegex,
+                        extension.snapshotRepositoryNameRegex,
+                        project.logger)
+
+                if (snapshotRepoUrl == extension.snapshotRepositoryUrl || snapshotRepoUrl == null || extension.snapshotRepositoryUrl == null) {
+                    project.logger.info("No custom snapshot repository url detected.")
+                } else {
+                    project.logger.info("Snapshot repository url is {}", snapshotRepoUrl)
+                    AWSCredentials awsCredentials = awsCredentials(project)
+                    if (awsCredentials) {
+                        project.repositories {
+                            maven {
+                                credentials(AwsCredentials) {
+                                    accessKey awsCredentials.AWSAccessKeyId
+                                    secretKey awsCredentials.AWSSecretKey
+                                }
+                                url snapshotRepoUrl
+                            }
+                        }
+                    } else {
+                        project.logger.warn("Snapshot repository credentials not found. Snapshot repository {} cannot be added. Please specify AWS credentials.", snapshotRepoUrl)
+                    }
                 }
             }
         }
@@ -122,6 +164,36 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
                 project.rootProject.tasks.release.dependsOn generateLockTask, saveLockTask, persistLockTask
             }
         }
+    }
+
+    static AWSCredentials awsCredentials(Project project) {
+        project.logger.info("Looking for AWS credentials")
+        try {
+            return new AWSCredentialsProviderChain(
+                    new ProfileCredentialsProvider(),
+                    new EnvironmentVariableCredentialsProvider()
+            ).credentials
+        } catch (IllegalArgumentException | SdkBaseException ex) {
+            if (project.logger.isInfoEnabled()) {
+                project.logger.error("Error reading AWS credentials: " + ex.message)
+            }
+            return null
+        }
+    }
+
+    private static String getCurrentGitBranch(Project project) {
+        String branchName = null
+        try {
+            Grgit git = Grgit.open(dir: project.rootProject.projectDir.absolutePath)
+            branchName = git.branch.current.name ?: "unknown"
+            project.logger.info("Currently on branch {}", branchName)
+        } catch (Exception ex) {
+            project.logger.warn("Unable to get current branch: ${ex.message}")
+            if (project.logger.isInfoEnabled()) {
+                project.logger.error(ex.message, ex)
+            }
+        }
+        return branchName
     }
 
     private static void interceptVersion(Project project, DependencyResolveDetails dependency) {

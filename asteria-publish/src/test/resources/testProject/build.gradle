@@ -15,6 +15,11 @@ subprojects {
     apply plugin: "java"
     apply plugin: "one.leftshift.asteria-publish"
 
+    asteriaPublish {
+        snapshotRepositoryUrl = "s3://leftshiftone-maven-artifacts.s3.eu-central-1.amazonaws.com/test-snapshots"
+        enableBranchSnapshotRepositories = true
+    }
+
     dependencies {
         testCompile "junit:junit:4.12"
     }
@@ -23,7 +28,6 @@ subprojects {
         publications {
             mavenJava(MavenPublication) {
                 from components.java
-
                 artifact sourceJar
             }
         }
