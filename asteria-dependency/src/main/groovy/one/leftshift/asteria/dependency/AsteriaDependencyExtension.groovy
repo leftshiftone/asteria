@@ -21,6 +21,11 @@ class AsteriaDependencyExtension {
     String dependencyManagementBom = "org.springframework.boot:spring-boot-dependencies:latest.release"
 
     /**
+     * Regular expression to determine a patch release branch.
+     */
+    String patchReleaseBranchRegex = BranchResolver.PATCH_RELEASE_BRANCH_REGEX
+
+    /**
      * If enabled the plugin encounters if the code is currently in a feature branch and creates a custom maven
      * repository for uploading snapshot artifacts for this feature.
      */

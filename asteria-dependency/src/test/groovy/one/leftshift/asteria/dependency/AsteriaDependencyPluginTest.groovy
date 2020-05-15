@@ -188,6 +188,67 @@ class AsteriaDependencyPluginTest extends Specification {
             "honors"    | "devSnapshot" || "Dependency lock is honored for version 0.1.0-dev.1"    | /Using org\.spockframework:spock-core:1\.0-groovy-2\.4/
     }
 
+    def "lock file is honored for patch release branch"() {
+        given:
+            Project project = ProjectBuilder.builder().build()
+            File projectDir = project.projectDir
+            new AntBuilder().copy(todir: project.projectDir.absolutePath) {
+                fileset(dir: "src/test/resources/testProject")
+            }
+            new AntBuilder().copy(todir: "${project.projectDir.absolutePath}/project1") {
+                fileset(file: "src/test/resources/project1/dependencies.lock")
+            }
+            new AntBuilder().copy(todir: "${project.projectDir.absolutePath}/project2") {
+                fileset(file: "src/test/resources/project2/dependencies.lock")
+            }
+            setupGitRepo(projectDir)
+            def branchGit = new ProcessBuilder(["git", "checkout", "-b", "release/0.0.x"]).directory(projectDir).start()
+            branchGit.waitForProcessOutput(System.out, System.err)
+
+        when:
+            def result = GradleRunner.create()
+                    .withProjectDir(project.projectDir)
+                    .withArguments("build", "--debug", "--stacktrace")
+                    .withPluginClasspath()
+                    .build()
+            println result.output
+
+        then:
+            result.output.contains "Currently on branch release/0.0.x"
+            result.output.contains "Dependency lock is honored for branch release/0.0.x and version 0.0.1-SNAPSHOT"
+            result.output =~ /Using org\.spockframework:spock-core:1\.0-groovy-2\.4/
+    }
+
+    def "lock file is ignored for minor release branch"() {
+        given:
+            Project project = ProjectBuilder.builder().build()
+            File projectDir = project.projectDir
+            new AntBuilder().copy(todir: project.projectDir.absolutePath) {
+                fileset(dir: "src/test/resources/testProject")
+            }
+            new AntBuilder().copy(todir: "${project.projectDir.absolutePath}/project1") {
+                fileset(file: "src/test/resources/project1/dependencies.lock")
+            }
+            new AntBuilder().copy(todir: "${project.projectDir.absolutePath}/project2") {
+                fileset(file: "src/test/resources/project2/dependencies.lock")
+            }
+            setupGitRepo(projectDir)
+            def branchGit = new ProcessBuilder(["git", "checkout", "-b", "release/0.x"]).directory(projectDir).start()
+            branchGit.waitForProcessOutput(System.out, System.err)
+
+        when:
+            def result = GradleRunner.create()
+                    .withProjectDir(project.projectDir)
+                    .withArguments("build", "--debug", "--stacktrace")
+                    .withPluginClasspath()
+                    .build()
+            println result.output
+
+        then:
+            result.output.contains "Dependency lock is ignored for version 0.1.0-SNAPSHOT"
+            result.output =~ /Using org\.spockframework:spock-core:\d\.\d.*-groovy-\d\.\d/
+    }
+
     def "releasing minor not possible when current branch is behind tracked branch"() {
         given: "remote repository"
             Project remote = ProjectBuilder.builder().build()

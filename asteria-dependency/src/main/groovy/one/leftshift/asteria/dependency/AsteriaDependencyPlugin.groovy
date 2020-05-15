@@ -142,8 +142,15 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
             project.logger.debug("Configuring tasks to ignore dependency lock for non release builds")
             if (!project.hasProperty("dependencyLock.ignore")) {
                 if (project.version.toString().endsWith(SNAPSHOT_VERSION_SUFFIX)) {
-                    project.logger.info("Dependency lock is ignored for version ${project.version}")
-                    project.ext.set("dependencyLock.ignore", true)
+                    String branchName = getCurrentGitBranch(project)
+                    boolean isPatchReleaseBranch = BranchResolver.isPatchReleaseBranch(branchName, extension.patchReleaseBranchRegex)
+                    if (isPatchReleaseBranch) {
+                        project.logger.quiet("Dependency lock is honored for branch ${branchName} and version ${project.version}")
+                        project.ext.set("dependencyLock.ignore", false)
+                    } else {
+                        project.logger.info("Dependency lock is ignored for version ${project.version}")
+                        project.ext.set("dependencyLock.ignore", true)
+                    }
                 } else {
                     project.logger.info("Dependency lock is honored for version ${project.version}")
                     project.ext.set("dependencyLock.ignore", false)
