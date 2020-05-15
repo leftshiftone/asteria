@@ -372,7 +372,8 @@ class AsteriaDependencyPluginTest extends Specification {
         then:
             result.output.contains "Currently on branch feature/FOO-666"
             result.output.contains "Snapshot repositories for branches are enabled"
-            result.output.contains "Using snapshot repository s3://leftshiftone-maven-artifacts.s3.eu-central-1.amazonaws.com/test-snapshots-foo-666"
+            result.output.contains "Current repositories: [maven, BintrayJCenter, maven2]"
+            result.output.contains "Using snapshot repository maven with url s3://leftshiftone-maven-artifacts.s3.eu-central-1.amazonaws.com/test-snapshots-foo-666 at position 1 of 3"
     }
 
     private static void setupGitRepo(File projectDir) {

@@ -6,15 +6,16 @@ plugins {
 group = "com.example"
 
 allprojects {
+
+    apply plugin: "one.leftshift.asteria-dependency"
+    apply plugin: "nebula.release"
+
     repositories {
         jcenter()
         maven {
             url 'https://repo.spring.io/libs-milestone'
         }
     }
-
-    apply plugin: "one.leftshift.asteria-dependency"
-    apply plugin: "nebula.release"
 
     asteriaDependency {
         dependencyManagementBom = "org.springframework.boot:spring-boot-dependencies:2.1.6.RELEASE"
