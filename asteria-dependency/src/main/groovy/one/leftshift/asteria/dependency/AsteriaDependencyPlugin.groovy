@@ -16,6 +16,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ComponentSelection
 import org.gradle.api.artifacts.DependencyResolveDetails
+import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.credentials.AwsCredentials
 
 class AsteriaDependencyPlugin implements Plugin<Project> {
@@ -69,6 +70,14 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
         }
 
         project.logger.debug("Adding custom snapshot repository if applicable")
+        // in order for this to be used as the repository with the highest priority, the plugin must be applied before
+        // the declaration of the repositories in a gradle build file
+        MavenArtifactRepository customSnapshotRepo = project.repositories.maven {
+            url extension.snapshotRepositoryUrl
+        }
+        project.repositories {
+            customSnapshotRepo
+        }
         project.afterEvaluate {
             if (extension.enableBranchSnapshotRepositories) {
                 String branchName = getCurrentGitBranch(project)
@@ -82,23 +91,27 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
 
                 if (snapshotRepoUrl == extension.snapshotRepositoryUrl || snapshotRepoUrl == null || extension.snapshotRepositoryUrl == null) {
                     project.logger.info("No custom snapshot repository url detected.")
+                    project.repositories.remove(customSnapshotRepo)
                 } else {
                     project.logger.info("Snapshot repository url is {}", snapshotRepoUrl)
                     AWSCredentials awsCredentials = awsCredentials(project)
                     if (awsCredentials) {
-                        project.repositories {
-                            maven {
-                                credentials(AwsCredentials) {
-                                    accessKey awsCredentials.AWSAccessKeyId
-                                    secretKey awsCredentials.AWSSecretKey
-                                }
-                                url snapshotRepoUrl
-                            }
+                        project.logger.debug("Current repositories: {}", project.repositories.collect { it.name })
+                        customSnapshotRepo.credentials(AwsCredentials) {
+                            accessKey awsCredentials.AWSAccessKeyId
+                            secretKey awsCredentials.AWSSecretKey
                         }
+                        customSnapshotRepo.url = snapshotRepoUrl
+                        MavenArtifactRepository usedRepo = project.repositories.findByName(customSnapshotRepo.name) as MavenArtifactRepository
+                        int usedRepoIndex = project.repositories.indexOf(usedRepo)
+                        project.logger.quiet("Using snapshot repository {} with url {} at position {} of {}", usedRepo.name, usedRepo.url, ++usedRepoIndex, project.repositories.size())
                     } else {
                         project.logger.warn("Snapshot repository credentials not found. Snapshot repository {} cannot be added. Please specify AWS credentials.", snapshotRepoUrl)
+                        project.repositories.remove(customSnapshotRepo)
                     }
                 }
+            } else {
+                project.repositories.remove(customSnapshotRepo)
             }
         }
 
