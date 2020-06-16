@@ -17,5 +17,5 @@ repositories {
 
 dependencies {
     compile("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.8")
-    compile("org.owasp:dependency-check-gradle:5.2.2")
+    compile("org.owasp:dependency-check-gradle:5.3.2")
 }
