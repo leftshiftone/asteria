@@ -55,7 +55,7 @@ class CreateBuildPropertiesTask extends DefaultTask {
             project.afterEvaluate {
                 project.configure(project) {
                     processResources {
-                        def replacePaths = ["config/**", "**/Dockerfile"]
+                        def replacePaths = ["**/banner.txt", "config/**", "**/Dockerfile"]
 
                         replacePaths.each {
                             filesMatching(it) {
