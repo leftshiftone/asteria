@@ -70,9 +70,8 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
                 }
             }
 
-            if (project.hasProperty("dependency.prerelease.ignore") && project.property("dependency.prerelease.ignore") != "true") {
-                project.logger.quiet("Dependency resolution considers pre-releases like release candidates for dependencies starting with one.leftshift")
-            } else {
+            if (project.hasProperty("dependency.prerelease.ignore") && project.property("dependency.prerelease.ignore") == "true") {
+                project.logger.quiet("Dependency resolution ignores pre-releases like release candidates for dependencies starting with one.leftshift")
                 resolutionStrategy {
                     componentSelection { rules ->
                         rules.all { ComponentSelection selection ->

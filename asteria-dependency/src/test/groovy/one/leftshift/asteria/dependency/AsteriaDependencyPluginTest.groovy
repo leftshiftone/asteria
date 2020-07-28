@@ -71,14 +71,14 @@ class AsteriaDependencyPluginTest extends Specification {
         when:
             def result = GradleRunner.create()
                     .withProjectDir(project.projectDir)
-                    .withArguments("build", "-Pdependency.prerelease.ignore=false", "--debug", "--stacktrace")
+                    .withArguments("build", "-Pdependency.prerelease.ignore=true", "--debug", "--stacktrace")
                     .withPluginClasspath()
                     .build()
             println result.output
 
         then:
             result.output.contains "BUILD SUCCESSFUL"
-            result.output.contains "Dependency resolution considers pre-releases like release candidates for dependencies starting with one.leftshift"
+            result.output.contains "Dependency resolution ignores pre-releases like release candidates for dependencies starting with one.leftshift"
     }
 
     def "dependency updates report is generated"() {
