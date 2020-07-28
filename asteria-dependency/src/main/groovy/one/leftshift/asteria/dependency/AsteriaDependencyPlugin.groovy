@@ -11,6 +11,7 @@ import nebula.plugin.dependencylock.DependencyLockPlugin
 import nebula.plugin.release.ReleasePlugin
 import one.leftshift.asteria.common.branch.BranchResolver
 import one.leftshift.asteria.dependency.tasks.PersistDependencyLockTask
+import one.leftshift.asteria.dependency.tasks.UpdateDependencyInLockTask
 import org.ajoberstar.grgit.Grgit
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -25,6 +26,7 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
     static final String SNAPSHOT_VERSION_SUFFIX = "-SNAPSHOT"
     static final String LATEST_SMART_VERSION = "latest.smart"
     static final String PERSIST_DEPENDENCY_LOCK_TASK_NAME = "persistDependencyLock"
+    static final String UPDATE_DEPENDENCY_LOCK_TASK_NAME = "updateDependencyLock"
 
     @Override
     void apply(Project project) {
@@ -67,6 +69,24 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
                     project.logger.info("Reassigned ${dep.requested.group}:${dep.requested.name} to version ${dep.target.version} (was ${dep.requested.version})")
                 }
             }
+
+            if (project.hasProperty("dependency.prerelease.ignore") && project.property("dependency.prerelease.ignore") != "true") {
+                project.logger.quiet("Dependency resolution considers pre-releases like release candidates")
+            } else {
+                resolutionStrategy {
+                    componentSelection { rules ->
+                        rules.all { ComponentSelection selection ->
+                            boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm'].any { qualifier ->
+                                selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
+                            }
+                            if (rejected) {
+                                selection.reject("Release candidates are ignored")
+                            }
+                        }
+                    }
+                }
+            }
+
         }
 
         project.logger.debug("Adding custom snapshot repository if applicable")
@@ -118,6 +138,9 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
         project.logger.debug("Adding tasks")
         if (!project.rootProject.tasks.find { it.name == PERSIST_DEPENDENCY_LOCK_TASK_NAME }) {
             project.rootProject.task(PERSIST_DEPENDENCY_LOCK_TASK_NAME, type: PersistDependencyLockTask)
+        }
+        if (!project.rootProject.tasks.find { it.name == UPDATE_DEPENDENCY_LOCK_TASK_NAME }) {
+            project.rootProject.task(UPDATE_DEPENDENCY_LOCK_TASK_NAME, type: UpdateDependencyInLockTask)
         }
 
         project.logger.debug("Configuring tasks")

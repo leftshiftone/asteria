@@ -58,6 +58,29 @@ class AsteriaDependencyPluginTest extends Specification {
             "for dev release build" | "devSnapshot" || "latest.release"
     }
 
+    def "dependencies are resolved and pre-releases are considered"() {
+        given:
+            Project project = ProjectBuilder.builder().build()
+            File projectDir = project.projectDir
+            new AntBuilder().copy(todir: project.projectDir.absolutePath) {
+                fileset(dir: "src/test/resources/testProject")
+                fileset(file: "src/test/resources/testProject/.gitignore")
+            }
+            setupGitRepo(projectDir)
+
+        when:
+            def result = GradleRunner.create()
+                    .withProjectDir(project.projectDir)
+                    .withArguments("build", "-Pdependency.prerelease.ignore=false", "--debug", "--stacktrace")
+                    .withPluginClasspath()
+                    .build()
+            println result.output
+
+        then:
+            result.output.contains "BUILD SUCCESSFUL"
+            result.output.contains "Dependency resolution considers pre-releases like release candidates"
+    }
+
     def "dependency updates report is generated"() {
         given:
             Project project = ProjectBuilder.builder().build()
@@ -376,7 +399,7 @@ class AsteriaDependencyPluginTest extends Specification {
             result.output.contains "Using snapshot repository maven with url s3://leftshiftone-maven-artifacts.s3.eu-central-1.amazonaws.com/test-snapshots-foo-666 at position 1 of 3"
     }
 
-    private static void setupGitRepo(File projectDir) {
+    static void setupGitRepo(File projectDir) {
         def gitignoreFile = new File(projectDir, ".gitignore")
         gitignoreFile << [".gradle", "build/", "userHome/"].join("\n")
         def initGit = new ProcessBuilder(["git", "init"]).directory(projectDir).start()
