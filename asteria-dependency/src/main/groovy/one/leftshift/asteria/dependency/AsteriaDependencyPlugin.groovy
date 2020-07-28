@@ -71,16 +71,19 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
             }
 
             if (project.hasProperty("dependency.prerelease.ignore") && project.property("dependency.prerelease.ignore") != "true") {
-                project.logger.quiet("Dependency resolution considers pre-releases like release candidates")
+                project.logger.quiet("Dependency resolution considers pre-releases like release candidates for dependencies starting with one.leftshift")
             } else {
                 resolutionStrategy {
                     componentSelection { rules ->
                         rules.all { ComponentSelection selection ->
-                            boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm'].any { qualifier ->
-                                selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
-                            }
-                            if (rejected) {
-                                selection.reject("Release candidates are ignored")
+                            if (selection.candidate.group.startsWith("one.leftshift")) {
+                                boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm'].any { qualifier ->
+                                    selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
+                                }
+                                if (rejected) {
+                                    project.logger.info("Rejecting version ${selection.candidate.group}:${selection.candidate.module}:${selection.candidate.version}")
+                                    selection.reject("Release candidates are ignored")
+                                }
                             }
                         }
                     }

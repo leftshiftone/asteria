@@ -78,7 +78,7 @@ class AsteriaDependencyPluginTest extends Specification {
 
         then:
             result.output.contains "BUILD SUCCESSFUL"
-            result.output.contains "Dependency resolution considers pre-releases like release candidates"
+            result.output.contains "Dependency resolution considers pre-releases like release candidates for dependencies starting with one.leftshift"
     }
 
     def "dependency updates report is generated"() {
