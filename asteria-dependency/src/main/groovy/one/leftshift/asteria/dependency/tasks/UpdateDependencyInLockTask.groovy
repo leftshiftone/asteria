@@ -17,7 +17,7 @@ class UpdateDependencyInLockTask extends DefaultTask {
 
     private String rootDirectory = null
     private String dependencyRegex = null
-    private String version = null
+    private String newVersion = null
 
     UpdateDependencyInLockTask() {
         group = AsteriaDependencyPlugin.GROUP
@@ -51,14 +51,14 @@ class UpdateDependencyInLockTask extends DefaultTask {
     }
 
     @Input
-    String getVersion() {
-        if (version == null) throw new RuntimeException("Version not set: use --version=4.2.0")
-        return version
+    String getNewVersion() {
+        if (newVersion == null) throw new RuntimeException("Version not set: use --version=4.2.0")
+        return newVersion
     }
 
-    @Option(option = "version", description = "The new version of the dependency (e.g. 4.2.0).")
-    void setVersion(String version) {
-        this.version = version
+    @Option(option = "newVersion", description = "The new version of the dependency (e.g. 4.2.0).")
+    void setNewVersion(String newVersion) {
+        this.newVersion = newVersion
     }
 
     @TaskAction
@@ -66,13 +66,13 @@ class UpdateDependencyInLockTask extends DefaultTask {
         project.fileTree(getRootDirectory()).matching {
             include "**/dependencies.lock"
         }.each { file ->
-            logger.quiet("Changing version to ${getVersion()} in file ${file.path}")
-            setVersion(logger, file, getDependencyRegex(), getVersion())
+            logger.quiet("Changing version to ${getNewVersion()} in file ${file.path}")
+            setVersionInFile(logger, file, getDependencyRegex(), getNewVersion())
             logger.quiet("Successfully changed version in file ${file.path}")
         }
     }
 
-    static void setVersion(def logger, File file, String regex, String version) {
+    static void setVersionInFile(def logger, File file, String regex, String version) {
         def pattern = Pattern.compile(regex)
 
         def parsedContent = new JsonSlurper().parseText(file.text)

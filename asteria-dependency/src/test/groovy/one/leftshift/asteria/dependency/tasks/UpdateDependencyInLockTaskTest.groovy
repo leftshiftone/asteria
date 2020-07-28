@@ -31,7 +31,7 @@ class UpdateDependencyInLockTaskTest extends Specification {
         when:
         def result = GradleRunner.create()
                 .withProjectDir(project.projectDir)
-                .withArguments("updateDependencyLock", "--dependency=one\\.leftshift\\.canon:canon", "--version=2.2.2", "--debug", "--stacktrace")
+                .withArguments("updateDependencyLock", "--dependency=one\\.leftshift\\.canon:canon", "--newVersion=2.2.2", "--debug", "--stacktrace")
                 .withPluginClasspath()
                 .build()
         println result.output
@@ -61,7 +61,7 @@ class UpdateDependencyInLockTaskTest extends Specification {
         when:
         def result = GradleRunner.create()
                 .withProjectDir(project.projectDir)
-                .withArguments("updateDependencyLock", "--dependency=junit:junit", "--version=4.4.4", "--debug", "--stacktrace")
+                .withArguments("updateDependencyLock", "--dependency=junit:junit", "--newVersion=4.4.4", "--debug", "--stacktrace")
                 .withPluginClasspath()
                 .build()
         println result.output
