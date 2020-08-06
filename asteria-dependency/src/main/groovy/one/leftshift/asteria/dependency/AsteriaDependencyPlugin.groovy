@@ -20,10 +20,12 @@ import org.gradle.api.artifacts.DependencyResolveDetails
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.credentials.AwsCredentials
 
+import static one.leftshift.asteria.common.version.VersionCategorizer.isPreReleaseVersion
+import static one.leftshift.asteria.common.version.VersionCategorizer.isSnapshotVersion
+
 class AsteriaDependencyPlugin implements Plugin<Project> {
     static final String GROUP = "Asteria Dependency"
     static final String EXTENSION_NAME = "asteriaDependency"
-    static final String SNAPSHOT_VERSION_SUFFIX = "-SNAPSHOT"
     static final String LATEST_SMART_VERSION = "latest.smart"
     static final String PERSIST_DEPENDENCY_LOCK_TASK_NAME = "persistDependencyLock"
     static final String UPDATE_DEPENDENCY_LOCK_TASK_NAME = "updateDependencyLock"
@@ -76,10 +78,7 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
                     componentSelection { rules ->
                         rules.all { ComponentSelection selection ->
                             if (selection.candidate.group.startsWith("one.leftshift")) {
-                                boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm'].any { qualifier ->
-                                    selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
-                                }
-                                if (rejected) {
+                                if (isPreReleaseVersion(selection.candidate.version)) {
                                     project.logger.info("Rejecting version ${selection.candidate.group}:${selection.candidate.module}:${selection.candidate.version}")
                                     selection.reject("Release candidates are ignored")
                                 }
@@ -167,10 +166,7 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
             project.tasks.dependencyUpdates.resolutionStrategy {
                 componentSelection { rules ->
                     rules.all { ComponentSelection selection ->
-                        boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm'].any { qualifier ->
-                            selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
-                        }
-                        if (rejected) {
+                        if (isPreReleaseVersion(selection.candidate.version)) {
                             selection.reject('Release candidate')
                         }
                     }
@@ -179,7 +175,7 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
 
             project.logger.debug("Configuring tasks to ignore dependency lock for non release builds")
             if (!project.hasProperty("dependencyLock.ignore")) {
-                if (project.version.toString().endsWith(SNAPSHOT_VERSION_SUFFIX)) {
+                if (isSnapshotVersion(project.version.toString())) {
                     String branchName = getCurrentGitBranch(project)
                     boolean isPatchReleaseBranch = BranchResolver.isPatchReleaseBranch(branchName, extension.patchReleaseBranchRegex)
                     if (isPatchReleaseBranch) {
@@ -242,7 +238,7 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
     }
 
     private static void interceptVersion(Project project, DependencyResolveDetails dependency) {
-        if (project.version.toString().endsWith(SNAPSHOT_VERSION_SUFFIX)) {
+        if (isSnapshotVersion(project.version.toString())) {
             project.logger.debug("Found non release version ${project.version}")
             dependency.useVersion "latest.integration"
             dependency.because "latest integration version is used for non release versions"

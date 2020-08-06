@@ -1,6 +1,5 @@
 package one.leftshift.asteria.publish
 
-
 import com.amazonaws.SdkBaseException
 import com.amazonaws.auth.AWSCredentials
 import com.amazonaws.auth.AWSCredentialsProviderChain
@@ -17,10 +16,12 @@ import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.publish.maven.plugins.MavenPublishPlugin
 import org.gradle.jvm.tasks.Jar
 
+import static one.leftshift.asteria.common.version.VersionCategorizer.isPreReleaseVersion
+import static one.leftshift.asteria.common.version.VersionCategorizer.isReleaseVersion
+
 class AsteriaPublishPlugin implements Plugin<Project> {
     static final String GROUP = "Asteria Publish"
     static final String EXTENSION_NAME = "asteriaPublish"
-    static final String SNAPSHOT_VERSION_SUFFIX = "-SNAPSHOT"
     static final String SOURCE_JAR_TASK_NAME = "sourceJar"
 
     @Override
@@ -36,19 +37,24 @@ class AsteriaPublishPlugin implements Plugin<Project> {
                 repositories {
                     if (awsCredentials(project)) {
                         project.afterEvaluate {
-                            boolean isSnapshotVersion = project.version.toString().endsWith(SNAPSHOT_VERSION_SUFFIX)
-                            if (!isSnapshotVersion && !extension.releaseRepositoryUrl) {
-                                project.logger.info("No release repository url set")
+                            String publishUrl = getSnapshotRepositoryUrl(extension, project)
+                            if (isPreReleaseVersion(project.version.toString())) {
+                                publishUrl = extension.preReleaseRepositoryUrl
+                                if (!publishUrl) project.logger.warn("No pre-release repository url set")
+                            } else if (isReleaseVersion(project.version.toString())) {
+                                publishUrl = extension.releaseRepositoryUrl
+                                if (!publishUrl) project.logger.warn("No release repository url set")
                             } else {
-                                String publishUrl = isSnapshotVersion ? getSnapshotRepositoryUrl(extension, project) : extension.releaseRepositoryUrl
-                                project.logger.info("Publishing to url {}", publishUrl)
-                                maven {
-                                    credentials(AwsCredentials) {
-                                        accessKey awsCredentials(project)?.AWSAccessKeyId
-                                        secretKey awsCredentials(project)?.AWSSecretKey
-                                    }
-                                    url publishUrl
+                                project.logger.warn("Unable to determine repository url from version ${project.version.toString()}. Falling back to snapshot repository URL")
+                            }
+                            
+                            project.logger.info("Publishing to url {}", publishUrl)
+                            maven {
+                                credentials(AwsCredentials) {
+                                    accessKey awsCredentials(project)?.AWSAccessKeyId
+                                    secretKey awsCredentials(project)?.AWSSecretKey
                                 }
+                                url publishUrl
                             }
                         }
                     }
