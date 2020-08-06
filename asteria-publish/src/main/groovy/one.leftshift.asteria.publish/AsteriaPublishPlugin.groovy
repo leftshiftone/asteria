@@ -44,10 +44,8 @@ class AsteriaPublishPlugin implements Plugin<Project> {
                             } else if (isReleaseVersion(project.version.toString())) {
                                 publishUrl = extension.releaseRepositoryUrl
                                 if (!publishUrl) project.logger.warn("No release repository url set")
-                            } else {
-                                project.logger.warn("Unable to determine repository url from version ${project.version.toString()}. Falling back to snapshot repository URL")
                             }
-                            
+
                             project.logger.info("Publishing to url {}", publishUrl)
                             maven {
                                 credentials(AwsCredentials) {
