@@ -1,7 +1,7 @@
 apply plugin: 'java-gradle-plugin'
 
 dependencies {
-    implementation("org.asciidoctor:asciidoctor-gradle-plugin:1.5.12")
+    implementation("org.asciidoctor:asciidoctor-gradle-plugin:1.5.9.2")
     implementation("org.asciidoctor:asciidoctorj-pdf:1.5.3")
     implementation("io.github.swagger2markup:markup-document-builder:1.1.2")
 }
