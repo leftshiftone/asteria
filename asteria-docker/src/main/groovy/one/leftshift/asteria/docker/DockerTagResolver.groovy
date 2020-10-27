@@ -3,21 +3,28 @@ package one.leftshift.asteria.docker
 import one.leftshift.asteria.AsteriaDockerExtension
 import one.leftshift.asteria.common.BuildProperties
 import one.leftshift.asteria.common.BuildPropertiesResolver
+import one.leftshift.asteria.common.branch.BranchResolver
 import one.leftshift.asteria.common.version.ReleaseExtractionStrategy
 import one.leftshift.asteria.common.version.SnapshotExtractionStrategy
 import one.leftshift.asteria.common.version.VersionExtractor
 
-class VersionResolver {
+class DockerTagResolver {
+    public static final String DOCKER_TAG_REGEX = ".*?([A-Za-z0-9_][A-Za-z0-9_.\\-]{0,127})\$"
     AsteriaDockerExtension extension
-    String explicitVersion
+    String explicitTag
 
-    VersionResolver(AsteriaDockerExtension extension, String explicitVersion) {
+    DockerTagResolver(AsteriaDockerExtension extension, String explicitTag) {
         this.extension = extension
-        this.explicitVersion = explicitVersion
+        this.explicitTag = explicitTag
     }
 
     String resolve() {
-        if (explicitVersion != null) return explicitVersion.split("/").last()
+        if (explicitTag != null) {
+            final ticketId = BranchResolver.getTicketIdBasedOnBranch(explicitTag)
+            final fallback = explicitTag =~ DOCKER_TAG_REGEX
+            fallback.find()
+            return ticketId ? ticketId : fallback.group(1)
+        }
         final String extractedVersion = VersionExtractor
                 .defaultExtractor()
                 .addStrategies(SnapshotExtractionStrategy.instance, ReleaseExtractionStrategy.instance)

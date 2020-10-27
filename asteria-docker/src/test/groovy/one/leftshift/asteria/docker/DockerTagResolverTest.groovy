@@ -2,15 +2,16 @@ package one.leftshift.asteria.tasks
 
 
 import one.leftshift.asteria.AsteriaDockerExtension
-import one.leftshift.asteria.docker.VersionResolver
+import one.leftshift.asteria.docker.DockerTagResolver
 import org.gradle.api.Project
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Subject
+import spock.lang.Unroll
 
-class VersionResolverTest extends Specification {
+class DockerTagResolverTest extends Specification {
     @Subject
-    VersionResolver classUnderTest
+    DockerTagResolver classUnderTest
 
     @Shared
     Project mockedProject
@@ -32,38 +33,41 @@ class VersionResolverTest extends Specification {
     void "resolver uses project version"() {
         given:
         extension.versionPrefix = null
-        classUnderTest = new VersionResolver(extension, null)
+        classUnderTest = new DockerTagResolver(extension, null)
         expect:
         classUnderTest.resolve() == "1.2.3-SNAPSHOT"
     }
 
     void "resolver combines prefix and version"() {
         given:
-        classUnderTest = new VersionResolver(extension, null)
+        classUnderTest = new DockerTagResolver(extension, null)
         expect:
         classUnderTest.resolve() == "foo-1.2.3-SNAPSHOT"
     }
 
-    void "resolver uses explicit version"() {
+    @Unroll
+    void "resolver resolves #explicitTag to #resolvedTag"() {
         given:
         extension.versionPrefix = null
-        classUnderTest = new VersionResolver(extension, "GAIA-123")
+        classUnderTest = new DockerTagResolver(extension, explicitTag)
         expect:
-        classUnderTest.resolve() == "GAIA-123"
-    }
+        classUnderTest.resolve() == resolvedTag
 
+        where:
+        explicitTag          || resolvedTag
+        "GAIA-123"           || "GAIA-123"
+        "feature/GAIA-123"   || "GAIA-123"
+        "feature/GAIA-123v2" || "GAIA-123"
+        "feature/GAIA/123v2" || "123v2"
+        "feature/.-GAIA-123" || "GAIA-123"
+        "bug/GAIA-123"       || "GAIA-123"
+        "release/1.0.x"      || "1.0.x"
+    }
 
     void "resolver uses explicit version and ignores prefix"() {
         given:
-        classUnderTest = new VersionResolver(extension, "GAIA-123")
+        classUnderTest = new DockerTagResolver(extension, "GAIA-123")
         expect:
         classUnderTest.resolve() == "GAIA-123"
-    }
-
-    void "resolver splits explicit version at dash and uses last"() {
-        given:
-        classUnderTest = new VersionResolver(extension, "feature/GAIA-1234")
-        expect:
-        classUnderTest.resolve() == "GAIA-1234"
     }
 }
