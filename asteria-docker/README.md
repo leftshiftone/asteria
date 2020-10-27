@@ -24,6 +24,16 @@ asteriaDocker {
 }
 ```
 
+_asteria-docker_ provides the following options to change behaviour of tasks at runtime:
+* **explicitVersion** _[optional]_: Can modify _dockerBuild_ and _dockerPush_ command to override the inferred version 
+and specify the tag that should be used explicitly. If slashes are present in the input, the string after the last slash
+ is used. 
+ 
+ Example:
+ ```shell script
+ gradlew dockerPush --explicitVersion  bug/TICKET-123 # Tag the image as TICKET-123
+ ```
+
 ## Defaults
 _asteria-docker_ will assemble the Docker image id (_repositoryURI/name:TAG_) for you.
 The repositoryURI and name is taken straight from the configuration while the value of the tag depends
@@ -74,7 +84,7 @@ _asteria-docker_ currently offers the following tasks
 
 * **dockerPush**
 
-  Triggers a docker build
+  Triggers a docker push
 
 Each of the tasks depends on its predecessor in the list above building the following 
 dependency graph:
