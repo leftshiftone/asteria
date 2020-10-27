@@ -26,7 +26,7 @@ class DockerBuildTaskUnitTest extends Specification {
             extension.name = "some-app"
             extension.versionPrefix = "foo-"
             classUnderTest = new DockerBuildTask.DockerBuildTaskExecution(
-                    mockedClient, extension
+                    mockedClient, extension, "foo-1.2.3-SNAPSHOT"
             )
             Path arg1
             DockerClient.BuildParam arg2
@@ -56,7 +56,7 @@ class DockerBuildTaskUnitTest extends Specification {
         extension.buildParameters = ["{\"argumentName1\":\"argumentValue1\",\"argumentName2\":\"argumentValue2\"}"]
         extension.versionPrefix = "foo-"
         classUnderTest = new DockerBuildTask.DockerBuildTaskExecution(
-                mockedClient, extension
+                mockedClient, extension, "foo-1.2.3-SNAPSHOT"
         )
         Path arg1
         DockerClient.BuildParam arg2, arg3, arg4

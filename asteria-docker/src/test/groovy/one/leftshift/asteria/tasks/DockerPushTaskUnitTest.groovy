@@ -21,6 +21,10 @@ class DockerPushTaskUnitTest extends Specification {
     @Shared
     AsteriaDockerExtension extension
 
+    @Shared
+    String version
+
+
     void setup() {
         mockedClient = Mock(DockerClient)
         mockedProject = Stub(Project)
@@ -31,12 +35,13 @@ class DockerPushTaskUnitTest extends Specification {
         extension.repositoryURI = "someRepository"
         extension.name = "some-app"
         extension.versionPrefix = "foo-"
+        version = "foo-1.2.3-SNAPSHOT"
     }
 
     void "invokes docker build with expected values"() {
         given:
             classUnderTest = new DockerPushTask.DockerPushTaskExecution(
-                    mockedClient, extension)
+                    mockedClient, extension, version)
         when:
             classUnderTest.execute()
         then:
@@ -47,7 +52,7 @@ class DockerPushTaskUnitTest extends Specification {
     void "if withLatestTag is enabled the image is pushed again with latest tag"() {
         given:
             classUnderTest = new DockerPushTask.DockerPushTaskExecution(
-                    mockedClient, extension)
+                    mockedClient, extension, version)
             extension.withLatestTag = true
         when:
             classUnderTest.execute()
