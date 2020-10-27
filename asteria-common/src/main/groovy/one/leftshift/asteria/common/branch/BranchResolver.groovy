@@ -20,6 +20,14 @@ abstract class BranchResolver {
         return false
     }
 
+    static String getTicketIdBasedOnBranch(String branchName, String branchRegex=SNAPSHOT_BRANCH_REGEX) {
+        Matcher branchMatcher = branchName =~ branchRegex
+        if (!branchMatcher) {
+            return null
+        }
+        return branchMatcher.group(2)
+    }
+
     static String getSnapshotRepositoryUrlBasedOnBranch(boolean enableBranchSnapshotRepositories,
                                                         String defaultSnapshotRepositoryUrl,
                                                         String branchName,

@@ -55,4 +55,19 @@ class BranchResolverTest extends Specification {
             true    | "bug/GAIA-1000"               || "s3://leftshiftone-maven-artifacts.s3.eu-central-1.amazonaws.com/snapshots-gaia-1000"
             true    | "bug/GAIA-1000/something"     || "s3://leftshiftone-maven-artifacts.s3.eu-central-1.amazonaws.com/snapshots-gaia-1000"
     }
+
+    @Unroll
+    def "when branch #branch then ticket is #ticket"() {
+        expect:
+            def result = BranchResolver.getTicketIdBasedOnBranch(branch)
+            result == ticket
+        where:
+            branch                  || ticket
+            "feature/GAIA-123"      || "GAIA-123"
+            "feature/GAIA-123/v2"   || "GAIA-123"
+            "release/3.0.0"         || null
+            "bug/AS-32v2"           || "AS-32"
+            "bug/AS-32-12"          || "AS-32"
+            "GAIA-123"              || null
+    }
 }
