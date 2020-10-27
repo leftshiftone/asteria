@@ -29,7 +29,7 @@ class VersionResolverTest extends Specification {
         extension.versionPrefix = "foo-"
     }
 
-    void "resolver combines uses version"() {
+    void "resolver uses project version"() {
         given:
         extension.versionPrefix = null
         classUnderTest = new VersionResolver(extension, null)
