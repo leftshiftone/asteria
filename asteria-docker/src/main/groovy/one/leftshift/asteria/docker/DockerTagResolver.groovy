@@ -26,7 +26,7 @@ class DockerTagResolver {
             fallback.find()
             final resolvedTag = ticketId ? ticketId : fallback.group(1)
             if ((resolvedTag =~ RELEASE_TAG_REGEX).find()) {
-                throw new RuntimeException("The supplied explicitTag $resolvedTag must not match a release tag.")
+                throw new RuntimeException("The tag ($resolvedTag) inferred from the supplied explicitTag ($explicitTag)  must not match a release tag.")
             }
             return resolvedTag
         }

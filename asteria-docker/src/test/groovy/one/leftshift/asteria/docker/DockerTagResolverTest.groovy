@@ -73,7 +73,7 @@ class DockerTagResolverTest extends Specification {
         classUnderTest.resolve()
         then:
         def error = thrown(RuntimeException)
-        error.message == "The supplied explicitTag $resolvedTag must not match a release tag."
+        error.message == "The tag ($resolvedTag) inferred from the supplied explicitTag ($explicitTag)  must not match a release tag."
 
         where:
         explicitTag            || resolvedTag
