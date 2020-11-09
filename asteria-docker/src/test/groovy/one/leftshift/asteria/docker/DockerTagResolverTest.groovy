@@ -64,6 +64,26 @@ class DockerTagResolverTest extends Specification {
         "release/1.0.x"      || "1.0.x"
     }
 
+    @Unroll
+    void "resolver does not resolve explicitTag #explicitTag if it matches a release tag"() {
+        given:
+        extension.versionPrefix = null
+        classUnderTest = new DockerTagResolver(extension, explicitTag)
+        when:
+        classUnderTest.resolve()
+        then:
+        def error = thrown(RuntimeException)
+        error.message == "The supplied explicitTag $resolvedTag must not match a release tag."
+
+        where:
+        explicitTag            || resolvedTag
+        "3.0.1"                || "3.0.1"
+        "asdf/3.0.0-rc2"       || "3.0.0-rc2"
+        "bugfix/0.1.0"         || "0.1.0"
+        "release/10.11.123123" || "10.11.123123"
+    }
+
+
     void "resolver uses explicit version and ignores prefix"() {
         given:
         classUnderTest = new DockerTagResolver(extension, "GAIA-123")
