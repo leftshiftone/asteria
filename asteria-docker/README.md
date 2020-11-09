@@ -27,11 +27,13 @@ asteriaDocker {
 _asteria-docker_ provides the following options to change behaviour of tasks at runtime:
 * **explicitTag** _[optional]_: Can modify _dockerBuild_ and _dockerPush_ command to override the inferred tag 
 and specify the tag that should be used explicitly. If the provided string is a branch name, the ticket ID is inferred 
-and used as tag.
+and used as tag. **HINT**: To avoid unwanted pushed overwriting release tags it is not allowed to specify a release version through the _explicitTag_.
  
  Example:
  ```shell script
  gradlew dockerPush --explicitTag  bug/TICKET-123 # Tag the image as TICKET-123 because ticket id is inferred.
+ gradlew dockerPush --explicitTag  1.0.0 # Raises runtime exception due to inferred release version
+
  ```
 
 ## Defaults
