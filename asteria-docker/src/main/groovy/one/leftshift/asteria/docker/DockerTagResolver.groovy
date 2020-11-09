@@ -10,6 +10,7 @@ import one.leftshift.asteria.common.version.VersionExtractor
 
 class DockerTagResolver {
     public static final String DOCKER_TAG_REGEX = ".*?([A-Za-z0-9_][A-Za-z0-9_.\\-]{0,127})\$"
+    public static final String RELEASE_TAG_REGEX = "^\\d+\\.\\d+\\.\\d+.*"
     AsteriaDockerExtension extension
     String explicitTag
 
@@ -23,7 +24,11 @@ class DockerTagResolver {
             final ticketId = BranchResolver.getTicketIdBasedOnBranch(explicitTag)
             final fallback = explicitTag =~ DOCKER_TAG_REGEX
             fallback.find()
-            return ticketId ? ticketId : fallback.group(1)
+            final resolvedTag = ticketId ? ticketId : fallback.group(1)
+            if ((resolvedTag =~ RELEASE_TAG_REGEX).find()) {
+                throw new RuntimeException("The tag ($resolvedTag) inferred from the supplied explicitTag ($explicitTag)  must not match a release tag.")
+            }
+            return resolvedTag
         }
         final String extractedVersion = VersionExtractor
                 .defaultExtractor()
