@@ -145,7 +145,7 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
         if (!project.rootProject.tasks.find { it.name == UPDATE_DEPENDENCY_LOCK_TASK_NAME }) {
             project.rootProject.task(UPDATE_DEPENDENCY_LOCK_TASK_NAME, type: UpdateDependencyInLockTask)
         }
-        if (!project.rootProject.tasks.find { it.name == UPDATE_DEPENDENCY_LOCK_TASK_NAME }) {
+        if (!project.rootProject.tasks.find { it.name == CLEAN_BRANCH_SNAPSHOT_ARTIFACTS_TASK_NAME }) {
             project.rootProject.task(CLEAN_BRANCH_SNAPSHOT_ARTIFACTS_TASK_NAME, type: CleanBranchSnapshotArtifactsTask)
         }
 
