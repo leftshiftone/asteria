@@ -8,60 +8,60 @@ page:
   margin_outer: 0.59in
   size: A4
 base:
-  font_color: 233246
-  border_color: 6E7989
+  font_color: 010622
+  border_color: 455156
   border_radius: 0
 link:
-  font_color: 829BAD
+  font_color: 455156
 literal:
-  font_color: 233246
+  font_color: 010622
 title_page:
   title:
-    font_color: 00FFC8
+    font_color: 010622
   authors:
-    font_color: 233246
+    font_color: 455156
 abstract:
-  font_color: 233246
+  font_color: 010622
 toc:
   dot_leader:
-    font_color: 233246
+    font_color: 010622
 heading:
-  font_color: 233246
+  font_color: 010622
 admonition:
   column_rule_color: $base_border_color
   icon:
     tip:
-      stroke_color: 233246
+      stroke_color: 0dc7ff
     note:
-      stroke_color: 233246
+      stroke_color: 5d19ff
     important:
-      stroke_color: 00FFC8
+      stroke_color: ff004b
     caution:
-      stroke_color: E22020
+      stroke_color: ff3500
     warning:
-      stroke_color: FFBC00
+      stroke_color: ffec00
   label:
     text_transform: uppercase
     font_style: bold
 key:
-  background_color: d2dee5
+  background_color: c4cfd4
   border_color: $base_border_color
   border_radius: $base_border_radius
 blockquote:
   font_color: $base_font_color
-  border_color: 00FFC8
+  border_color: 5d19ff
   cite_font_color: $link_font_color
 code:
   font_color: $base_font_color
-  background_color: d2dee5
-  border_color: d2dee5
+  background_color: c4cfd4
+  border_color: c4cfd4
   border_radius: $base_border_radius
 example:
   border_color: $base_border_color
   border_radius: $base_border_radius
 sidebar:
-  background_color: d2dee5
-  border_color: d2dee5
+  background_color: c4cfd4
+  border_color: c4cfd4
   border_radius: $base_border_radius
   title:
     font_color: $base_font_color
