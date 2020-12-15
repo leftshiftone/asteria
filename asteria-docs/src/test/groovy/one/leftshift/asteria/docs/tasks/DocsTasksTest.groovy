@@ -64,8 +64,8 @@ class DocsTasksTest extends Specification {
             docResult.text.contains("<img src=\"./resources/images/infrastructure-overview.svg\" alt=\"infrastructure overview\" width=\"100%\">")
             docResult.text.contains("<div class=\"title\">Figure 1. <a id=\"figure-infrastructure-overview\"></a>Infrastructure Overview</div>")
             docResult.text.contains("Dumm ist der, der Dummes tut.")
-            docResult.text.contains("color: #233246")
-            docResult.text.contains("color: #00ffc8")
+            docResult.text.contains("color: #010622")
+            docResult.text.contains("color: #455156")
             imageFileResult.exists()
             attachmentFileResult.exists()
 
