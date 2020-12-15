@@ -71,8 +71,8 @@ hr {
 }
 
 mark {
-    background: #00FFC8;
-    color: #233246
+    background: #455156;
+    color: #010622;
 }
 
 code, kbd, pre, samp {
@@ -196,7 +196,7 @@ html, body {
 
 body {
     background: #fff;
-    color: #233246;
+    color: #010622;
     padding: 0;
     margin: 0;
     font-family: "Noto Serif", "DejaVu Serif", serif;
@@ -286,7 +286,7 @@ p.lead, .paragraph.lead > p, #preamble > .sectionbody > .paragraph:first-of-type
 
 .subheader, .admonitionblock td.content > .title, .audioblock > .title, .exampleblock > .title, .imageblock > .title, .listingblock > .title, .literalblock > .title, .stemblock > .title, .openblock > .title, .paragraph > .title, .quoteblock > .title, table.tableblock > .title, .verseblock > .title, .videoblock > .title, .dlist > .title, .olist > .title, .ulist > .title, .qlist > .title, .hdlist > .title {
     line-height: 1.45;
-    color: #233246;
+    color: #010622;
     font-weight: 400;
     margin-top: 0;
     margin-bottom: .25em
@@ -299,13 +299,13 @@ div, dl, dt, dd, ul, ol, li, h1, h2, h3, #toctitle, .sidebarblock > .content > .
 }
 
 a {
-    color: #00d1a4;
+    color: #455156;
     text-decoration: underline;
     line-height: inherit
 }
 
 a:hover, a:focus {
-    color: #00ffc8
+    color: #5d19ff
 }
 
 a img {
@@ -331,7 +331,7 @@ h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 {
     font-family: "Open Sans", "DejaVu Sans", sans-serif;
     font-weight: 300;
     font-style: normal;
-    color: #233246;
+    color: #010622;
     text-rendering: optimizeLegibility;
     margin-top: 1em;
     margin-bottom: .5em;
@@ -340,7 +340,7 @@ h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 {
 
 h1 small, h2 small, h3 small, #toctitle small, .sidebarblock > .content > .title small, h4 small, h5 small, h6 small {
     font-size: 60%;
-    color: #233246;
+    color: #010622;
     line-height: 0
 }
 
@@ -365,7 +365,7 @@ h6 {
 }
 
 hr {
-    border: solid #ddddd8;
+    border: solid #e1e8eb;
     border-width: 1px 0 0;
     clear: both;
     margin: 1.25em 0 1.1875em;
@@ -390,7 +390,7 @@ small {
 code {
     font-family: "Droid Sans Mono", "DejaVu Sans Mono", monospace;
     font-weight: 400;
-    color: #233246
+    color: #010622
 }
 
 ul, ol, dl {
@@ -448,7 +448,7 @@ dl dd {
 abbr, acronym {
     text-transform: uppercase;
     font-size: 90%;
-    color: #233246;
+    color: #010622;
     border-bottom: 1px dotted #ddd;
     cursor: help
 }
@@ -466,7 +466,7 @@ blockquote {
 blockquote cite {
     display: block;
     font-size: .9375em;
-    color: rgba(0, 0, 0, .6)
+    color: #010622
 }
 
 blockquote cite:before {
@@ -474,12 +474,12 @@ blockquote cite:before {
 }
 
 blockquote cite a, blockquote cite a:visited {
-    color: rgba(0, 0, 0, .6)
+    color: #010622
 }
 
 blockquote, blockquote p {
     line-height: 1.6;
-    color: #233246
+    color: #010622
 }
 
 @media only screen and (min-width: 768px) {
@@ -507,29 +507,29 @@ blockquote, blockquote p {
 table {
     background: #fff;
     margin-bottom: 1.25em;
-    border: solid 1px #dedede
+    border: solid 1px #e1e8eb
 }
 
 table thead, table tfoot {
-    background: #f7f8f7;
+    background: #f0f5f7;
     font-weight: bold
 }
 
 table thead tr th, table thead tr td, table tfoot tr th, table tfoot tr td {
     padding: .5em .625em .625em;
     font-size: inherit;
-    color: #233246;
+    color: #010622;
     text-align: left
 }
 
 table tr th, table tr td {
     padding: .5625em .625em;
     font-size: inherit;
-    color: #233246
+    color: #010622
 }
 
 table tr.even, table tr.alt, table tr:nth-of-type(even) {
-    background: #f8f8f7
+    background: #f0f5f7
 }
 
 table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoot tr td {
@@ -565,14 +565,14 @@ h1 strong, h2 strong, h3 strong, #toctitle strong, .sidebarblock > .content > .t
     letter-spacing: 0;
     padding: .1em .5ex;
     word-spacing: -.15em;
-    background-color: #f7f7f8;
+    background-color: #f0f5f7;
     line-height: 1.45;
     text-rendering: optimizeSpeed
 }
 
 pre, pre > code {
     line-height: 1.45;
-    color: #233246;
+    color: #010622;
     font-family: "Droid Sans Mono", "DejaVu Sans Mono", monospace;
     font-weight: 400;
     text-rendering: optimizeSpeed
@@ -585,11 +585,11 @@ pre, pre > code {
 kbd {
     font-family: "Droid Sans Mono", "DejaVu Sans Mono", monospace;
     display: inline-block;
-    color: #233246;
+    color: #010622;
     font-size: .65em;
     line-height: 1.45;
-    background-color: #f7f7f7;
-    border: 1px solid #ccc;
+    background-color: #f0f5f7;
+    border: 1px solid #c4cfd4;
     -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, .2), 0 0 0 .1em white inset;
     box-shadow: 0 1px 0 rgba(0, 0, 0, .2), 0 0 0 .1em #fff inset;
     margin: 0 .15em;
@@ -609,7 +609,7 @@ kbd {
 }
 
 .menuseq, .menu {
-    color: #233246
+    color: #010622
 }
 
 b.button:before, b.button:after {
@@ -629,7 +629,7 @@ b.button:after {
 }
 
 p a > code:hover {
-    color: #233246
+    color: #010622
 }
 
 #header, #content, #footnotes, #footer {
@@ -663,28 +663,28 @@ p a > code:hover {
 }
 
 #header > h1:first-child {
-    color: #233246;
+    color: #010622;
     margin-top: 2.25rem;
     margin-bottom: 0
 }
 
 #header > h1:first-child + #toc {
     margin-top: 8px;
-    border-top: 1px solid #ddddd8
+    border-top: 1px solid #e1e8eb
 }
 
 #header > h1:only-child, body.toc2 #header > h1:nth-last-child(2) {
-    border-bottom: 1px solid #ddddd8;
+    border-bottom: 1px solid #e1e8eb;
     padding-bottom: 8px
 }
 
 #header .details {
-    border-bottom: 1px solid #ddddd8;
+    border-bottom: 1px solid #e1e8eb;
     line-height: 1.45;
     padding-top: .25em;
     padding-bottom: .25em;
     padding-left: .25em;
-    color: rgba(0, 0, 0, .6);
+    color: #010622;
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
@@ -698,7 +698,7 @@ p a > code:hover {
 }
 
 #header .details span.email a {
-    color: #233246
+    color: #010622
 }
 
 #header .details br {
@@ -711,7 +711,7 @@ p a > code:hover {
 
 #header .details br + span.author:before {
     content: "\00a0\22c5\00a0";
-    color: #233246
+    color: #010622
 }
 
 #header .details br + span#revremark:before {
@@ -727,8 +727,8 @@ p a > code:hover {
 }
 
 #content > h1:first-child:not([class]) {
-    color: #233246;
-    border-bottom: 1px solid #ddddd8;
+    color: #010622;
+    border-bottom: 1px solid #e1e8eb;
     padding-bottom: 8px;
     margin-top: 0;
     padding-top: 1rem;
@@ -736,7 +736,7 @@ p a > code:hover {
 }
 
 #toc {
-    border-bottom: 1px solid #efefed;
+    border-bottom: 1px solid #e1e8eb;
     padding-bottom: .5em
 }
 
@@ -771,7 +771,7 @@ p a > code:hover {
 }
 
 #toctitle {
-    color: #233246;
+    color: #010622;
     font-size: 1.2em
 }
 
@@ -787,12 +787,12 @@ p a > code:hover {
 
     #toc.toc2 {
         margin-top: 0 !important;
-        background-color: #f8f8f7;
+        background-color: #f0f5f7;
         position: fixed;
         width: 15em;
         left: 0;
         top: 0;
-        border-right: 1px solid #efefed;
+        border-right: 1px solid #e1e8eb;
         border-top-width: 0 !important;
         border-bottom-width: 0 !important;
         z-index: 1000;
@@ -830,7 +830,7 @@ p a > code:hover {
 
     body.toc2.toc-right #toc.toc2 {
         border-right-width: 0;
-        border-left: 1px solid #efefed;
+        border-left: 1px solid #e1e8eb;
         left: auto;
         right: 0
     }
@@ -867,10 +867,10 @@ p a > code:hover {
 #content #toc {
     border-style: solid;
     border-width: 1px;
-    border-color: #e0e0dc;
+    border-color: #e1e8eb;
     margin-bottom: 1.25em;
     padding: 1.25em;
-    background: #f8f8f7;
+    background: #f0f5f7;
 }
 
 #content #toc > :first-child {
@@ -883,7 +883,7 @@ p a > code:hover {
 
 #footer {
     max-width: 100%;
-    background-color: #233246;
+    background-color: #010622;
     padding: 1.25em
 }
 
@@ -903,7 +903,7 @@ p a > code:hover {
 }
 
 .sect1 + .sect1 {
-    border-top: 1px solid #efefed
+    border-top: 1px solid #e1e8eb
 }
 
 #content h1 > a.anchor, h2 > a.anchor, h3 > a.anchor, #toctitle > a.anchor, .sidebarblock > .content > .title > a.anchor, h4 > a.anchor, h5 > a.anchor, h6 > a.anchor {
@@ -935,7 +935,7 @@ p a > code:hover {
 }
 
 #content h1 > a.link:hover, h2 > a.link:hover, h3 > a.link:hover, #toctitle > a.link:hover, .sidebarblock > .content > .title > a.link:hover, h4 > a.link:hover, h5 > a.link:hover, h6 > a.link:hover {
-    color: #5F6978
+    color: #455156
 }
 
 .audioblock, .imageblock, .literalblock, .listingblock, .stemblock, .videoblock {
@@ -957,7 +957,7 @@ table.tableblock > caption.title {
 }
 
 .paragraph.lead > p, #preamble > .sectionbody > .paragraph:first-of-type p {
-    color: #233246
+    color: #010622
 }
 
 table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
@@ -989,8 +989,8 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 .admonitionblock > table td.content {
     padding-left: 1.125em;
     padding-right: 1.25em;
-    border-left: 1px solid #ddddd8;
-    color: rgba(0, 0, 0, .6)
+    border-left: 1px solid #e1e8eb;
+    color: #010622
 }
 
 .admonitionblock > table td.content > :last-child > :last-child {
@@ -1000,7 +1000,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 .exampleblock > .content {
     border-style: solid;
     border-width: 1px;
-    border-color: #e6e6e6;
+    border-color: #e1e8eb;
     margin-bottom: 1.25em;
     padding: 1.25em;
     background: #fff;
@@ -1017,10 +1017,10 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 .sidebarblock {
     border-style: solid;
     border-width: 1px;
-    border-color: #e0e0dc;
+    border-color: #e1e8eb;
     margin-bottom: 1.25em;
     padding: 1.25em;
-    background: #f8f8f7;
+    background: #f0f5f7;
 }
 
 .sidebarblock > :first-child {
@@ -1032,7 +1032,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 }
 
 .sidebarblock > .content > .title {
-    color: #233246;
+    color: #010622;
     margin-top: 0;
     text-align: center
 }
@@ -1042,11 +1042,11 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 }
 
 .literalblock pre, .listingblock pre:not(.highlight), .listingblock pre[class="highlight"], .listingblock pre[class^="highlight "], .listingblock pre.CodeRay, .listingblock pre.prettyprint {
-    background: #f7f7f8
+    background: #f0f5f7
 }
 
 .sidebarblock .literalblock pre, .sidebarblock .listingblock pre:not(.highlight), .sidebarblock .listingblock pre[class="highlight"], .sidebarblock .listingblock pre[class^="highlight "], .sidebarblock .listingblock pre.CodeRay, .sidebarblock .listingblock pre.prettyprint {
-    background: #f2f1f1
+    background: #f0f5f7
 }
 
 .literalblock pre, .literalblock pre[class], .listingblock pre, .listingblock pre[class] {
@@ -1074,8 +1074,8 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 }
 
 .literalblock.output pre {
-    color: #f7f7f8;
-    background-color: #233246
+    color: #f0f5f7;
+    background-color: #010622
 }
 
 .listingblock pre.highlightjs {
@@ -1103,7 +1103,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
     right: .5rem;
     line-height: 1;
     text-transform: uppercase;
-    color: #999
+    color: #c4cfd4
 }
 
 .listingblock:hover code[data-lang]:before {
@@ -1113,7 +1113,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 .listingblock.terminal pre .command:before {
     content: attr(data-prompt);
     padding-right: .5em;
-    color: #999
+    color: #c4cfd4
 }
 
 .listingblock.terminal pre .command:not([data-prompt]):before {
@@ -1140,10 +1140,10 @@ table.pyhltable td.code {
 }
 
 pre.pygments .lineno, table.pyhltable td:not(.code) {
-    color: #999;
+    color: #c4cfd4;
     padding-left: 0;
     padding-right: .5em;
-    border-right: 1px solid #ddddd8
+    border-right: 1px solid #e1e8eb
 }
 
 pre.pygments .lineno {
@@ -1167,7 +1167,7 @@ table.pyhltable .linenodiv {
 }
 
 .quoteblock blockquote, .quoteblock blockquote p {
-    color: #233246;
+    color: #010622;
     font-size: 1.15rem;
     line-height: 1.75;
     word-spacing: .1em;
@@ -1189,8 +1189,8 @@ table.pyhltable .linenodiv {
     font-weight: bold;
     line-height: .6em;
     margin-left: -.6em;
-    color: #233246;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, .1)
+    color: #010622;
+    text-shadow: none;
 }
 
 .quoteblock blockquote > .paragraph:last-child p {
@@ -1207,7 +1207,7 @@ table.pyhltable .linenodiv {
     margin-left: 0;
     margin-right: 0;
     padding: .5em 0;
-    border-left: 3px solid rgba(0, 0, 0, .6)
+    border-left: 3px solid #010622
 }
 
 .quoteblock .quoteblock blockquote {
@@ -1225,7 +1225,7 @@ table.pyhltable .linenodiv {
 .verseblock pre {
     font-family: "Open Sans", "DejaVu Sans", sans;
     font-size: 1.15rem;
-    color: #233246;
+    color: #010622;
     font-weight: 300;
     text-rendering: optimizeLegibility
 }
@@ -1252,7 +1252,7 @@ table.pyhltable .linenodiv {
 .quoteblock .attribution cite, .verseblock .attribution cite {
     display: block;
     letter-spacing: -.025em;
-    color: rgba(0, 0, 0, .6)
+    color: #010622
 }
 
 .quoteblock.abstract {
@@ -1279,7 +1279,7 @@ table.tableblock td > .paragraph:last-child p > p:last-child, table.tableblock t
 }
 
 table.tableblock, th.tableblock, td.tableblock {
-    border: 0 solid #dedede
+    border: 0 solid #e1e8eb
 }
 
 table.grid-all th.tableblock, table.grid-all td.tableblock {
@@ -1353,11 +1353,11 @@ table thead th, table tfoot th {
 tbody tr th {
     display: table-cell;
     line-height: 1.6;
-    background: #f7f8f7
+    background: #f0f5f7
 }
 
 tbody tr th, tbody tr th p, tfoot tr th, tfoot tr th p {
-    color: #233246;
+    color: #010622;
     font-weight: bold
 }
 
@@ -1636,134 +1636,6 @@ div.unbreakable {
     text-decoration: line-through
 }
 
-.aqua {
-    color: #00bfbf
-}
-
-.aqua-background {
-    background-color: #00fafa
-}
-
-.black {
-    color: #000
-}
-
-.black-background {
-    background-color: #000
-}
-
-.blue {
-    color: #0000bf
-}
-
-.blue-background {
-    background-color: #0000fa
-}
-
-.fuchsia {
-    color: #bf00bf
-}
-
-.fuchsia-background {
-    background-color: #fa00fa
-}
-
-.gray {
-    color: #606060
-}
-
-.gray-background {
-    background-color: #7d7d7d
-}
-
-.green {
-    color: #006000
-}
-
-.green-background {
-    background-color: #007d00
-}
-
-.lime {
-    color: #00bf00
-}
-
-.lime-background {
-    background-color: #00fa00
-}
-
-.maroon {
-    color: #600000
-}
-
-.maroon-background {
-    background-color: #7d0000
-}
-
-.navy {
-    color: #000060
-}
-
-.navy-background {
-    background-color: #00007d
-}
-
-.olive {
-    color: #606000
-}
-
-.olive-background {
-    background-color: #7d7d00
-}
-
-.purple {
-    color: #600060
-}
-
-.purple-background {
-    background-color: #7d007d
-}
-
-.red {
-    color: #bf0000
-}
-
-.red-background {
-    background-color: #fa0000
-}
-
-.silver {
-    color: #909090
-}
-
-.silver-background {
-    background-color: #bcbcbc
-}
-
-.teal {
-    color: #006060
-}
-
-.teal-background {
-    background-color: #007d7d
-}
-
-.white {
-    color: #bfbfbf
-}
-
-.white-background {
-    background-color: #fafafa
-}
-
-.yellow {
-    color: #bfbf00
-}
-
-.yellow-background {
-    background-color: #fafa00
-}
-
 span.icon > .fa {
     cursor: default
 }
@@ -1776,34 +1648,34 @@ span.icon > .fa {
 
 .admonitionblock td.icon .icon-note:before {
     content: "\f05a";
-    color: #00D1A4
+    color: #5d19ff
 }
 
 .admonitionblock td.icon .icon-tip:before {
     content: "\f0eb";
     text-shadow: none;
-    color: #233246;
+    color: #0dc7ff;
 }
 
 .admonitionblock td.icon .icon-warning:before {
     content: "\f071";
-    color: #FFBC00
+    color: #ffec00
 }
 
 .admonitionblock td.icon .icon-caution:before {
     content: "\f06d";
-    color: #FF3939
+    color: #ff3500
 }
 
 .admonitionblock td.icon .icon-important:before {
     content: "\f06a";
-    color: #C61414
+    color: #ff004b
 }
 
 .conum[data-value] {
     display: inline-block;
     color: #fff !important;
-    background-color: #233246;
+    background-color: #010622;
     text-align: center;
     font-size: .75em;
     width: 1.67em;
@@ -1865,7 +1737,7 @@ p {
 
 .exampleblock > .content {
     background-color: #fffef7;
-    border-color: #e0e0dc;
+    border-color: #e1e8eb;
 }
 
 .print-only {
@@ -1930,7 +1802,7 @@ p {
     }
 
     #toc {
-        border-bottom: 1px solid #ddddd8 !important;
+        border-bottom: 1px solid #e1e8eb !important;
         padding-bottom: 0 !important
     }
 
@@ -1994,7 +1866,7 @@ p {
     }
 
     #footer-text {
-        color: rgba(0, 0, 0, .6) !important;
+        color: #010622 !important;
         font-size: .9em
     }
 
