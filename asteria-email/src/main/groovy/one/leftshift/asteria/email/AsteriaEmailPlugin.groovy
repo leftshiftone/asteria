@@ -25,7 +25,7 @@ class AsteriaEmailPlugin implements Plugin<Project> {
         def sendReleaseEmailTask
         if (!project.rootProject.tasks.find { it.name == SEND_RELEASE_EMAIL_TASK_NAME }) {
             sendReleaseEmailTask = project.rootProject.task(SEND_RELEASE_EMAIL_TASK_NAME, type: SendEmailTask)
-            sendReleaseEmailTask.sender = "Release Leftshift One <no-reply@leftshift.one>"
+            sendReleaseEmailTask.sender = "Release Leftshift One <noreply@leftshift.one>"
             sendReleaseEmailTask.recipients = "devs@leftshift.one,5751fae1.leftshift.one@emea.teams.ms"
             project.afterEvaluate {
                 sendReleaseEmailTask.subject = "Release ${project.rootProject.name} ${project.version.toString()}"
