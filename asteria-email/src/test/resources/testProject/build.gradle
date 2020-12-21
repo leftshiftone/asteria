@@ -28,8 +28,8 @@ asteriaEmail {
     smptUser = "admin"
     smptPassword = "admin"
 
-    sender = "CI Leftshift One <no-reply@leftshift.one>"
-    recipients = "no-reply@leftshift.one"
+    sender = "CI Leftshift One <noreply@leftshift.one>"
+    recipients = "noreply@leftshift.one"
     subject = "Test"
     project.afterEvaluate {
         content = "Test of ${rootProject.name} ${version.toString()}"

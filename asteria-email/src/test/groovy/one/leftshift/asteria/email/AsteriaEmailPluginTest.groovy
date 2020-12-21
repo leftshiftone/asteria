@@ -48,7 +48,7 @@ class AsteriaEmailPluginTest extends Specification {
 
         then:
             result.output.contains "BUILD SUCCESSFUL"
-            result.output.contains "Sending email to no-reply@leftshift.one"
+            result.output.contains "Sending email to noreply@leftshift.one"
             smtpServer.waitForIncomingEmail(1)
             smtpServer.receivedMessages.first().subject == "Test"
         cleanup:
@@ -74,7 +74,7 @@ class AsteriaEmailPluginTest extends Specification {
 
         then:
             result.output.contains "BUILD SUCCESSFUL"
-            result.output.contains "Sending email to no-reply@leftshift.one"
+            result.output.contains "Sending email to noreply@leftshift.one"
             smtpServer.waitForIncomingEmail(1)
             smtpServer.receivedMessages.first().subject == "Test"
         cleanup:
