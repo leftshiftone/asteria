@@ -19,4 +19,4 @@ Run `./gradlew final -x bintrayUpload -Prelease.scope=minor` locally.
 
 #### Patch
 Must be executed from a release branch like `release/3.0.x`.
-Run `./gradlew final -x bintrayUpload -Prelease.scope=patch` locally.
+Run `./gradlew final -x bintrayUpload -Prelease.scope=patch` locally to create a patch.
