@@ -40,7 +40,6 @@ allprojects {
 subprojects {
     apply plugin: "groovy"
     apply plugin: "maven-publish"
-    apply plugin: "org.jetbrains.dokka"
     apply plugin: "org.sonarqube"
 
     repositories {
@@ -67,12 +66,8 @@ subprojects {
         }
     }
 
-    task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
-        outputFormat = "javadoc"
-        outputDirectory = "${buildDir}/dokkaJavadoc"
-    }
     task javadocJar(type: Jar) {
-        from dokkaJavadoc
+        from javadoc
         classifier "javadoc"
     }
     task sourcesJar(type: Jar) {
@@ -89,6 +84,7 @@ subprojects {
                 artifactId = project.name
                 from components.java
                 artifact sourcesJar
+                artifact javadocJar
                 pom.withXml {
                     Node root = asNode()
                     root.appendNode("name", "Asteria")
