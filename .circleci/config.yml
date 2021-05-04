@@ -29,6 +29,7 @@ jobs:
       - run:
           <<: *webhook-created
       - checkout
+      - run: echo $OSSRH_SIGN_KEY_CONTENT | base64 --decode > "$OSSRH_SIGN_KEY_PATH"
       - run: chmod a+x gradlew
       - restore_cache:
           key: cache-gradle-{{ checksum "build.gradle" }}
@@ -58,6 +59,7 @@ jobs:
       - run:
           <<: *webhook-created
       - checkout
+      - run: echo $OSSRH_SIGN_KEY_CONTENT | base64 --decode > "$OSSRH_SIGN_KEY_PATH"
       - restore_cache:
           key: cache-gradle-{{ checksum "build.gradle" }}
       - run: ./gradlew test --stacktrace
@@ -65,7 +67,7 @@ jobs:
           name: Collect test results
           command: find . -type f -regex ".*/build/test-results/test/.*xml" -exec cp {} $TEST_RESULTS_PATH \;
           when: always
-      - run: ./gradlew final bintrayUpload -x test -Prelease.useLastTag=true --stacktrace
+      - run: ./gradlew final publishReleasePublicationToSonatypeRepository -Prelease.useLastTag=true --max-workers 1 closeAndReleaseRepository --stacktrace
       - save_cache:
           paths:
             - ~/.gradle
@@ -107,12 +109,16 @@ workflows:
   build:
     jobs:
       - build:
-          context: asteria
+          context:
+            - asteria
+            - maven-central
           filters:
             tags:
               ignore: /.*/
       - webhook-completed:
-          context: asteria
+          context:
+            - asteria
+            - maven-central
           filters:
             tags:
               ignore: /.*/
@@ -121,14 +127,18 @@ workflows:
   release:
     jobs:
       - release:
-          context: asteria
+          context:
+            - asteria
+            - maven-central
           filters:
             branches:
               ignore: /.*/
             tags:
               only: /^v\d+\.\d+\.\d+$/
       - webhook-completed:
-          context: asteria
+          context:
+            - asteria
+            - maven-central
           filters:
             branches:
               ignore: /.*/
@@ -146,8 +156,12 @@ workflows:
                 - master
     jobs:
       - code-analytics:
-          context: asteria
+          context:
+            - asteria
+            - maven-central
       - webhook-completed:
-          context: asteria
+          context:
+            - asteria
+            - maven-central
           requires:
             - code-analytics

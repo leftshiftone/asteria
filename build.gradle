@@ -10,14 +10,26 @@ buildscript {
         classpath "com.netflix.nebula:nebula-release-plugin:8.0.3"
         classpath "com.github.ben-manes:gradle-versions-plugin:0.20.0"
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.17"
-        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4"
+        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.30.0"
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.8"
     }
+}
+
+apply plugin: "io.codearte.nexus-staging"
+
+nexusStaging {
+    packageGroup = "one.leftshift"
+    serverUrl = "https://s01.oss.sonatype.org/service/local/"
+    stagingProfileId = System.getenv("OSSRH_STAGING_PROFILE_ID")
+    username = System.getenv("OSSRH_LOGIN_NAME")
+    password = System.getenv("OSSRH_LOGIN_PASSWORD")
 }
 
 allprojects {
     apply plugin: "nebula.nebula-release"
     apply plugin: "com.github.ben-manes.versions"
+    apply plugin: "maven-publish"
+    apply plugin: "signing"
     apply plugin: "org.sonarqube"
 
     release {
@@ -28,7 +40,6 @@ allprojects {
 subprojects {
     apply plugin: "groovy"
     apply plugin: "maven-publish"
-    apply plugin: "com.jfrog.bintray"
     apply plugin: "org.jetbrains.dokka"
     apply plugin: "org.sonarqube"
 
@@ -56,17 +67,28 @@ subprojects {
         }
     }
 
-    task sourceJar(type: Jar) {
+    task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
+        outputFormat = "javadoc"
+        outputDirectory = "${buildDir}/dokkaJavadoc"
+    }
+    task javadocJar(type: Jar) {
+        from dokkaJavadoc
+        classifier "javadoc"
+    }
+    task sourcesJar(type: Jar) {
         from sourceSets.main.allSource
         classifier "sources"
+    }
+    artifacts {
+        archives javadocJar, sourcesJar
     }
 
     publishing {
         publications {
-            mavenJava(MavenPublication) {
+            release(MavenPublication) {
                 artifactId = project.name
                 from components.java
-                artifact sourceJar
+                artifact sourcesJar
                 pom.withXml {
                     Node root = asNode()
                     root.appendNode("name", "Asteria")
@@ -93,21 +115,29 @@ subprojects {
                 }
             }
         }
-    }
-
-    bintray {
-        logger.info "Bintray deploy with user [${System.getenv('BINTRAY_USER')}] while working on ${project.name}"
-        user = System.getenv('BINTRAY_USER')
-        key = System.getenv('BINTRAY_KEY')
-        publish = true
-        pkg {
-            repo = "asteria"
-            name = "${project.group}.${project.name}"
-            userOrg = "leftshiftone"
-            licenses = ["Apache-2.0"]
-            vcsUrl = "https://github.com/leftshiftone/asteria.git"
-            publications = ["mavenJava"]
+        repositories {
+            maven {
+                name = "sonatype"
+                url = version.toString().endsWith("SNAPSHOT") ? "https://s01.oss.sonatype.org/content/repositories/snapshots" : "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+                credentials {
+                    username System.getenv("OSSRH_LOGIN_NAME")
+                    password System.getenv("OSSRH_LOGIN_PASSWORD")
+                }
+            }
         }
     }
+    ext."signing.keyId" = System.getenv("OSSRH_SIGN_KEY_ID")
+    ext."signing.password" = System.getenv("OSSRH_SIGN_KEY_PASSWORD")
+    ext."signing.secretKeyRingFile" = System.getenv("OSSRH_SIGN_KEY_PATH")
+    signing {
+        sign publishing.publications
+    }
 
+}
+
+ext."signing.keyId" = System.getenv("OSSRH_SIGN_KEY_ID")
+ext."signing.password" = System.getenv("OSSRH_SIGN_KEY_PASSWORD")
+ext."signing.secretKeyRingFile" = System.getenv("OSSRH_SIGN_KEY_PATH")
+signing {
+    sign publishing.publications
 }
