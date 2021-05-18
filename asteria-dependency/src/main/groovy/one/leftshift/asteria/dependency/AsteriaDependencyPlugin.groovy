@@ -10,6 +10,7 @@ import io.spring.gradle.dependencymanagement.DependencyManagementPlugin
 import nebula.plugin.dependencylock.DependencyLockPlugin
 import nebula.plugin.release.ReleasePlugin
 import one.leftshift.asteria.common.branch.BranchResolver
+import one.leftshift.asteria.dependency.tasks.CleanBranchSnapshotArtifactsTask
 import one.leftshift.asteria.dependency.tasks.PersistDependencyLockTask
 import one.leftshift.asteria.dependency.tasks.UpdateDependencyInLockTask
 import org.ajoberstar.grgit.Grgit
@@ -29,6 +30,7 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
     static final String LATEST_SMART_VERSION = "latest.smart"
     static final String PERSIST_DEPENDENCY_LOCK_TASK_NAME = "persistDependencyLock"
     static final String UPDATE_DEPENDENCY_LOCK_TASK_NAME = "updateDependencyLock"
+    static final String CLEAN_BRANCH_SNAPSHOT_ARTIFACTS_TASK_NAME = "cleanBranchArtifacts"
 
     @Override
     void apply(Project project) {
@@ -142,6 +144,9 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
         }
         if (!project.rootProject.tasks.find { it.name == UPDATE_DEPENDENCY_LOCK_TASK_NAME }) {
             project.rootProject.task(UPDATE_DEPENDENCY_LOCK_TASK_NAME, type: UpdateDependencyInLockTask)
+        }
+        if (!project.rootProject.tasks.find { it.name == CLEAN_BRANCH_SNAPSHOT_ARTIFACTS_TASK_NAME }) {
+            project.rootProject.task(CLEAN_BRANCH_SNAPSHOT_ARTIFACTS_TASK_NAME, type: CleanBranchSnapshotArtifactsTask)
         }
 
         project.logger.debug("Configuring tasks")
