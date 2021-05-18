@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        versionGradle = "5.6.4"
+        versionGradle = "6.9"
     }
     repositories {
         jcenter()
@@ -8,7 +8,7 @@ buildscript {
     }
     dependencies {
         classpath "com.netflix.nebula:nebula-release-plugin:8.0.3"
-        classpath "com.github.ben-manes:gradle-versions-plugin:0.20.0"
+        classpath "com.github.ben-manes:gradle-versions-plugin:0.36.0"
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.17"
         classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.30.0"
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.8"
