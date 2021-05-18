@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        versionGradle = "6.9"
+        versionGradle = "6.8.3"
     }
     repositories {
         jcenter()
