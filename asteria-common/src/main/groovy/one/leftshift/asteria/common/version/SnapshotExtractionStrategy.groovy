@@ -28,7 +28,7 @@ class SnapshotExtractionStrategy extends AbstractVersionExtractionStrategy {
     }
 
     private static String assembleRevision(BuildProperties properties) {
-        return properties.revision.substring(0, 7)
+        return "r${properties.revision.substring(0, 7)}"
     }
 
     private static String formatTimestamp(ZonedDateTime zonedDateTime) {
