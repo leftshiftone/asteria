@@ -2,7 +2,7 @@ apply plugin: 'java-gradle-plugin'
 
 dependencies {
     implementation('com.spotify:docker-client:8.16.0')
-    implementation('com.amazonaws:aws-java-sdk-ecr:1.11.505')
+    implementation('com.amazonaws:aws-java-sdk-ecr:1.11.1020')
     implementation(project(':asteria-common'))
 }
 

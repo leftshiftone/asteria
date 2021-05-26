@@ -14,6 +14,7 @@ import org.gradle.api.artifacts.ResolvedArtifact
 import org.gradle.api.credentials.AwsCredentials
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.publish.maven.plugins.MavenPublishPlugin
+import org.gradle.api.publish.tasks.GenerateModuleMetadata
 import org.gradle.jvm.tasks.Jar
 
 import static one.leftshift.asteria.common.version.VersionCategorizer.isPreReleaseVersion
@@ -124,6 +125,12 @@ class AsteriaPublishPlugin implements Plugin<Project> {
                 from project.files(project.sourceSets.main.allSource.srcDirs)
                 classifier "sources"
             }
+        }
+
+        // this is a workaround for the spring dependency management plugin (see https://github.com/gradle/gradle/issues/11862)
+        // maybe the gradle native platform should be used or configured accordingly (see https://github.com/spring-gradle-plugins/dependency-management-plugin/issues/211)
+        project.tasks.withType(GenerateModuleMetadata) {
+            enabled = false
         }
     }
 

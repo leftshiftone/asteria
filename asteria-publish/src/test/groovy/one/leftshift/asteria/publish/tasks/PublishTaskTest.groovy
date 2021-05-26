@@ -63,7 +63,7 @@ class PublishTaskTest extends Specification {
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>compile</scope>
-      <version>4.12</version>
+      <version>4.13.2</version>
     </dependency>
   </dependencies>""")
     }

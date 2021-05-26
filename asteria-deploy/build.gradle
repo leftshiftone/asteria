@@ -2,9 +2,9 @@ apply plugin: 'java-gradle-plugin'
 
 dependencies {
     implementation(project(':asteria-common'))
-    implementation('com.amazonaws:aws-java-sdk-s3:1.11.505')
-    implementation('com.amazonaws:aws-java-sdk-elasticbeanstalk:1.11.505')
-    implementation('com.typesafe:config:1.3.3')
+    implementation('com.amazonaws:aws-java-sdk-s3:1.11.1020')
+    implementation('com.amazonaws:aws-java-sdk-elasticbeanstalk:1.11.1020')
+    implementation('com.typesafe:config:1.3.4')
 }
 
 gradlePlugin {

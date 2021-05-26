@@ -28,9 +28,9 @@ class HelmPrepareTaskTest extends Specification {
         then:
             result.output.contains "BUILD SUCCESSFUL"
             helmSource.exists()
-            chartFile.text.contains("appVersion: \"0.4.0-dev.20180619T211755Z.289eea3\"")
-            chartFile.text.contains("version: \"0.2.0-dev.20180619T211755Z.289eea3\"")
+            chartFile.text.contains("appVersion: \"0.4.0-dev.20180619T211755Z.r289eea3\"")
+            chartFile.text.contains("version: \"0.2.0-dev.20180619T211755Z.r289eea3\"")
             chartVersionFile.exists()
-            chartVersionFile.text == "0.2.0-dev.20180619T211755Z.289eea3"
+            chartVersionFile.text == "0.2.0-dev.20180619T211755Z.r289eea3"
     }
 }

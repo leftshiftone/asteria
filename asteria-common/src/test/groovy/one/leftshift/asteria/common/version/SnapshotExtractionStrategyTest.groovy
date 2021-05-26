@@ -23,7 +23,7 @@ class SnapshotExtractionStrategyTest extends Specification {
         when:
             def result = classUnderTest.extract(BuildProperties.from(p))
         then:
-            result == "0.4.0-dev.20180619T211755Z.289eea3"
+            result == "0.4.0-dev.20180619T211755Z.r289eea3"
     }
 
     @Unroll
