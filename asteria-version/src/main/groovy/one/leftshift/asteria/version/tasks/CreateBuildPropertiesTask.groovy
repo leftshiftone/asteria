@@ -61,7 +61,7 @@ class CreateBuildPropertiesTask extends DefaultTask {
                             filesMatching(it) {
                                 filter(ReplaceTokens, tokens: [
                                         version  : version.toString(),
-                                        revision : revision,
+                                        revision : "r${revision}".toString(),
                                         timestamp: timestamp.format(ISO_OFFSET_DATE_TIME)
                                 ])
                             }
@@ -86,7 +86,7 @@ class CreateBuildPropertiesTask extends DefaultTask {
 
         Properties properties = [
                 version  : version,
-                revision : revision,
+                revision : "r${revision}".toString(),
                 timestamp: timestamp.format(ofPattern(ASTERIA_DEFAULT.pattern)),
         ] as Properties
         properties.store(buildPropertiesFile.newWriter(), null)

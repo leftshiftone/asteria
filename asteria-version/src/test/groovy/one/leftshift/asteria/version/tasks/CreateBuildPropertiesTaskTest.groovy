@@ -84,7 +84,7 @@ class CreateBuildPropertiesTaskTest extends Specification {
             def resultPropertiesFile = new File("${projectDir.absolutePath}/build/classes/java/main/build.properties")
             resultPropertiesFile.exists()
             resultPropertiesFile.readLines().find { it.startsWith "version" }
-            resultPropertiesFile.readLines().find { it.matches(/revision=\w{10}/) }
+            resultPropertiesFile.readLines().find { it.matches(/revision=r\w{10}/) }
             resultPropertiesFile.readLines().find { it.startsWith "timestamp" }
             print(resultPropertiesFile.readLines())
     }
