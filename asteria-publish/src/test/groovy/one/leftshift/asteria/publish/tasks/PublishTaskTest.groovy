@@ -34,7 +34,6 @@ class PublishTaskTest extends Specification {
             pomFileProject1.text.contains("<artifactId>junit</artifactId>")
     }
 
-
     def "pom with dependencies is published to local maven repo when spring dependency plugin is enabled"() {
         given:
             Project project = ProjectBuilder.builder().build()
