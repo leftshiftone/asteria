@@ -87,13 +87,20 @@ class AsteriaPublishPlugin implements Plugin<Project> {
                             if (!asNode().dependencies.isEmpty()) {
                                 project.logger.info("Dependencies: " + asNode().dependencies.first().toString())
                                 asNode().dependencies.first().each { Node dependency ->
+                                    project.logger.info("Handling groupId ${dependency.get("groupId")} (type ${dependency.get("groupId").getClass()}) and artifactId ${dependency.get("artifactId")} (type ${dependency.get("artifactId").getClass()})")
                                     if (!dependency.get("groupId") || !dependency.get("artifactId")) {
                                         project.logger.debug("Information missing for " + dependency)
                                         return false
                                     }
-                                    project.logger.debug("Handling dependency " + it)
-                                    String groupId = dependency.get("groupId").first().value().first()
-                                    String artifactId = dependency.get("artifactId").first().value().first()
+                                    project.logger.debug("Handling dependency " + dependency)
+                                    NodeList rawGroupId = dependency.get("groupId")
+                                    project.logger.debug("Handling groupId " + rawGroupId.first())
+                                    project.logger.debug("Handling groupId value " + rawGroupId.first().value())
+                                    String groupId = rawGroupId.first().value() in Collection ? rawGroupId.first().value().first() : rawGroupId.first().value()
+                                    NodeList rawArtifactId = dependency.get("artifactId")
+                                    project.logger.debug("Handling artifactId " + rawArtifactId.first())
+                                    project.logger.debug("Handling artifactId value " + rawArtifactId.first().value())
+                                    String artifactId = rawArtifactId.first().value() in Collection ? rawArtifactId.first().value().first() : rawArtifactId.first().value()
                                     String version = resolvedVersionMap.get("${groupId}:${artifactId}")
                                     if (!version) {
                                         project.logger.info("No version found for ${groupId}:${artifactId}")
