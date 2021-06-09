@@ -20,7 +20,7 @@ class DockerTagResolver {
     }
 
     String resolve() {
-        if (explicitTag != null) {
+        if (explicitTag != null && !explicitTag.isEmpty()) {
             final ticketId = BranchResolver.getTicketIdBasedOnBranch(explicitTag)
             final fallback = explicitTag =~ DOCKER_TAG_REGEX
             fallback.find()
