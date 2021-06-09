@@ -23,7 +23,7 @@ class DockerBuildTask extends DefaultTask {
 
     @Option(description = "Sets an explicit tag of the docker image overriding version inference and version prefix. If the explicitTag is a branch name, the according ticket number is inferred.")
     @Input
-    String explicitTag
+    String explicitTag = null
 
     @TaskAction
     void dockerBuild() {
