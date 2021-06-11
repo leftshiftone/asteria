@@ -8,7 +8,7 @@ dependencies {
     implementation("org.ajoberstar:grgit:1.9.3")
     implementation("org.eclipse.jgit:org.eclipse.jgit:4.5.7.201904151645-r")
     implementation("com.github.ben-manes:gradle-versions-plugin:0.36.0")
-    implementation("org.springframework.boot:spring-boot-gradle-plugin:2.4.5")
+    implementation("org.springframework.boot:spring-boot-gradle-plugin:2.4.7")
     implementation("io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE")
 }
 
