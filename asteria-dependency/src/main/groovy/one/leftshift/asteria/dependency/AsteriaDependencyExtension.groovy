@@ -45,4 +45,13 @@ class AsteriaDependencyExtension {
      * The URL pointing to the maven repository.
      */
     String snapshotRepositoryUrl = "s3://leftshiftone-maven-artifacts.s3.eu-central-1.amazonaws.com/snapshots"
+
+    /**
+     * Configure dynamic version cache.
+     */
+    Integer cacheDynamicVersionsForMinutes = 30
+    /**
+     * Configure changing modules cache.
+     */
+    Integer cacheChangingModulesForSeconds = 0
 }

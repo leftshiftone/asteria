@@ -58,8 +58,8 @@ class AsteriaDependencyPlugin implements Plugin<Project> {
 
         project.logger.debug("Applying dependency interception")
         project.configurations.all {
-            resolutionStrategy.cacheDynamicVersionsFor 30, "minutes"
-            resolutionStrategy.cacheChangingModulesFor 0, "seconds"
+            resolutionStrategy.cacheDynamicVersionsFor extension.cacheDynamicVersionsForMinutes, "minutes"
+            resolutionStrategy.cacheChangingModulesFor extension.cacheChangingModulesForSeconds, "seconds"
             resolutionStrategy.eachDependency { DependencyResolveDetails dep ->
                 project.logger.debug("Evaluating dependency ${dep.requested.group}:${dep.requested.name}:${dep.requested.version}")
 
